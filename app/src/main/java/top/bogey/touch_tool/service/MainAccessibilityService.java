@@ -3,7 +3,6 @@ package top.bogey.touch_tool.service;
 import static top.bogey.touch_tool.service.TaskInfoSummary.OCR_SERVICE_ACTION;
 
 import android.accessibilityservice.AccessibilityService;
-import android.accessibilityservice.AccessibilityServiceInfo;
 import android.accessibilityservice.GestureDescription;
 import android.annotation.SuppressLint;
 import android.app.AlarmManager;
@@ -89,7 +88,6 @@ public class MainAccessibilityService extends AccessibilityService {
 
     @Override
     public void onAccessibilityEvent(AccessibilityEvent event) {
-        setServiceInfo(new AccessibilityServiceInfo());
         if (event == null) return;
 
         if (event.getClassName() == null) return;
