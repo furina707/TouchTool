@@ -3,6 +3,7 @@
     <string name="window_anchor">悬浮窗锚点</string>
     <string name="screen_anchor">屏幕锚点</string>
     <string name="screen_anchor_pos">窗相对屏位置</string>
+    <string name="realtime_mode">实时模式</string>
 
     <!-- 动作-Start -->
     <string name="start_action_enable">启用</string>
@@ -126,7 +127,6 @@
     <!-- 动作-Task -->
     <string name="execute_task_action">执行任务</string>
     <string name="execute_task_action_task_id">任务</string>
-    <string name="execute_task_action_just_cal">无需执行针脚</string>
 
     <string name="stop_task_action">停止任务</string>
     <string name="stop_task_action_desc">停止对应任务</string>

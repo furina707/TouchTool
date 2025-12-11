@@ -42,7 +42,7 @@ public class PinWidgetApp extends PinWidget<PinApplication> {
     protected void initBase() {
         binding.selectAppButton.setOnClickListener(v -> new SelectAppDialog(getContext(), applications, result -> {
             refreshApps();
-            pinView.getPin().notifyValueUpdated();
+            pinView.getPin().notifyValueUpdated(card.getTask());
         }).show());
         refreshApps();
     }

@@ -52,7 +52,7 @@ public class PinWidgetImage extends PinWidget<PinImage> {
                     .setPositiveButton(R.string.enter, null)
                     .setNegativeButton(R.string.clear, (dialog, which) -> {
                         pinBase.setImage(null);
-                        pinView.getPin().notifyValueUpdated();
+                        pinView.getPin().notifyValueUpdated(card.getTask());
                         binding.image.setImageBitmap(null);
                     })
                     .setView(view)
@@ -65,12 +65,12 @@ public class PinWidgetImage extends PinWidget<PinImage> {
         switch (pinBase.getSubType()) {
             case NORMAL -> binding.pickButton.setOnClickListener(v -> new ImagePickerPreview(getContext(), image -> {
                 pinBase.setImage(image);
-                pinView.getPin().notifyValueUpdated();
+                pinView.getPin().notifyValueUpdated(card.getTask());
                 binding.image.setImageBitmap(image);
             }, pinBase.getImage()).show());
             case WITH_ICON -> binding.pickButton.setOnClickListener(v -> new SelectIconDialog(getContext(), result -> {
                 pinBase.setImage(result);
-                pinView.getPin().notifyValueUpdated();
+                pinView.getPin().notifyValueUpdated(card.getTask());
                 binding.image.setImageBitmap(result);
             }).show());
             case FILE_CONTENT -> binding.pickButton.setOnClickListener(v -> {
@@ -86,7 +86,7 @@ public class PinWidgetImage extends PinWidget<PinImage> {
                             }
                         }
                         pinBase.setImage(bitmap);
-                        pinView.getPin().notifyValueUpdated();
+                        pinView.getPin().notifyValueUpdated(card.getTask());
                         binding.image.setImageBitmap(bitmap);
                     }
                 }, ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE);

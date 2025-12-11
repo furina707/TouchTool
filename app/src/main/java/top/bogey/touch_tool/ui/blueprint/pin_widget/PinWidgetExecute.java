@@ -54,7 +54,7 @@ public class PinWidgetExecute extends PinWidget<PinExecute> {
                     @Override
                     public void afterTextChanged(Editable s) {
                         stringExecute.setValue(s.toString());
-                        pinView.getPin().notifyValueUpdated();
+                        pinView.getPin().notifyValueUpdated(card.getTask());
                     }
                 });
             }
@@ -67,14 +67,14 @@ public class PinWidgetExecute extends PinWidget<PinExecute> {
                 binding.pickButton.setOnClickListener(v -> new SelectIconDialog(getContext(), result -> {
                     binding.pickButton.setImageBitmap(result);
                     iconExecute.setImage(result);
-                    pinView.getPin().notifyValueUpdated();
+                    pinView.getPin().notifyValueUpdated(card.getTask());
                 }).show());
                 binding.title.setText(iconExecute.getValue());
                 binding.title.addTextChangedListener(new TextChangedListener() {
                     @Override
                     public void afterTextChanged(Editable s) {
                         iconExecute.setValue(s.toString());
-                        pinView.getPin().notifyValueUpdated();
+                        pinView.getPin().notifyValueUpdated(card.getTask());
                     }
                 });
             }

@@ -21,20 +21,20 @@ import top.bogey.touch_tool.bean.task.Task;
 import top.bogey.touch_tool.service.TaskRunnable;
 
 public class CustomEndAction extends Action implements DynamicPinsAction, SyncAction {
-    private final transient Pin justCallPin = new NotLinkAblePin(new PinBoolean(false), R.string.execute_task_action_just_cal);
+    private final transient Pin realTimeMode = new NotLinkAblePin(new PinBoolean(false), R.string.realtime_mode);
 
     private final static SyncActionListener LISTENER = new SyncActionListener();
 
     public CustomEndAction() {
         super(ActionType.CUSTOM_END);
         setExpandType(ExpandType.FULL);
-        addPin(justCallPin);
+        addPin(realTimeMode);
         setPos(0, 30);
     }
 
     public CustomEndAction(JsonObject jsonObject) {
         super(jsonObject);
-        reAddPin(justCallPin);
+        reAddPin(realTimeMode);
         tmpPins.forEach(this::addPin);
         tmpPins.clear();
     }
@@ -64,14 +64,14 @@ public class CustomEndAction extends Action implements DynamicPinsAction, SyncAc
         boolean start = false;
         for (Pin pin : getPins()) {
             if (start) pins.add(pin);
-            if (pin == justCallPin) start = true;
+            if (pin == realTimeMode) start = true;
         }
         return pins;
     }
 
-    public boolean isJustCall() {
-        PinBoolean justCall = justCallPin.getValue();
-        return justCall.getValue();
+    public boolean isRealTimeMode() {
+        PinBoolean realTime = realTimeMode.getValue();
+        return realTime.getValue();
     }
 
     @Override
@@ -134,7 +134,7 @@ public class CustomEndAction extends Action implements DynamicPinsAction, SyncAc
                 if (!pinByUid.isSameClass(pin)) pinByUid.setValue(pin.getValue().copy());
 
                 // 仅执行针脚同步
-                if (pinByUid.getTitleId() == R.string.execute_task_action_just_cal) {
+                if (pinByUid.getTitleId() == R.string.realtime_mode) {
                     pinByUid.setValue(pin.getValue().copy());
                 }
             }

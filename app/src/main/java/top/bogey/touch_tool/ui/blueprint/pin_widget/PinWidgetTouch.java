@@ -41,7 +41,7 @@ public class PinWidgetTouch extends PinWidget<PinTouchPath> {
         binding.pickButton.setOnClickListener(v -> new TouchPickerPreview(getContext(), result -> {
             pinBase.setValue(result.getValue());
             pinBase.setAnchor(result.getAnchor());
-            pinView.getPin().notifyValueUpdated();
+            pinView.getPin().notifyValueUpdated(card.getTask());
             binding.pathView.setPath(result.getPathParts());
         }, pinBase).show());
     }

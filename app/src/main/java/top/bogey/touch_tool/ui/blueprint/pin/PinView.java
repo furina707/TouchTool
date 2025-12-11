@@ -210,12 +210,12 @@ public abstract class PinView extends FrameLayout implements PinListener {
     }
 
     @Override
-    public void onValueReplaced(Pin origin, PinBase value) {
+    public void onValueReplaced(Task task, Pin origin, PinBase value) {
         post(this::init);
     }
 
     @Override
-    public void onValueUpdated(Pin origin, PinBase value) {
+    public void onValueUpdated(Task task, Pin origin, PinBase value) {
     }
 
     @Override

@@ -13,10 +13,11 @@ import top.bogey.touch_tool.R;
 import top.bogey.touch_tool.bean.action.Action;
 import top.bogey.touch_tool.bean.action.ActionCheckResult;
 import top.bogey.touch_tool.bean.action.ActionType;
-import top.bogey.touch_tool.bean.action.parent.ExecuteAction;
+import top.bogey.touch_tool.bean.action.parent.ExecuteOrCalculateAction;
 import top.bogey.touch_tool.bean.action.parent.SyncAction;
 import top.bogey.touch_tool.bean.action.system.SwitchCaptureAction;
 import top.bogey.touch_tool.bean.pin.Pin;
+import top.bogey.touch_tool.bean.pin.pin_objects.PinBase;
 import top.bogey.touch_tool.bean.pin.pin_objects.PinBoolean;
 import top.bogey.touch_tool.bean.pin.pin_objects.pin_scale_able.PinArea;
 import top.bogey.touch_tool.bean.pin.pin_objects.pin_scale_able.PinImage;
@@ -27,21 +28,24 @@ import top.bogey.touch_tool.service.MainAccessibilityService;
 import top.bogey.touch_tool.service.TaskRunnable;
 import top.bogey.touch_tool.utils.DisplayUtil;
 
-public class GetImageAction extends ExecuteAction implements SyncAction {
+public class GetImageAction extends ExecuteOrCalculateAction implements SyncAction {
     private final transient Pin areaPin = new Pin(new PinArea(), R.string.pin_area, false, false, true);
     private final transient Pin useAccPin = new NotLinkAblePin(new PinBoolean(true), R.string.get_image_action_use_accessibility, false, false, true);
     private final transient Pin imagePin = new Pin(new PinImage(), R.string.pin_image, true);
     private final transient Pin posPin = new Pin(new PinPoint(), R.string.pin_point, true);
+
     public GetImageAction() {
         super(ActionType.GET_IMAGE);
         addPins(areaPin, useAccPin, imagePin, posPin);
     }
+
     public GetImageAction(JsonObject jsonObject) {
         super(jsonObject);
         reAddPins(areaPin, useAccPin, imagePin, posPin);
     }
+
     @Override
-    public void execute(TaskRunnable runnable, Pin pin) {
+    protected void doAction(TaskRunnable runnable, Pin pin) {
         sync(runnable.getTask());
         PinArea area = getPinValue(runnable, areaPin);
         PinBoolean useAcc = getPinValue(runnable, useAccPin);
@@ -60,8 +64,6 @@ public class GetImageAction extends ExecuteAction implements SyncAction {
             imagePin.getValue(PinImage.class).setImage(clipBitmap);
             posPin.getValue(PinPoint.class).setValue(areaRect.left, areaRect.top);
         }
-
-        executeNext(runnable, outPin);
     }
 
     @Override

@@ -1203,7 +1203,7 @@ public class CardLayoutView extends FrameLayout implements TaskSaveListener, Var
                     if (card == null) return;
                     PinView pinView = card.getPinView(pinUpdateHistory.getPinId());
                     if (pinView == null) return;
-                    pinView.getPin().setValue(pinUpdateHistory.getFrom());
+                    pinView.getPin().setValue(task, pinUpdateHistory.getFrom());
                     pinView.refreshPin();
                 }
 
@@ -1280,7 +1280,7 @@ public class CardLayoutView extends FrameLayout implements TaskSaveListener, Var
                     if (card == null) return;
                     PinView pinView = card.getPinView(pinUpdateHistory.getPinId());
                     if (pinView == null) return;
-                    pinView.getPin().setValue(pinUpdateHistory.getTo());
+                    pinView.getPin().setValue(task, pinUpdateHistory.getTo());
                     pinView.refreshPin();
                 }
 

@@ -33,7 +33,7 @@ public class PinWidgetColor extends PinWidget<PinColor> {
             colorInfo.setColor(result.getColor());
             colorInfo.setMinArea(result.getMinArea());
             colorInfo.setMaxArea(result.getMaxArea());
-            pinView.getPin().notifyValueUpdated();
+            pinView.getPin().notifyValueUpdated(card.getTask());
             binding.colorText.setText(colorInfo.getColorString());
             binding.colorText.setTextColor(DisplayUtil.getTextColor(colorInfo.getColor()));
             binding.color.setBackgroundColor(colorInfo.getColor());

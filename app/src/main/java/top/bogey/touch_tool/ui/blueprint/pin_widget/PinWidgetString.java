@@ -194,11 +194,11 @@ public class PinWidgetString extends PinWidget<PinString> {
                             if (uri == null) {
                                 binding.editText.setText("");
                                 pinBase.setValue(null);
-                                pinView.getPin().notifyValueUpdated();
+                                pinView.getPin().notifyValueUpdated(card.getTask());
                             } else {
                                 binding.editText.setText(getRingtoneName(uri.toString()));
                                 pinBase.setValue(uri.toString());
-                                pinView.getPin().notifyValueUpdated();
+                                pinView.getPin().notifyValueUpdated(card.getTask());
                             }
                         }
                     });
@@ -213,7 +213,7 @@ public class PinWidgetString extends PinWidget<PinString> {
                     public void afterTextChanged(Editable s) {
                         if (Objects.equals(s.toString(), pinBase.getValue())) return;
                         pinBase.setValue(s.toString());
-                        pinView.getPin().notifyValueUpdated();
+                        pinView.getPin().notifyValueUpdated(card.getTask());
                         resetDynamicPin(s.toString());
                     }
                 });
@@ -227,7 +227,7 @@ public class PinWidgetString extends PinWidget<PinString> {
                     @Override
                     public void afterTextChanged(Editable s) {
                         pinBase.setValue(s.toString());
-                        pinView.getPin().notifyValueUpdated();
+                        pinView.getPin().notifyValueUpdated(card.getTask());
                     }
                 });
             }
@@ -237,7 +237,7 @@ public class PinWidgetString extends PinWidget<PinString> {
                 binding.pickButton.setIconResource(R.drawable.icon_widgets);
                 binding.pickButton.setOnClickListener(v -> new NodePickerPreview(getContext(), result -> {
                     nodePath.setValue(result);
-                    pinView.getPin().notifyValueUpdated();
+                    pinView.getPin().notifyValueUpdated(card.getTask());
                     binding.editText.setText(nodePath.getSimpleValue());
                 }, nodePath.getValue()).show());
             }
@@ -251,7 +251,7 @@ public class PinWidgetString extends PinWidget<PinString> {
                     @Override
                     public void afterTextChanged(Editable s) {
                         nodePath.setValue(s.toString());
-                        pinView.getPin().notifyValueUpdated();
+                        pinView.getPin().notifyValueUpdated(card.getTask());
                     }
                 });
                 binding.pickButton.setIconResource(R.drawable.icon_text_fields);
@@ -259,7 +259,7 @@ public class PinWidgetString extends PinWidget<PinString> {
                     nodePath.setValue(result);
                     String regex = AppUtil.formatRegex(nodePath.getValue());
                     nodePath.setValue(regex);
-                    pinView.getPin().notifyValueUpdated();
+                    pinView.getPin().notifyValueUpdated(card.getTask());
                     binding.editText.setText(regex);
                 }, null).show());
             }
@@ -271,7 +271,7 @@ public class PinWidgetString extends PinWidget<PinString> {
                     ExecuteTaskAction executeTaskAction = (ExecuteTaskAction) action;
                     Task executeTask = executeTaskAction.getTask(card.getTask());
                     pinBase.setValue(executeTask.getId());
-                    pinView.getPin().notifyValueUpdated();
+                    pinView.getPin().notifyValueUpdated(card.getTask());
                     binding.editText.setText(executeTask.getTitle());
                     if (card.getAction() instanceof ExecuteTaskAction executeAction) {
                         executeAction.sync(card.getTask(), executeTask);
@@ -295,7 +295,7 @@ public class PinWidgetString extends PinWidget<PinString> {
                     @Override
                     public void afterTextChanged(Editable s) {
                         pinBase.setValue(s.toString());
-                        pinView.getPin().notifyValueUpdated();
+                        pinView.getPin().notifyValueUpdated(card.getTask());
                     }
                 });
                 binding.pickButton.setIconResource(R.drawable.icon_folder);
@@ -310,7 +310,7 @@ public class PinWidgetString extends PinWidget<PinString> {
                                 String content = new String(AppUtil.readFile(getContext(), uri));
                                 binding.editText.setText(content);
                                 pinBase.setValue(content);
-                                pinView.getPin().notifyValueUpdated();
+                                pinView.getPin().notifyValueUpdated(card.getTask());
                             }
                         }
                     }, "*/*");
@@ -326,7 +326,7 @@ public class PinWidgetString extends PinWidget<PinString> {
                     @Override
                     public void afterTextChanged(Editable s) {
                         pinBase.setValue(s.toString());
-                        pinView.getPin().notifyValueUpdated();
+                        pinView.getPin().notifyValueUpdated(card.getTask());
                     }
                 });
                 binding.pickButton.setVisibility(GONE);

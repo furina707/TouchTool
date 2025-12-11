@@ -88,8 +88,8 @@ public class ParseJsonAction extends CalculateAction implements SyncAction {
     }
 
     @Override
-    public void onValueUpdated(Pin origin, PinBase value) {
-        super.onValueUpdated(origin, value);
-        sync(null);
+    public void onValueUpdated(Task task, Pin origin, PinBase value) {
+        super.onValueUpdated(task, origin, value);
+        sync(task);
     }
 }

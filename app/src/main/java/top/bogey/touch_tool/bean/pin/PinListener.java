@@ -8,9 +8,9 @@ public interface PinListener {
 
     void onUnLinkedFrom(Task task, Pin origin, Pin from);
 
-    void onValueReplaced(Pin origin, PinBase value);
+    void onValueReplaced(Task task, Pin origin, PinBase value);
 
-    void onValueUpdated(Pin origin, PinBase value);
+    void onValueUpdated(Task task, Pin origin, PinBase value);
 
     void onTitleChanged(Pin origin, String title);
 }

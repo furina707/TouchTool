@@ -43,7 +43,7 @@ public class PinWidgetSelect extends PinWidget<PinSingleSelect> {
             popup.setOnItemClickListener((parent, view, position, id) -> {
                 pinBase.setValue(adapter.getItem(position));
                 binding.spinner.setText(pinBase.getValue());
-                pinView.getPin().notifyValueUpdated();
+                pinView.getPin().notifyValueUpdated(card.getTask());
                 popup.dismiss();
             });
             popup.show();

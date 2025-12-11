@@ -296,12 +296,12 @@ public abstract class Action extends Identity implements PinListener {
     }
 
     @Override
-    public void onValueReplaced(Pin origin, PinBase value) {
+    public void onValueReplaced(Task task, Pin origin, PinBase value) {
         listeners.stream().filter(Objects::nonNull).forEach(listener -> listener.onPinChanged(origin));
     }
 
     @Override
-    public void onValueUpdated(Pin origin, PinBase value) {
+    public void onValueUpdated(Task task, Pin origin, PinBase value) {
         listeners.stream().filter(Objects::nonNull).forEach(listener -> listener.onPinChanged(origin));
     }
 

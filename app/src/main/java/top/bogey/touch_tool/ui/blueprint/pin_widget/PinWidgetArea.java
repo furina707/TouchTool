@@ -38,28 +38,28 @@ public class PinWidgetArea extends PinWidget<PinArea> {
             @Override
             public void afterTextChanged(Editable s) {
                 area.left = toInt(s);
-                pinView.getPin().notifyValueUpdated();
+                pinView.getPin().notifyValueUpdated(card.getTask());
             }
         });
         binding.topEdit.addTextChangedListener(new TextChangedListener() {
             @Override
             public void afterTextChanged(Editable s) {
                 area.top = toInt(s);
-                pinView.getPin().notifyValueUpdated();
+                pinView.getPin().notifyValueUpdated(card.getTask());
             }
         });
         binding.rightEdit.addTextChangedListener(new TextChangedListener() {
             @Override
             public void afterTextChanged(Editable s) {
                 area.right = toInt(s);
-                pinView.getPin().notifyValueUpdated();
+                pinView.getPin().notifyValueUpdated(card.getTask());
             }
         });
         binding.bottomEdit.addTextChangedListener(new TextChangedListener() {
             @Override
             public void afterTextChanged(Editable s) {
                 area.bottom = toInt(s);
-                pinView.getPin().notifyValueUpdated();
+                pinView.getPin().notifyValueUpdated(card.getTask());
             }
         });
 

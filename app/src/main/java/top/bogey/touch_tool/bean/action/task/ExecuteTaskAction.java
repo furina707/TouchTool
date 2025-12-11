@@ -75,19 +75,19 @@ public class ExecuteTaskAction extends Action implements DynamicPinsAction, Sync
 
     @Override
     public void executeNext(TaskRunnable runnable, Pin pin) {
-        if (isJustCall(runnable.getTask())) return;
+        if (isRealTimeMode(runnable.getTask())) return;
         Pin pinByUid = getPinByUid(pin.getUid());
         super.executeNext(runnable, pinByUid);
     }
 
     @Override
     public void calculate(TaskRunnable runnable, Pin pin) {
-        if (isJustCall(runnable.getTask())) execute(runnable, pin);
+        if (isRealTimeMode(runnable.getTask())) execute(runnable, pin);
     }
 
     @Override
     public void resetReturnValue(TaskRunnable runnable, Pin pin) {
-        if (isJustCall(runnable.getTask()) || (!pin.isOut() && pin.isSameClass(PinExecute.class))) {
+        if (isRealTimeMode(runnable.getTask()) || (!pin.isOut() && pin.isSameClass(PinExecute.class))) {
             for (Pin p : getDynamicPins()) {
                 if (p.isOut()) {
                     p.getValue().reset();
@@ -104,14 +104,14 @@ public class ExecuteTaskAction extends Action implements DynamicPinsAction, Sync
         });
     }
 
-    public boolean isJustCall(Task context) {
+    public boolean isRealTimeMode(Task context) {
         Task task = getTask(context);
         if (task == null) return false;
         List<Action> actions = task.getActions(CustomEndAction.class);
         if (actions.isEmpty()) return false;
         for (Action action : actions) {
             CustomEndAction endAction = (CustomEndAction) action;
-            return endAction.isJustCall();
+            return endAction.isRealTimeMode();
         }
         return false;
     }
@@ -248,7 +248,7 @@ public class ExecuteTaskAction extends Action implements DynamicPinsAction, Sync
         public boolean showAble(Task context) {
             ExecuteTaskAction action = (ExecuteTaskAction) context.getAction(getOwnerId());
             if (action == null) return false;
-            return !action.isJustCall(context);
+            return !action.isRealTimeMode(context);
         }
     }
 }

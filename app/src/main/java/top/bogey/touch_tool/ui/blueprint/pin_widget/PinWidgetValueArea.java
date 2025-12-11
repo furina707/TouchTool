@@ -41,7 +41,7 @@ public class PinWidgetValueArea extends PinWidget<PinValueArea> {
                 if (binding.lockButton.isChecked()) {
                     binding.highEdit.setText(s);
                 } else {
-                    pinView.getPin().notifyValueUpdated();
+                    pinView.getPin().notifyValueUpdated(card.getTask());
                 }
             }
         });
@@ -50,7 +50,7 @@ public class PinWidgetValueArea extends PinWidget<PinValueArea> {
             @Override
             public void afterTextChanged(Editable s) {
                 pinBase.setMax(toInt(s));
-                pinView.getPin().notifyValueUpdated();
+                pinView.getPin().notifyValueUpdated(card.getTask());
             }
         });
 

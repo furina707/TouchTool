@@ -13,6 +13,7 @@ import top.bogey.touch_tool.R;
 import top.bogey.touch_tool.bean.action.ActionCheckResult;
 import top.bogey.touch_tool.bean.action.ActionType;
 import top.bogey.touch_tool.bean.action.parent.ExecuteAction;
+import top.bogey.touch_tool.bean.action.parent.ExecuteOrCalculateAction;
 import top.bogey.touch_tool.bean.action.parent.SyncAction;
 import top.bogey.touch_tool.bean.pin.Pin;
 import top.bogey.touch_tool.bean.pin.pin_objects.pin_list.PinList;
@@ -29,7 +30,7 @@ import top.bogey.touch_tool.service.OcrResult;
 import top.bogey.touch_tool.service.TaskInfoSummary;
 import top.bogey.touch_tool.service.TaskRunnable;
 
-public class GetOcrTextAction extends ExecuteAction implements SyncAction {
+public class GetOcrTextAction extends ExecuteOrCalculateAction implements SyncAction {
     private final transient Pin sourcePin = new Pin(new PinImage(), R.string.pin_image);
     private final transient Pin similarPin = new Pin(new PinInteger(60), R.string.get_ocr_text_action_similar);
     private final transient Pin typePin = new SingleSelectPin(new PinSingleSelect(), R.string.get_ocr_text_action_type, false, false, true);
@@ -48,7 +49,7 @@ public class GetOcrTextAction extends ExecuteAction implements SyncAction {
     }
 
     @Override
-    public void execute(TaskRunnable runnable, Pin pin) {
+    protected void doAction(TaskRunnable runnable, Pin pin) {
         sync(runnable.getTask());
         PinImage source = getPinValue(runnable, sourcePin);
         PinNumber<?> similar = getPinValue(runnable, similarPin);
@@ -88,7 +89,6 @@ public class GetOcrTextAction extends ExecuteAction implements SyncAction {
             textArray.clear();
             areaArray.clear();
         }
-        executeNext(runnable, outPin);
     }
 
     @Override

@@ -36,7 +36,7 @@ public class PinWidgetPoint extends PinWidget<PinPoint> {
             @Override
             public void afterTextChanged(Editable s) {
                 point.x = toInt(s);
-                pinView.getPin().notifyValueUpdated();
+                pinView.getPin().notifyValueUpdated(card.getTask());
             }
         });
 
@@ -44,13 +44,13 @@ public class PinWidgetPoint extends PinWidget<PinPoint> {
             @Override
             public void afterTextChanged(Editable s) {
                 point.y = toInt(s);
-                pinView.getPin().notifyValueUpdated();
+                pinView.getPin().notifyValueUpdated(card.getTask());
             }
         });
 
         binding.pickButton.setOnClickListener(v -> new PointPickerPreview(getContext(), result -> {
             point.set(result.x, result.y);
-            pinView.getPin().notifyValueUpdated();
+            pinView.getPin().notifyValueUpdated(card.getTask());
             binding.xEdit.setText(String.valueOf(point.x));
             binding.yEdit.setText(String.valueOf(point.y));
         }, point).show());

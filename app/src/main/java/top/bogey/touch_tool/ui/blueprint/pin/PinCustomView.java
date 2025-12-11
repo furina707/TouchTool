@@ -67,7 +67,7 @@ public abstract class PinCustomView extends PinView {
                     PinInfo pinInfo = pinInfoList.get(position);
                     keyTypeView.setText(pinInfo.getTitle());
                     variable.setKeyPinInfo(pinInfo);
-                    pin.setValue(variable.getValue().copy());
+                    pin.setValue(card.getTask(), variable.getValue().copy());
                     popup.dismiss();
                 });
                 popup.show();
@@ -92,7 +92,7 @@ public abstract class PinCustomView extends PinView {
                     PinInfo pinInfo = pinInfoList.get(position);
                     valueTypeView.setText(pinInfo.getTitle());
                     variable.setValuePinInfo(pinInfo);
-                    pin.setValue(variable.getValue().copy());
+                    pin.setValue(card.getTask(), variable.getValue().copy());
                     popup.dismiss();
                 });
                 popup.show();
@@ -113,7 +113,7 @@ public abstract class PinCustomView extends PinView {
                 popup.setOnItemClickListener((parent, view, position, id) -> {
                     typeView.setIconResource(ICON_ARRAY[position]);
                     variable.setType(Variable.VariableType.values()[position]);
-                    pin.setValue(variable.getValue().copy());
+                    pin.setValue(card.getTask(), variable.getValue().copy());
                     refreshPin();
                     popup.dismiss();
                 });

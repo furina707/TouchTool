@@ -258,11 +258,15 @@ public class Pin extends Identity {
 
     public void setValue(PinBase value) {
         this.value = value;
-        listeners.stream().filter(Objects::nonNull).forEach(listener -> listener.onValueReplaced(this, value));
+    }
+    
+    public void setValue(Task task, PinBase value) {
+        this.value = value;
+        listeners.stream().filter(Objects::nonNull).forEach(listener -> listener.onValueReplaced(task, this, value));
     }
 
-    public void notifyValueUpdated() {
-        listeners.stream().filter(Objects::nonNull).forEach(listener -> listener.onValueUpdated(this, value));
+    public void notifyValueUpdated(Task task) {
+        listeners.stream().filter(Objects::nonNull).forEach(listener -> listener.onValueUpdated(task, this, value));
     }
 
     public Map<String, String> getLinks() {
