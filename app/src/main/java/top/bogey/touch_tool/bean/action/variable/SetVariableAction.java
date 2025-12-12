@@ -15,7 +15,8 @@ import top.bogey.touch_tool.bean.pin.PinInfo;
 import top.bogey.touch_tool.bean.pin.pin_objects.PinBoolean;
 import top.bogey.touch_tool.bean.pin.pin_objects.PinObject;
 import top.bogey.touch_tool.bean.pin.special_pin.NotLinkAblePin;
-import top.bogey.touch_tool.bean.save.Saver;
+import top.bogey.touch_tool.bean.save.task.TaskSaver;
+import top.bogey.touch_tool.bean.save.variable.VariableSaver;
 import top.bogey.touch_tool.bean.task.Task;
 import top.bogey.touch_tool.bean.task.Variable;
 import top.bogey.touch_tool.service.TaskRunnable;
@@ -52,7 +53,7 @@ public class SetVariableAction extends ExecuteAction implements SyncAction {
     public void execute(TaskRunnable runnable, Pin pin) {
         Task task = runnable.getTask();
         Variable var = task.upFindVariable(varId);
-        if (var == null) var = Saver.getInstance().getVar(varId);
+        if (var == null) var = VariableSaver.getInstance().getVar(varId);
         if (var != null && varPin != null) {
             PinObject value = getPinValue(runnable, varPin);
             var.setSaveValue(value);
@@ -60,10 +61,10 @@ public class SetVariableAction extends ExecuteAction implements SyncAction {
             // 保存变量，需要找到原始任务来保存
             if (savePin.getValue(PinBoolean.class).getValue()) {
                 Task startTask = runnable.getStartTask();
-                Task saveTask = Saver.getInstance().getTask(startTask.getId());
+                Task saveTask = TaskSaver.getInstance().getTask(startTask.getId());
                 if (saveTask == null) saveTask = task;
                 Variable variable = saveTask.downFindVariable(varId);
-                if (variable == null) variable = Saver.getInstance().getVar(varId);
+                if (variable == null) variable = VariableSaver.getInstance().getVar(varId);
                 if (variable != null) {
                     variable.setSaveValue(value);
                     variable.save();
@@ -80,7 +81,7 @@ public class SetVariableAction extends ExecuteAction implements SyncAction {
     @Override
     public void sync(Task context) {
         Variable variable = context.upFindVariable(varId);
-        if (variable == null) variable = Saver.getInstance().getVar(varId);
+        if (variable == null) variable = VariableSaver.getInstance().getVar(varId);
         if (variable == null) return;
         if (varPin == null) return;
         varPin.setTitle(variable.getTitle());
@@ -96,7 +97,7 @@ public class SetVariableAction extends ExecuteAction implements SyncAction {
     public void check(ActionCheckResult result, Task task) {
         super.check(result, task);
         Variable variable = task.upFindVariable(varId);
-        if (variable == null) variable = Saver.getInstance().getVar(varId);
+        if (variable == null) variable = VariableSaver.getInstance().getVar(varId);
         if (variable == null) {
             result.addResult(ActionCheckResult.ResultType.ERROR, R.string.check_not_exist_variable_error);
         }

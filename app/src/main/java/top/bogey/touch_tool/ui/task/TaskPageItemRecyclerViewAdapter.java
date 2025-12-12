@@ -20,8 +20,8 @@ import top.bogey.touch_tool.bean.action.Action;
 import top.bogey.touch_tool.bean.action.ActionCheckResult;
 import top.bogey.touch_tool.bean.action.start.StartAction;
 import top.bogey.touch_tool.bean.base.Identity;
-import top.bogey.touch_tool.bean.save.Saver;
 import top.bogey.touch_tool.bean.save.task.TaskSaveListener;
+import top.bogey.touch_tool.bean.save.task.TaskSaver;
 import top.bogey.touch_tool.bean.task.Task;
 import top.bogey.touch_tool.databinding.ViewTaskPageItemActionBinding;
 import top.bogey.touch_tool.databinding.ViewTaskPageItemBinding;
@@ -58,7 +58,7 @@ public class TaskPageItemRecyclerViewAdapter extends RecyclerView.Adapter<TaskPa
 
     @Override
     public void onCreate(Task task) {
-        if (Saver.matchTag(tag, task.getTags())) {
+        if (TaskSaver.matchTag(tag, task.getTags())) {
             tasks.add(task);
             notifyItemInserted(tasks.size() - 1);
         }

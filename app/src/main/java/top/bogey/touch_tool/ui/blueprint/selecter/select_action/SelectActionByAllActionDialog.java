@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import top.bogey.touch_tool.bean.action.Action;
-import top.bogey.touch_tool.bean.save.Saver;
+import top.bogey.touch_tool.bean.save.task.TaskSaver;
 import top.bogey.touch_tool.bean.task.Task;
 import top.bogey.touch_tool.utils.callback.ResultCallback;
 
@@ -41,7 +41,7 @@ public class SelectActionByAllActionDialog extends SelectActionDialog {
             subGroupMap.put(PRIVATE, task);
 
             // 公共任务
-            List<Object> publicTasks = new ArrayList<>(Saver.getInstance().getTasks());
+            List<Object> publicTasks = new ArrayList<>(TaskSaver.getInstance().getTasks());
             map.put(GLOBAL, publicTasks);
             subGroupMap.put(GLOBAL, GLOBAL);
 

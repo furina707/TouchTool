@@ -30,8 +30,8 @@ import java.util.regex.Pattern;
 import top.bogey.touch_tool.MainApplication;
 import top.bogey.touch_tool.R;
 import top.bogey.touch_tool.bean.action.Action;
-import top.bogey.touch_tool.bean.action.parent.DynamicPinsAction;
 import top.bogey.touch_tool.bean.action.number.MathExpressionAction;
+import top.bogey.touch_tool.bean.action.parent.DynamicPinsAction;
 import top.bogey.touch_tool.bean.action.task.ExecuteTaskAction;
 import top.bogey.touch_tool.bean.pin.Pin;
 import top.bogey.touch_tool.bean.pin.pin_objects.PinSubType;
@@ -46,7 +46,7 @@ import top.bogey.touch_tool.bean.pin.pin_objects.pin_string.PinSingleLineString;
 import top.bogey.touch_tool.bean.pin.pin_objects.pin_string.PinString;
 import top.bogey.touch_tool.bean.pin.pin_objects.pin_string.PinTaskString;
 import top.bogey.touch_tool.bean.pin.pin_objects.pin_string.PinUrlString;
-import top.bogey.touch_tool.bean.save.Saver;
+import top.bogey.touch_tool.bean.save.task.TaskSaver;
 import top.bogey.touch_tool.bean.task.Task;
 import top.bogey.touch_tool.databinding.PinWidgetInputBinding;
 import top.bogey.touch_tool.ui.InstantActivity;
@@ -264,7 +264,7 @@ public class PinWidgetString extends PinWidget<PinString> {
                 }, null).show());
             }
             case TASK_ID, ALL_TASK_ID -> {
-                Task task = Saver.getInstance().upFindTask(card.getTask(), pinBase.getValue());
+                Task task = TaskSaver.getInstance().upFindTask(card.getTask(), pinBase.getValue());
                 if (task != null) binding.editText.setText(task.getTitle());
                 binding.pickButton.setIconResource(R.drawable.icon_assignment);
                 ResultCallback<Action> callback = action -> {

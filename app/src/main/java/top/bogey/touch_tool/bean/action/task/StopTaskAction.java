@@ -11,7 +11,7 @@ import top.bogey.touch_tool.bean.pin.Pin;
 import top.bogey.touch_tool.bean.pin.pin_objects.PinSubType;
 import top.bogey.touch_tool.bean.pin.pin_objects.pin_string.PinTaskString;
 import top.bogey.touch_tool.bean.pin.special_pin.NotLinkAblePin;
-import top.bogey.touch_tool.bean.save.Saver;
+import top.bogey.touch_tool.bean.save.task.TaskSaver;
 import top.bogey.touch_tool.bean.task.Task;
 import top.bogey.touch_tool.service.MainAccessibilityService;
 import top.bogey.touch_tool.service.TaskRunnable;
@@ -46,7 +46,7 @@ public class StopTaskAction extends ExecuteAction {
 
     public Task getTask() {
         PinTaskString taskString = taskPin.getValue();
-        return Saver.getInstance().downFindTask(null, taskString.getValue());
+        return TaskSaver.getInstance().downFindTask(null, taskString.getValue());
     }
 
     @Override

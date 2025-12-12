@@ -35,8 +35,8 @@ import top.bogey.touch_tool.bean.action.start.ScreenStartAction;
 import top.bogey.touch_tool.bean.action.start.StartAction;
 import top.bogey.touch_tool.bean.pin.Pin;
 import top.bogey.touch_tool.bean.pin.pin_objects.PinObject;
-import top.bogey.touch_tool.bean.save.Saver;
 import top.bogey.touch_tool.bean.save.SettingSaver;
+import top.bogey.touch_tool.bean.save.task.TaskSaver;
 import top.bogey.touch_tool.bean.task.Task;
 import top.bogey.touch_tool.ui.MainActivity;
 import top.bogey.touch_tool.ui.custom.ChoiceExecuteFloatView;
@@ -284,7 +284,7 @@ public class TaskInfoSummary {
         MainAccessibilityService service = MainApplication.getInstance().getService();
         if (service == null || !service.isEnabled()) return;
 
-        for (Task task : Saver.getInstance().getTasks(clazz)) {
+        for (Task task : TaskSaver.getInstance().getTasks(clazz)) {
             for (Action action : task.getActions(clazz)) {
                 StartAction startAction = (StartAction) action;
                 if (startAction.isEnable() && startAction.ready()) service.runTask(task, startAction);
@@ -297,7 +297,7 @@ public class TaskInfoSummary {
         if (service == null || !service.isEnabled()) return;
 
         Map<Action, Task> tasks = new HashMap<>();
-        for (Task task : Saver.getInstance().getTasks(ReceivedShareStartAction.class)) {
+        for (Task task : TaskSaver.getInstance().getTasks(ReceivedShareStartAction.class)) {
             for (Action action : task.getActions(ReceivedShareStartAction.class)) {
                 Pin connectToAblePin = action.getPins().stream().filter(p -> p.isSameClass(pinObject.getClass()) && p.isOut()).findFirst().orElse(null);
                 if (connectToAblePin != null) {
@@ -334,7 +334,7 @@ public class TaskInfoSummary {
         List<ManualExecuteInfo> singleShowList = new ArrayList<>();
 
         if (show) {
-            for (Task task : Saver.getInstance().getTasks(ManualStartAction.class)) {
+            for (Task task : TaskSaver.getInstance().getTasks(ManualStartAction.class)) {
                 for (Action action : task.getActions(ManualStartAction.class)) {
                     ManualStartAction startAction = (ManualStartAction) action;
                     if (startAction.isEnable() && startAction.ready()) {

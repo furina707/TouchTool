@@ -259,7 +259,7 @@ public class Pin extends Identity {
     public void setValue(PinBase value) {
         this.value = value;
     }
-    
+
     public void setValue(Task task, PinBase value) {
         this.value = value;
         listeners.stream().filter(Objects::nonNull).forEach(listener -> listener.onValueReplaced(task, this, value));

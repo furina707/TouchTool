@@ -17,7 +17,7 @@ import top.bogey.touch_tool.bean.action.start.TimeStartAction;
 import top.bogey.touch_tool.bean.pin.Pin;
 import top.bogey.touch_tool.bean.pin.pin_objects.PinBase;
 import top.bogey.touch_tool.bean.pin.pin_objects.PinObject;
-import top.bogey.touch_tool.bean.save.Saver;
+import top.bogey.touch_tool.bean.save.task.TaskSaver;
 import top.bogey.touch_tool.bean.task.Task;
 import top.bogey.touch_tool.bean.task.Variable;
 import top.bogey.touch_tool.service.MainAccessibilityService;
@@ -105,7 +105,7 @@ public class InstantActivity extends BaseActivity {
     public static void doAction(String taskId, String actionId, String pinId, Map<String, String> params) {
         if (taskId == null || actionId == null) return;
 
-        Task task = Saver.getInstance().getTask(taskId);
+        Task task = TaskSaver.getInstance().getTask(taskId);
         if (task == null) return;
         Task copy = task.copy();
 

@@ -1,4 +1,4 @@
-package top.bogey.touch_tool.bean.save.log;
+package top.bogey.touch_tool.bean.log;
 
 import android.content.Context;
 
@@ -49,7 +49,7 @@ public class LogInfo implements ILazyTreeNodeData {
         return uid;
     }
 
-    void setUid(String uid) {
+    public void setUid(String uid) {
         this.uid = uid;
     }
 

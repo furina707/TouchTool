@@ -7,6 +7,8 @@ import com.google.gson.JsonObject;
 import java.lang.reflect.Type;
 
 import top.bogey.touch_tool.bean.action.Action;
+import top.bogey.touch_tool.bean.log.Log;
+import top.bogey.touch_tool.bean.log.LogInfo;
 import top.bogey.touch_tool.bean.pin.Pin;
 import top.bogey.touch_tool.bean.pin.pin_objects.PinBase;
 import top.bogey.touch_tool.bean.pin.pin_objects.PinMap;
@@ -14,8 +16,6 @@ import top.bogey.touch_tool.bean.pin.pin_objects.pin_list.PinApplications;
 import top.bogey.touch_tool.bean.pin.pin_objects.pin_list.PinList;
 import top.bogey.touch_tool.bean.pin.pin_objects.pin_list.PinMultiSelect;
 import top.bogey.touch_tool.bean.pin.pin_objects.pin_scale_able.PinImage;
-import top.bogey.touch_tool.bean.save.log.Log;
-import top.bogey.touch_tool.bean.save.log.LogInfo;
 import top.bogey.touch_tool.bean.task.Task;
 import top.bogey.touch_tool.bean.task.Variable;
 

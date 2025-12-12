@@ -11,7 +11,7 @@ import java.util.Map;
 
 import top.bogey.touch_tool.bean.action.Action;
 import top.bogey.touch_tool.bean.action.task.CustomStartAction;
-import top.bogey.touch_tool.bean.save.Saver;
+import top.bogey.touch_tool.bean.save.task.TaskSaver;
 import top.bogey.touch_tool.bean.task.Task;
 import top.bogey.touch_tool.utils.callback.ResultCallback;
 
@@ -39,7 +39,7 @@ public class SelectActionByCustomActionDialog extends SelectActionDialog {
 
             // 公共任务
             List<Object> publicTasks = new ArrayList<>();
-            for (Task task : Saver.getInstance().getTasks()) {
+            for (Task task : TaskSaver.getInstance().getTasks()) {
                 if (!task.getActions(CustomStartAction.class).isEmpty()) publicTasks.add(task);
             }
             map.put(GLOBAL, publicTasks);

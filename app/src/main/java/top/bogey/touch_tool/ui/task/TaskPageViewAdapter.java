@@ -5,16 +5,14 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import top.bogey.touch_tool.bean.save.Saver;
+import top.bogey.touch_tool.bean.save.task.TaskSaver;
 import top.bogey.touch_tool.databinding.ViewTaskPageBinding;
-import top.bogey.touch_tool.utils.DisplayUtil;
 
 public class TaskPageViewAdapter extends RecyclerView.Adapter<TaskPageViewAdapter.ViewHolder> {
 
@@ -31,7 +29,7 @@ public class TaskPageViewAdapter extends RecyclerView.Adapter<TaskPageViewAdapte
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         ViewHolder viewHolder = new ViewHolder(ViewTaskPageBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
-        Saver.getInstance().addListener(viewHolder.adapter);
+        TaskSaver.getInstance().addListener(viewHolder.adapter);
         adapters.add(viewHolder.adapter);
         return viewHolder;
     }
@@ -41,7 +39,7 @@ public class TaskPageViewAdapter extends RecyclerView.Adapter<TaskPageViewAdapte
         super.onDetachedFromRecyclerView(recyclerView);
         for (TaskPageItemRecyclerViewAdapter adapter : adapters) {
             if (adapter == null) continue;
-            Saver.getInstance().removeListener(adapter);
+            TaskSaver.getInstance().removeListener(adapter);
         }
     }
 
@@ -95,9 +93,9 @@ public class TaskPageViewAdapter extends RecyclerView.Adapter<TaskPageViewAdapte
 
         public void refresh(String tag) {
             if (search) {
-                adapter.setTasks(tag, Saver.getInstance().searchTasks(tag));
+                adapter.setTasks(tag, TaskSaver.getInstance().searchTasks(tag));
             } else {
-                adapter.setTasks(tag, Saver.getInstance().getTasks(tag));
+                adapter.setTasks(tag, TaskSaver.getInstance().getTasks(tag));
             }
         }
     }

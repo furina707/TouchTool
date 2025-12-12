@@ -59,10 +59,11 @@ import top.bogey.touch_tool.R;
 import top.bogey.touch_tool.bean.action.Action;
 import top.bogey.touch_tool.bean.action.start.StartAction;
 import top.bogey.touch_tool.bean.action.start.TimeStartAction;
-import top.bogey.touch_tool.bean.save.Saver;
+import top.bogey.touch_tool.bean.log.LogInfo;
+import top.bogey.touch_tool.bean.log.NormalLog;
 import top.bogey.touch_tool.bean.save.SettingSaver;
-import top.bogey.touch_tool.bean.save.log.LogInfo;
-import top.bogey.touch_tool.bean.save.log.NormalLog;
+import top.bogey.touch_tool.bean.save.log.LogSaver;
+import top.bogey.touch_tool.bean.save.task.TaskSaver;
 import top.bogey.touch_tool.bean.task.Task;
 import top.bogey.touch_tool.service.capture.CaptureService;
 import top.bogey.touch_tool.service.receiver.SystemEventReceiver;
@@ -308,7 +309,7 @@ public class MainAccessibilityService extends AccessibilityService {
     }
 
     public void resetAllAlarm() {
-        List<Task> tasks = Saver.getInstance().getTasks(TimeStartAction.class);
+        List<Task> tasks = TaskSaver.getInstance().getTasks(TimeStartAction.class);
         for (Task task : tasks) {
             for (Action action : task.getActions(TimeStartAction.class)) {
                 TimeStartAction timeStartAction = (TimeStartAction) action;
@@ -321,7 +322,7 @@ public class MainAccessibilityService extends AccessibilityService {
     }
 
     public void cancelAllAlarm() {
-        List<Task> tasks = Saver.getInstance().getTasks(TimeStartAction.class);
+        List<Task> tasks = TaskSaver.getInstance().getTasks(TimeStartAction.class);
         for (Task task : tasks) {
             for (Action action : task.getActions(TimeStartAction.class)) {
                 TimeStartAction timeStartAction = (TimeStartAction) action;
@@ -376,12 +377,12 @@ public class MainAccessibilityService extends AccessibilityService {
         } else {
             manager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, nextStartTime, pendingIntent);
         }
-        Saver.getInstance().addLog(task.getId(), new LogInfo(new NormalLog(getString(R.string.time_start_action_set_tips, AppUtil.formatDateTime(this, nextStartTime, false, true)))), true);
+        LogSaver.getInstance().addLog(task.getId(), new LogInfo(new NormalLog(getString(R.string.time_start_action_set_tips, AppUtil.formatDateTime(this, nextStartTime, false, true)))), true);
     }
 
     public void replaceAlarm(Task task) {
         if (task == null) return;
-        Task originTask = Saver.getInstance().getOriginTask(task.getId());
+        Task originTask = TaskSaver.getInstance().getOriginTask(task.getId());
         List<Action> actions = task.getActions(TimeStartAction.class);
 
         if (originTask != null) {

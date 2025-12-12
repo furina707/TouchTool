@@ -37,7 +37,7 @@ public class ToolView extends Fragment {
 
         binding.appInfoButton.setOnClickListener(v -> new AppInfoFloatView(requireActivity()).show());
 
-        binding.nodePickerButton.setOnClickListener(v -> new NodePickerPreview(requireActivity(), null,  null).show());
+        binding.nodePickerButton.setOnClickListener(v -> new NodePickerPreview(requireActivity(), null, null).show());
 
         binding.logButton.setOnClickListener(v -> new LogFloatView(requireActivity()).show());
 

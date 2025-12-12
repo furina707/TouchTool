@@ -20,11 +20,12 @@ import java.util.List;
 
 import top.bogey.touch_tool.MainApplication;
 import top.bogey.touch_tool.R;
-import top.bogey.touch_tool.bean.save.Saver;
-import top.bogey.touch_tool.bean.save.log.ActionLog;
-import top.bogey.touch_tool.bean.save.log.LogInfo;
+import top.bogey.touch_tool.bean.log.ActionLog;
+import top.bogey.touch_tool.bean.log.LogInfo;
 import top.bogey.touch_tool.bean.save.log.LogSave;
 import top.bogey.touch_tool.bean.save.log.LogSaveListener;
+import top.bogey.touch_tool.bean.save.log.LogSaver;
+import top.bogey.touch_tool.bean.save.task.TaskSaver;
 import top.bogey.touch_tool.bean.task.Task;
 import top.bogey.touch_tool.databinding.FloatLogBinding;
 import top.bogey.touch_tool.utils.AppUtil;
@@ -74,7 +75,7 @@ public class LogFloatView extends FrameLayout implements FloatInterface, LogSave
         binding.title.setOnClickListener(v -> {
             ListPopupWindow popup = new ListPopupWindow(context);
             ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(context, R.layout.widget_textview_item);
-            List<Task> tasks = Saver.getInstance().getTasks();
+            List<Task> tasks = TaskSaver.getInstance().getTasks();
             List<Task> validTasks = new ArrayList<>();
             tasks.forEach(t -> {
                 if (t.isEnable()) {
@@ -87,7 +88,7 @@ public class LogFloatView extends FrameLayout implements FloatInterface, LogSave
             popup.setOnItemClickListener((parent, view, position, id) -> {
                 this.task = validTasks.get(position);
                 binding.title.setText(this.task.getTitle());
-                adapter.setLogSave(Saver.getInstance().getLogSave(this.task.getId()));
+                adapter.setLogSave(LogSaver.getInstance().getLogSave(this.task.getId()));
                 popup.dismiss();
             });
             popup.setModal(true);
@@ -138,7 +139,7 @@ public class LogFloatView extends FrameLayout implements FloatInterface, LogSave
 
         if (task != null) {
             binding.title.setText(task.getTitle());
-            adapter.setLogSave(Saver.getInstance().getLogSave(task.getId()));
+            adapter.setLogSave(LogSaver.getInstance().getLogSave(task.getId()));
             binding.recyclerView.scrollToPosition(adapter.getItemCount() - 1);
         }
 
@@ -159,8 +160,8 @@ public class LogFloatView extends FrameLayout implements FloatInterface, LogSave
 
         binding.clearButton.setOnClickListener(v -> {
             if (task == null) return;
-            Saver.getInstance().clearLog(task.getId());
-            adapter.setLogSave(Saver.getInstance().getLogSave(task.getId()));
+            LogSaver.getInstance().clearLog(task.getId());
+            adapter.setLogSave(LogSaver.getInstance().getLogSave(task.getId()));
         });
     }
 
@@ -267,12 +268,12 @@ public class LogFloatView extends FrameLayout implements FloatInterface, LogSave
                 .setLocation(EAnchor.BOTTOM_CENTER, 0, -size.y / 4)
                 .setExistEditText(true)
                 .show();
-        Saver.getInstance().addListener(this);
+        LogSaver.getInstance().addListener(this);
     }
 
     @Override
     public void dismiss() {
-        Saver.getInstance().removeListener(this);
+        LogSaver.getInstance().removeListener(this);
         FloatWindow.dismiss(tag);
     }
 

@@ -23,7 +23,7 @@ import top.bogey.touch_tool.bean.pin.pin_objects.pin_list.PinList;
 import top.bogey.touch_tool.bean.pin.pin_objects.pin_string.PinTaskString;
 import top.bogey.touch_tool.bean.pin.special_pin.NotLinkAblePin;
 import top.bogey.touch_tool.bean.pin.special_pin.ShowAblePin;
-import top.bogey.touch_tool.bean.save.Saver;
+import top.bogey.touch_tool.bean.save.task.TaskSaver;
 import top.bogey.touch_tool.bean.task.Task;
 import top.bogey.touch_tool.service.TaskRunnable;
 
@@ -118,7 +118,7 @@ public class ExecuteTaskAction extends Action implements DynamicPinsAction, Sync
 
     public Task getTask(Task context) {
         PinTaskString taskString = taskPin.getValue();
-        return Saver.getInstance().upFindTask(context, taskString.getValue());
+        return TaskSaver.getInstance().upFindTask(context, taskString.getValue());
     }
 
     public void setTask(Task task) {

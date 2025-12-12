@@ -20,7 +20,6 @@ import com.tencent.mmkv.MMKV;
 import java.util.List;
 
 import top.bogey.touch_tool.service.KeepAliveService;
-import top.bogey.touch_tool.service.notification.NotificationService;
 import top.bogey.touch_tool.ui.custom.KeepAliveFloatView;
 import top.bogey.touch_tool.utils.callback.ActivityLifecycleCallback;
 import top.bogey.touch_tool.utils.float_window_manager.FloatWindow;
@@ -403,11 +402,11 @@ public class SettingSaver {
 
 
     public boolean getManualPlayingHideType() {
-        return mmkv.decodeBool(MANUAL_PLAY_HIDE_TYPE, false);
+        return mmkv.decodeBool(MANUAL_PLAYING_HIDE_TYPE, false);
     }
 
     public void setManualPlayingHideType(boolean enable) {
-        mmkv.encode(MANUAL_PLAY_HIDE_TYPE, enable);
+        mmkv.encode(MANUAL_PLAYING_HIDE_TYPE, enable);
     }
 
     public int getManualPlayViewPadding() {

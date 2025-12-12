@@ -48,6 +48,7 @@ public class TaskSave {
         this.task = task;
         mmkv.encode(key, GsonUtil.toJson(task));
     }
+
     // 大于10分钟没使用回收内存
     public void recycle() {
         long current = System.currentTimeMillis();

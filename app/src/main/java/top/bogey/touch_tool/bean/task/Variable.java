@@ -18,7 +18,7 @@ import top.bogey.touch_tool.bean.pin.pin_objects.PinObject;
 import top.bogey.touch_tool.bean.pin.pin_objects.PinType;
 import top.bogey.touch_tool.bean.pin.pin_objects.pin_list.PinApplications;
 import top.bogey.touch_tool.bean.pin.pin_objects.pin_list.PinList;
-import top.bogey.touch_tool.bean.save.Saver;
+import top.bogey.touch_tool.bean.save.variable.VariableSaver;
 import top.bogey.touch_tool.utils.GsonUtil;
 
 public class Variable extends Identity implements ITagManager {
@@ -178,7 +178,7 @@ public class Variable extends Identity implements ITagManager {
 
     public void save() {
         if (parent != null) parent.save();
-        else Saver.getInstance().saveVar(this);
+        else VariableSaver.getInstance().saveVar(this);
     }
 
     public Task getParent() {

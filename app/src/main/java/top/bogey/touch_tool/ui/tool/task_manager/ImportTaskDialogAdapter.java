@@ -17,7 +17,9 @@ import java.util.List;
 import java.util.Set;
 
 import top.bogey.touch_tool.R;
-import top.bogey.touch_tool.bean.save.Saver;
+import top.bogey.touch_tool.bean.save.TagSaver;
+import top.bogey.touch_tool.bean.save.task.TaskSaver;
+import top.bogey.touch_tool.bean.save.variable.VariableSaver;
 import top.bogey.touch_tool.bean.task.Task;
 import top.bogey.touch_tool.bean.task.Variable;
 import top.bogey.touch_tool.databinding.DialogTaskManagerItemBinding;
@@ -31,7 +33,7 @@ public class ImportTaskDialogAdapter extends RecyclerView.Adapter<ImportTaskDial
     public ImportTaskDialogAdapter(List<TaskPackage> taskPackages) {
         this.taskPackages.addAll(taskPackages);
         for (TaskPackage taskPackage : taskPackages) {
-            Task savedTask = Saver.getInstance().getTask(taskPackage.getTask().getId());
+            Task savedTask = TaskSaver.getInstance().getTask(taskPackage.getTask().getId());
             if (savedTask == null) taskReference.addTaskPackage(taskPackage);
         }
         AppUtil.chineseSort(this.taskPackages, TaskPackage::getTitle);
@@ -61,7 +63,7 @@ public class ImportTaskDialogAdapter extends RecyclerView.Adapter<ImportTaskDial
             tasks.add(task);
         }
 
-        List<String> allTags = Saver.getInstance().getAllTags();
+        List<String> allTags = TagSaver.getInstance().getTags();
         Set<Variable> variables = new HashSet<>();
         for (Variable variable : taskReference.getVariables()) {
             if (!importTag) {
@@ -130,7 +132,7 @@ public class ImportTaskDialogAdapter extends RecyclerView.Adapter<ImportTaskDial
             binding.getRoot().setChecked(times > 0);
             binding.getRoot().setEnabled(times <= 1);
             binding.getRoot().setChecked(times > 0);
-            Task savedTask = Saver.getInstance().getTask(taskPackage.getTask().getId());
+            Task savedTask = TaskSaver.getInstance().getTask(taskPackage.getTask().getId());
             if (savedTask != null && times > 0) {
                 binding.errorText.setVisibility(View.VISIBLE);
                 binding.errorText.setText(context.getString(R.string.task_import_error_tips, savedTask.getTitle()));
@@ -139,7 +141,7 @@ public class ImportTaskDialogAdapter extends RecyclerView.Adapter<ImportTaskDial
             binding.referenceCard.setVisibility(taskPackage.isEmpty() ? View.GONE : View.VISIBLE);
             binding.referenceBox.removeAllViews();
             for (TaskPackage aPackage : taskPackage.getTaskPackages()) {
-                savedTask = Saver.getInstance().getTask(aPackage.getTask().getId());
+                savedTask = TaskSaver.getInstance().getTask(aPackage.getTask().getId());
 
                 int usageTimes = taskReference.getTaskUsageTimes(aPackage.getTask());
                 ColorStateList color = ColorStateList.valueOf(DisplayUtil.getAttrColor(context, savedTask == null || usageTimes == 0 ? NORMAL_COLOR : SPECIAL_COLOR));
@@ -165,7 +167,7 @@ public class ImportTaskDialogAdapter extends RecyclerView.Adapter<ImportTaskDial
             }
 
             for (Variable var : taskPackage.getVariables()) {
-                Variable variable = Saver.getInstance().getVar(var.getId());
+                Variable variable = VariableSaver.getInstance().getVar(var.getId());
                 int usageTimes = taskReference.getVariableTimes(var);
                 ColorStateList color = ColorStateList.valueOf(DisplayUtil.getAttrColor(context, variable == null || usageTimes == 0 ? NORMAL_COLOR : SPECIAL_COLOR));
 

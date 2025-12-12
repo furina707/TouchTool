@@ -37,7 +37,7 @@ public class SetVolumeAction extends ExecuteAction {
         Context context = MainApplication.getInstance();
         AudioManager audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
         int idx = volumeType.getIndex();
-        if(idx == 0) {
+        if (idx == 0) {
             int maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
             int value = Math.max(0, Math.min(volume.intValue(), maxVolume));
             audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, value, 0);

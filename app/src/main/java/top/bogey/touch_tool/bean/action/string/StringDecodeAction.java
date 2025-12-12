@@ -4,8 +4,8 @@ import android.util.Base64;
 
 import com.google.gson.JsonObject;
 
-import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 
 import top.bogey.touch_tool.R;
 import top.bogey.touch_tool.bean.action.ActionType;
@@ -39,12 +39,7 @@ public class StringDecodeAction extends CalculateAction {
         if (value == null || value.isEmpty()) return;
         String result = switch (type.getIndex()) {
             case 0 -> {
-                try {
-                    yield URLDecoder.decode(value, "UTF-8");
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                    yield value;
-                }
+                yield URLDecoder.decode(value, StandardCharsets.UTF_8);
             }
             case 1 -> new String(Base64.decode(value, Base64.DEFAULT));
             default -> value;

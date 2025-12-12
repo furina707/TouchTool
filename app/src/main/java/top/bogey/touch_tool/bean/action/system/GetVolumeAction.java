@@ -36,7 +36,7 @@ public class GetVolumeAction extends CalculateAction {
         PinSingleSelect volumeType = getPinValue(runnable, volumeTypePin);
         int idx = volumeType.getIndex();
         int currentVolume = 0, maxVolume = 0;
-        if(idx == 0) {
+        if (idx == 0) {
             currentVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
             maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
         } else if (idx == 1) {

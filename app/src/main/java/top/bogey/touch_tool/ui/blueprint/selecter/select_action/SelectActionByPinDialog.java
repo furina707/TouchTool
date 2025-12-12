@@ -17,7 +17,8 @@ import top.bogey.touch_tool.bean.action.task.CustomEndAction;
 import top.bogey.touch_tool.bean.action.task.CustomStartAction;
 import top.bogey.touch_tool.bean.pin.Pin;
 import top.bogey.touch_tool.bean.pin.pin_objects.pin_execute.PinExecute;
-import top.bogey.touch_tool.bean.save.Saver;
+import top.bogey.touch_tool.bean.save.task.TaskSaver;
+import top.bogey.touch_tool.bean.save.variable.VariableSaver;
 import top.bogey.touch_tool.bean.task.Task;
 import top.bogey.touch_tool.bean.task.Variable;
 import top.bogey.touch_tool.utils.callback.ResultCallback;
@@ -63,7 +64,7 @@ public class SelectActionByPinDialog extends SelectActionDialog {
 
                 // 公共任务
                 List<Object> publicTasks = new ArrayList<>();
-                for (Task task : Saver.getInstance().getTasks()) {
+                for (Task task : TaskSaver.getInstance().getTasks()) {
                     if (isConnectAbleTask(task)) publicTasks.add(task);
                 }
                 map.put(GLOBAL, publicTasks);
@@ -91,7 +92,7 @@ public class SelectActionByPinDialog extends SelectActionDialog {
 
                 // 全局变量
                 List<Object> publicVars = new ArrayList<>();
-                for (Variable var : Saver.getInstance().getVars()) {
+                for (Variable var : VariableSaver.getInstance().getVars()) {
                     if (touchedPin.getValue().linkFromAble(var.getValue())) publicVars.add(var);
                     else if (touchedPin.isSameClass(PinExecute.class)) publicVars.add(var);
                 }

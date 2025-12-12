@@ -29,7 +29,9 @@ import top.bogey.touch_tool.bean.base.Identity;
 import top.bogey.touch_tool.bean.other.Usage;
 import top.bogey.touch_tool.bean.pin.Pin;
 import top.bogey.touch_tool.bean.pin.pin_objects.PinObject;
-import top.bogey.touch_tool.bean.save.Saver;
+import top.bogey.touch_tool.bean.save.TagSaver;
+import top.bogey.touch_tool.bean.save.task.TaskSaver;
+import top.bogey.touch_tool.bean.save.variable.VariableSaver;
 import top.bogey.touch_tool.service.TaskRunnable;
 import top.bogey.touch_tool.utils.GsonUtil;
 import top.bogey.touch_tool.utils.callback.BooleanResultCallback;
@@ -179,7 +181,7 @@ public class Task extends Identity implements IActionManager, ITaskManager, IVar
         for (Action action : getActions(ExecuteTaskAction.class)) {
             ExecuteTaskAction execute = (ExecuteTaskAction) action;
             String taskId = execute.getTaskId();
-            Task task = Saver.getInstance().getTask(taskId);
+            Task task = TaskSaver.getInstance().getTask(taskId);
             if (task != null) tasks.add(task);
         }
 
@@ -194,13 +196,13 @@ public class Task extends Identity implements IActionManager, ITaskManager, IVar
         for (Action action : getActions(GetVariableAction.class)) {
             GetVariableAction get = (GetVariableAction) action;
             String varId = get.getVarId();
-            Variable variable = Saver.getInstance().getVar(varId);
+            Variable variable = VariableSaver.getInstance().getVar(varId);
             if (variable != null) variables.add(variable);
         }
         for (Action action : getActions(SetVariableAction.class)) {
             SetVariableAction set = (SetVariableAction) action;
             String varId = set.getVarId();
-            Variable variable = Saver.getInstance().getVar(varId);
+            Variable variable = VariableSaver.getInstance().getVar(varId);
             if (variable != null) variables.add(variable);
         }
         for (Task task : getTasks()) {
@@ -258,7 +260,7 @@ public class Task extends Identity implements IActionManager, ITaskManager, IVar
 
     // 清理无效标签
     public void cleanInvalidTag() {
-        List<String> allTags = Saver.getInstance().getAllTags();
+        List<String> allTags = TagSaver.getInstance().getTags();
         for (String tag : new ArrayList<>(getTags())) {
             if (allTags.contains(tag)) continue;
             removeTag(tag);
@@ -352,7 +354,7 @@ public class Task extends Identity implements IActionManager, ITaskManager, IVar
 
     public void save() {
         if (parent != null) parent.save();
-        else Saver.getInstance().saveTask(this);
+        else TaskSaver.getInstance().saveTask(this);
     }
 
     @Override

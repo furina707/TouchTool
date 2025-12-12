@@ -11,7 +11,6 @@ import com.google.android.material.button.MaterialButton;
 import java.util.Arrays;
 import java.util.List;
 
-import top.bogey.touch_tool.R;
 import top.bogey.touch_tool.bean.action.Action;
 import top.bogey.touch_tool.bean.action.ActionCheckResult;
 import top.bogey.touch_tool.bean.pin.Pin;

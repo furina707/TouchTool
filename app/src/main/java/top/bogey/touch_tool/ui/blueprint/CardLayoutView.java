@@ -48,9 +48,10 @@ import top.bogey.touch_tool.bean.action.Action;
 import top.bogey.touch_tool.bean.action.ActionInfo;
 import top.bogey.touch_tool.bean.action.parent.SyncAction;
 import top.bogey.touch_tool.bean.pin.Pin;
-import top.bogey.touch_tool.bean.save.Saver;
 import top.bogey.touch_tool.bean.save.task.TaskSaveListener;
+import top.bogey.touch_tool.bean.save.task.TaskSaver;
 import top.bogey.touch_tool.bean.save.variable.VariableSaveListener;
+import top.bogey.touch_tool.bean.save.variable.VariableSaver;
 import top.bogey.touch_tool.bean.task.Task;
 import top.bogey.touch_tool.bean.task.Variable;
 import top.bogey.touch_tool.ui.blueprint.card.ActionCard;
@@ -180,15 +181,15 @@ public class CardLayoutView extends FrameLayout implements TaskSaveListener, Var
         });
         detector.setQuickScaleEnabled(true);
 
-        Saver.getInstance().addListener((TaskSaveListener) this);
-        Saver.getInstance().addListener((VariableSaveListener) this);
+        TaskSaver.getInstance().addListener(this);
+        VariableSaver.getInstance().addListener(this);
     }
 
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
-        Saver.getInstance().removeListener((TaskSaveListener) this);
-        Saver.getInstance().removeListener((VariableSaveListener) this);
+        TaskSaver.getInstance().removeListener(this);
+        VariableSaver.getInstance().removeListener(this);
     }
 
     public void setTask(Task task, HistoryManager history) {

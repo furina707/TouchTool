@@ -32,7 +32,6 @@ public class PinColor extends PinScaleAble<PinColor.ColorInfo> {
     public void reset() {
         super.reset();
         value = new ColorInfo(Color.BLACK, 0, 0);
-        ;
     }
 
     @NonNull

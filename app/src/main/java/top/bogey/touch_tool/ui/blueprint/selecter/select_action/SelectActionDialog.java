@@ -4,12 +4,10 @@ import android.content.Context;
 import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -31,8 +29,9 @@ import top.bogey.touch_tool.bean.action.ActionMap;
 import top.bogey.touch_tool.bean.action.task.CustomEndAction;
 import top.bogey.touch_tool.bean.action.task.CustomStartAction;
 import top.bogey.touch_tool.bean.pin.pin_objects.pin_string.PinString;
-import top.bogey.touch_tool.bean.save.Saver;
 import top.bogey.touch_tool.bean.save.SettingSaver;
+import top.bogey.touch_tool.bean.save.task.TaskSaver;
+import top.bogey.touch_tool.bean.save.variable.VariableSaver;
 import top.bogey.touch_tool.bean.task.ITagManager;
 import top.bogey.touch_tool.bean.task.Task;
 import top.bogey.touch_tool.bean.task.Variable;
@@ -132,12 +131,12 @@ public class SelectActionDialog extends BottomSheetDialog {
                     parent.addTask(copy);
                 } else if (o instanceof String tag) {
                     if (GLOBAL.equals(tag)) {
-                        Saver.getInstance().saveTask(copy);
+                        TaskSaver.getInstance().saveTask(copy);
                     }
                 } else if (o == null) {
                     copy.getTags().clear();
                     copy.addTag(subGroupTag.replace(TAG_PREFIX, ""));
-                    Saver.getInstance().saveTask(copy);
+                    TaskSaver.getInstance().saveTask(copy);
                 }
             } else if (groupType == GroupType.VARIABLE && copyObject instanceof Variable copy) {
                 Object o = subGroupMap.get(subGroupTag);
@@ -145,12 +144,12 @@ public class SelectActionDialog extends BottomSheetDialog {
                     parent.addVariable(copy);
                 } else if (o instanceof String tag) {
                     if (GLOBAL.equals(tag)) {
-                        Saver.getInstance().saveVar(copy);
+                        VariableSaver.getInstance().saveVar(copy);
                     }
                 } else if (o == null) {
                     copy.getTags().clear();
                     copy.addTag(subGroupTag.replace(TAG_PREFIX, ""));
-                    Saver.getInstance().saveVar(copy);
+                    VariableSaver.getInstance().saveVar(copy);
                 }
             }
             adapter.addData(copyObject);
@@ -312,7 +311,7 @@ public class SelectActionDialog extends BottomSheetDialog {
                 subGroupMap.put(PRIVATE, task);
 
                 // 公共任务
-                List<Object> publicTasks = new ArrayList<>(Saver.getInstance().getTasks());
+                List<Object> publicTasks = new ArrayList<>(TaskSaver.getInstance().getTasks());
                 map.put(GLOBAL, publicTasks);
                 subGroupMap.put(GLOBAL, GLOBAL);
 
@@ -347,7 +346,7 @@ public class SelectActionDialog extends BottomSheetDialog {
                 subGroupMap.put(PRIVATE, task);
 
                 // 全局变量
-                List<Object> publicVars = new ArrayList<>(Saver.getInstance().getVars());
+                List<Object> publicVars = new ArrayList<>(VariableSaver.getInstance().getVars());
                 map.put(GLOBAL, publicVars);
                 subGroupMap.put(GLOBAL, GLOBAL);
 

@@ -13,12 +13,12 @@ import java.util.concurrent.Future;
 import top.bogey.touch_tool.bean.action.Action;
 import top.bogey.touch_tool.bean.action.start.InnerStartAction;
 import top.bogey.touch_tool.bean.action.start.StartAction;
-import top.bogey.touch_tool.bean.save.Saver;
+import top.bogey.touch_tool.bean.log.ActionLog;
+import top.bogey.touch_tool.bean.log.DateTimeLog;
+import top.bogey.touch_tool.bean.log.LogInfo;
+import top.bogey.touch_tool.bean.log.NormalLog;
 import top.bogey.touch_tool.bean.save.SettingSaver;
-import top.bogey.touch_tool.bean.save.log.ActionLog;
-import top.bogey.touch_tool.bean.save.log.DateTimeLog;
-import top.bogey.touch_tool.bean.save.log.LogInfo;
-import top.bogey.touch_tool.bean.save.log.NormalLog;
+import top.bogey.touch_tool.bean.save.log.LogSaver;
 import top.bogey.touch_tool.bean.task.Task;
 
 public class TaskRunnable implements Runnable {
@@ -150,11 +150,11 @@ public class TaskRunnable implements Runnable {
             }
             case 0 -> {
                 if (logStack.isEmpty()) {
-                    if (!skipLog) Saver.getInstance().addLog(task.getId(), logInfo, true);
+                    if (!skipLog) LogSaver.getInstance().addLog(task.getId(), logInfo, true);
                     logList.add(logInfo);
                 } else {
                     logStack.peek().addChild(logInfo);
-                    if (!skipLog) Saver.getInstance().addLog(task.getId(), logInfo, false);
+                    if (!skipLog) LogSaver.getInstance().addLog(task.getId(), logInfo, false);
                 }
             }
             case 1 -> logStack.push(logInfo);

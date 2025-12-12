@@ -9,6 +9,7 @@ public class PinTime extends PinLong {
     public PinTime() {
         super(PinSubType.TIME, formatTime(System.currentTimeMillis()));
     }
+
     public PinTime(long value) {
         super(PinSubType.TIME, formatTime(value));
     }

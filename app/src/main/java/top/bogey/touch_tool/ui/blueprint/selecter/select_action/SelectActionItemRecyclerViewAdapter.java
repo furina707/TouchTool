@@ -33,7 +33,8 @@ import top.bogey.touch_tool.bean.action.variable.SetVariableAction;
 import top.bogey.touch_tool.bean.other.Usage;
 import top.bogey.touch_tool.bean.pin.PinInfo;
 import top.bogey.touch_tool.bean.pin.pin_objects.PinType;
-import top.bogey.touch_tool.bean.save.Saver;
+import top.bogey.touch_tool.bean.save.task.TaskSaver;
+import top.bogey.touch_tool.bean.save.variable.VariableSaver;
 import top.bogey.touch_tool.bean.task.Task;
 import top.bogey.touch_tool.bean.task.Variable;
 import top.bogey.touch_tool.common.StaticFunction;
@@ -276,7 +277,7 @@ public class SelectActionItemRecyclerViewAdapter extends RecyclerView.Adapter<Se
                         deleteTask(task, result -> {
                             Task parent = task.getParent();
                             if (parent == null) {
-                                Saver.getInstance().removeTask(task.getId());
+                                TaskSaver.getInstance().removeTask(task.getId());
                             } else {
                                 parent.removeTask(task.getId());
                             }
@@ -433,7 +434,7 @@ public class SelectActionItemRecyclerViewAdapter extends RecyclerView.Adapter<Se
                             if (result) {
                                 Task parent = var.getParent();
                                 if (parent == null) {
-                                    Saver.getInstance().removeVar(var.getId());
+                                    VariableSaver.getInstance().removeVar(var.getId());
                                 } else {
                                     parent.removeVariable(var.getId());
                                 }
@@ -557,7 +558,7 @@ public class SelectActionItemRecyclerViewAdapter extends RecyclerView.Adapter<Se
             List<Usage> usages;
             Task parent = task.getParent();
             if (parent == null) {
-                usages = Saver.getInstance().getTaskUses(task.getId());
+                usages = TaskSaver.getInstance().getTaskUses(task.getId());
             } else {
                 usages = parent.getTaskUses(task.getId());
             }
@@ -582,7 +583,7 @@ public class SelectActionItemRecyclerViewAdapter extends RecyclerView.Adapter<Se
             List<Usage> usages;
             Task parent = var.getParent();
             if (parent == null) {
-                usages = Saver.getInstance().getVarUses(var.getId());
+                usages = VariableSaver.getInstance().getVarUses(var.getId());
             } else {
                 usages = parent.getVariableUses(var.getId());
             }

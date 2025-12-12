@@ -3,7 +3,6 @@ package top.bogey.touch_tool.ui.task;
 import static top.bogey.touch_tool.ui.blueprint.selecter.select_action.SelectActionItemRecyclerViewAdapter.getTipsLinearLayout;
 
 import android.app.Activity;
-import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.text.Editable;
@@ -36,8 +35,9 @@ import top.bogey.touch_tool.MainApplication;
 import top.bogey.touch_tool.R;
 import top.bogey.touch_tool.bean.action.Action;
 import top.bogey.touch_tool.bean.other.Usage;
-import top.bogey.touch_tool.bean.save.Saver;
+import top.bogey.touch_tool.bean.save.SearchHistprySaver;
 import top.bogey.touch_tool.bean.save.task.TaskSaveListener;
+import top.bogey.touch_tool.bean.save.task.TaskSaver;
 import top.bogey.touch_tool.bean.task.Task;
 import top.bogey.touch_tool.databinding.ViewTagListItemBinding;
 import top.bogey.touch_tool.databinding.ViewTaskBinding;
@@ -84,7 +84,7 @@ public class TaskView extends Fragment implements ITaskListener, TaskSaveListene
                 if (selecting) {
                     List<Task> tasks = new ArrayList<>();
                     selected.forEach(id -> {
-                        Task task = Saver.getInstance().getTask(id);
+                        Task task = TaskSaver.getInstance().getTask(id);
                         if (task == null) return;
                         tasks.add(task);
                     });
@@ -115,7 +115,7 @@ public class TaskView extends Fragment implements ITaskListener, TaskSaveListene
 
     @Override
     public void onDestroyView() {
-        Saver.getInstance().removeListener(this);
+        TaskSaver.getInstance().removeListener(this);
         MainAccessibilityService service = MainApplication.getInstance().getService();
         if (service != null && service.isEnabled()) service.removeListener(this);
         binding.tasksBox.setAdapter(null);
@@ -138,7 +138,7 @@ public class TaskView extends Fragment implements ITaskListener, TaskSaveListene
 
         binding.searchBar.addMenuProvider(menuProvider, getViewLifecycleOwner());
 
-        Saver.getInstance().addListener(this);
+        TaskSaver.getInstance().addListener(this);
         MainAccessibilityService service = MainApplication.getInstance().getService();
         if (service != null && service.isEnabled()) service.addListener(this);
 
@@ -151,7 +151,7 @@ public class TaskView extends Fragment implements ITaskListener, TaskSaveListene
                 if (s.length() == 0) {
                     searchAdapter.setTasks("", new ArrayList<>());
                 } else {
-                    searchAdapter.setTasks("", Saver.getInstance().searchTasks(s.toString()));
+                    searchAdapter.setTasks("", TaskSaver.getInstance().searchTasks(s.toString()));
                 }
             }
         });
@@ -161,7 +161,7 @@ public class TaskView extends Fragment implements ITaskListener, TaskSaveListene
         binding.searchView.getEditText().setOnEditorActionListener((textView, i, keyEvent) -> {
             Editable text = binding.searchView.getText();
             String textString = text.toString();
-            Saver.getInstance().addSearchHistory(textString);
+            SearchHistprySaver.getInstance().addSearchHistory(textString);
             refreshSearchHistory();
             binding.searchBar.setText(textString);
             resetTags();
@@ -170,7 +170,7 @@ public class TaskView extends Fragment implements ITaskListener, TaskSaveListene
         });
 
         binding.cleanButton.setOnClickListener(v -> {
-            Saver.getInstance().cleanSearchHistory();
+            SearchHistprySaver.getInstance().cleanSearchHistory();
             refreshSearchHistory();
         });
         refreshSearchHistory();
@@ -190,7 +190,7 @@ public class TaskView extends Fragment implements ITaskListener, TaskSaveListene
         binding.deleteButton.setOnClickListener(v -> {
             List<Usage> usages = new ArrayList<>();
             for (String id : selected) {
-                usages.addAll(Saver.getInstance().getTaskUses(id));
+                usages.addAll(TaskSaver.getInstance().getTaskUses(id));
             }
             if (!usages.isEmpty()) {
                 LinearLayout linearLayout = getTipsLinearLayout(requireContext(), usages, R.string.task_delete_tips);
@@ -200,7 +200,7 @@ public class TaskView extends Fragment implements ITaskListener, TaskSaveListene
                         .setPositiveButton(R.string.enter, null)
                         .setNegativeButton(R.string.force_delete, (dialog, which) -> {
                             for (String id : selected) {
-                                Saver.getInstance().removeTask(id);
+                                TaskSaver.getInstance().removeTask(id);
                             }
                             hideBottomBar();
                         })
@@ -212,7 +212,7 @@ public class TaskView extends Fragment implements ITaskListener, TaskSaveListene
                 AppUtil.showDialog(requireContext(), R.string.remove_tips, result -> {
                     if (result) {
                         for (String id : selected) {
-                            Saver.getInstance().removeTask(id);
+                            TaskSaver.getInstance().removeTask(id);
                         }
                         hideBottomBar();
                     }
@@ -223,7 +223,7 @@ public class TaskView extends Fragment implements ITaskListener, TaskSaveListene
         binding.exportButton.setOnClickListener(v -> {
             List<Task> tasks = new ArrayList<>();
             selected.forEach(id -> {
-                Task task = Saver.getInstance().getTask(id);
+                Task task = TaskSaver.getInstance().getTask(id);
                 if (task == null) return;
                 tasks.add(task);
             });
@@ -240,7 +240,7 @@ public class TaskView extends Fragment implements ITaskListener, TaskSaveListene
 
         binding.copyButton.setOnClickListener(v -> {
             selected.forEach(id -> {
-                Task task = Saver.getInstance().getTask(id);
+                Task task = TaskSaver.getInstance().getTask(id);
                 if (task == null) return;
                 Task copy = task.newCopy();
                 copy.setTitle(getString(R.string.copy_title, task.getTitle()));
@@ -270,7 +270,7 @@ public class TaskView extends Fragment implements ITaskListener, TaskSaveListene
         CharSequence text = binding.searchBar.getText();
         String string = text.toString();
         if (string.isEmpty()) {
-            List<String> tags = Saver.getInstance().getTaskTags();
+            List<String> tags = TaskSaver.getInstance().getTaskTags();
             adapter.setTags(tags);
             if (searchMenuItem != null) searchMenuItem.setVisible(false);
         } else {
@@ -281,11 +281,11 @@ public class TaskView extends Fragment implements ITaskListener, TaskSaveListene
 
     public void refreshSearchHistory() {
         binding.historyBox.removeAllViews();
-        for (String history : Saver.getInstance().getSearchHistory()) {
+        for (String history : SearchHistprySaver.getInstance().getSearchHistory()) {
             ViewTagListItemBinding itemBinding = ViewTagListItemBinding.inflate(LayoutInflater.from(getContext()), binding.historyBox, true);
             Chip chip = itemBinding.getRoot();
             chip.setOnCloseIconClickListener(v -> {
-                Saver.getInstance().removeSearchHistory(history);
+                SearchHistprySaver.getInstance().removeSearchHistory(history);
                 binding.historyBox.removeView(chip);
             });
 
@@ -339,7 +339,7 @@ public class TaskView extends Fragment implements ITaskListener, TaskSaveListene
         if (tab == null || tab.getText() == null) return;
 
         String tag = tab.getText().toString();
-        List<Task> tasks = Saver.getInstance().getTasks(tag);
+        List<Task> tasks = TaskSaver.getInstance().getTasks(tag);
 
         boolean flag = true;
         if (selected.size() == tasks.size()) {

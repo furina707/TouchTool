@@ -14,6 +14,8 @@ import top.bogey.touch_tool.bean.action.ActionType;
 import top.bogey.touch_tool.bean.action.parent.DynamicPinsAction;
 import top.bogey.touch_tool.bean.action.parent.ExecuteAction;
 import top.bogey.touch_tool.bean.action.start.InnerStartAction;
+import top.bogey.touch_tool.bean.log.ActionLog;
+import top.bogey.touch_tool.bean.log.LogInfo;
 import top.bogey.touch_tool.bean.pin.Pin;
 import top.bogey.touch_tool.bean.pin.pin_objects.PinAdd;
 import top.bogey.touch_tool.bean.pin.pin_objects.PinBoolean;
@@ -21,9 +23,7 @@ import top.bogey.touch_tool.bean.pin.pin_objects.pin_execute.PinExecute;
 import top.bogey.touch_tool.bean.pin.pin_objects.pin_number.PinInteger;
 import top.bogey.touch_tool.bean.pin.pin_objects.pin_number.PinNumber;
 import top.bogey.touch_tool.bean.pin.special_pin.AlwaysShowPin;
-import top.bogey.touch_tool.bean.save.Saver;
-import top.bogey.touch_tool.bean.save.log.ActionLog;
-import top.bogey.touch_tool.bean.save.log.LogInfo;
+import top.bogey.touch_tool.bean.save.log.LogSaver;
 import top.bogey.touch_tool.service.MainAccessibilityService;
 import top.bogey.touch_tool.service.TaskListener;
 import top.bogey.touch_tool.service.TaskRunnable;
@@ -107,7 +107,7 @@ public class ParallelExecuteAction extends ExecuteAction implements DynamicPinsA
         List<String> logs = new ArrayList<>();
         for (LogInfo logInfo : logList) {
             logs.add(logInfo.getUid());
-            Saver.getInstance().addLog(runnable.getStartTask().getId(), logInfo, false);
+            LogSaver.getInstance().addLog(runnable.getStartTask().getId(), logInfo, false);
             List<LogInfo> children = new ArrayList<>();
             for (ITreeNodeData child : logInfo.getChildrenData()) {
                 LogInfo childLogInfo = (LogInfo) child;

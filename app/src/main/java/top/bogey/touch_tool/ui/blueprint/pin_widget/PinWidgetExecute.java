@@ -2,7 +2,6 @@ package top.bogey.touch_tool.ui.blueprint.pin_widget;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.graphics.drawable.BitmapDrawable;
 import android.text.Editable;
 import android.view.LayoutInflater;
 

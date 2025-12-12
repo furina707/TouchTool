@@ -20,7 +20,7 @@ import java.util.List;
 
 import top.bogey.touch_tool.MainApplication;
 import top.bogey.touch_tool.R;
-import top.bogey.touch_tool.bean.save.Saver;
+import top.bogey.touch_tool.bean.save.task.TaskSaver;
 import top.bogey.touch_tool.bean.task.Task;
 import top.bogey.touch_tool.databinding.DialogTaskManagerBinding;
 import top.bogey.touch_tool.ui.MainActivity;
@@ -41,7 +41,7 @@ public class ExportTaskDialog extends FrameLayout {
     }
 
     public static void showDialog(Context context) {
-        List<Task> tasks = Saver.getInstance().getTasks();
+        List<Task> tasks = TaskSaver.getInstance().getTasks();
         ExportTaskDialog view = new ExportTaskDialog(context, tasks, false);
         showDialog(context, view);
     }

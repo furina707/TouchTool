@@ -35,8 +35,8 @@ import top.bogey.touch_tool.bean.action.normal.LoggerAction;
 import top.bogey.touch_tool.bean.action.start.StartAction;
 import top.bogey.touch_tool.bean.action.task.CustomEndAction;
 import top.bogey.touch_tool.bean.action.task.CustomStartAction;
-import top.bogey.touch_tool.bean.save.Saver;
 import top.bogey.touch_tool.bean.save.SettingSaver;
+import top.bogey.touch_tool.bean.save.task.TaskSaver;
 import top.bogey.touch_tool.bean.task.Task;
 import top.bogey.touch_tool.databinding.ViewBlueprintBinding;
 import top.bogey.touch_tool.ui.MainActivity;
@@ -228,7 +228,7 @@ public class BlueprintView extends Fragment {
         Bundle arguments = getArguments();
         if (arguments == null) throw new IllegalArgumentException();
         BlueprintViewArgs args = BlueprintViewArgs.fromBundle(arguments);
-        Task task = Saver.getInstance().getTask(args.getTaskId());
+        Task task = TaskSaver.getInstance().getTask(args.getTaskId());
         if (task == null) throw new IllegalArgumentException();
 
         binding = ViewBlueprintBinding.inflate(inflater, container, false);

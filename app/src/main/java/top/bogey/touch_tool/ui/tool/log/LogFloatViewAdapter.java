@@ -16,14 +16,14 @@ import java.util.regex.Pattern;
 
 import top.bogey.touch_tool.R;
 import top.bogey.touch_tool.bean.action.Action;
+import top.bogey.touch_tool.bean.log.ActionLog;
+import top.bogey.touch_tool.bean.log.DateTimeLog;
+import top.bogey.touch_tool.bean.log.Log;
+import top.bogey.touch_tool.bean.log.LogInfo;
+import top.bogey.touch_tool.bean.log.NormalLog;
 import top.bogey.touch_tool.bean.pin.Pin;
-import top.bogey.touch_tool.bean.save.Saver;
-import top.bogey.touch_tool.bean.save.log.ActionLog;
-import top.bogey.touch_tool.bean.save.log.DateTimeLog;
-import top.bogey.touch_tool.bean.save.log.Log;
-import top.bogey.touch_tool.bean.save.log.LogInfo;
 import top.bogey.touch_tool.bean.save.log.LogSave;
-import top.bogey.touch_tool.bean.save.log.NormalLog;
+import top.bogey.touch_tool.bean.save.task.TaskSaver;
 import top.bogey.touch_tool.bean.task.Task;
 import top.bogey.touch_tool.databinding.FloatLogActionItemBinding;
 import top.bogey.touch_tool.databinding.FloatLogActionValueItemBinding;
@@ -61,7 +61,7 @@ public class LogFloatViewAdapter extends TreeAdapter {
     }
 
     public void setLogSave(LogSave logSave) {
-        task = Saver.getInstance().getTask(logSave.getKey());
+        task = TaskSaver.getInstance().getTask(logSave.getKey());
 
         List<TreeNode> nodeList = new ArrayList<>();
         for (int i = 1; i < logSave.getLogCount() + 1; i++) {
@@ -215,7 +215,7 @@ public class LogFloatViewAdapter extends TreeAdapter {
                 Log log = logInfo.getLogObject();
                 if (log instanceof ActionLog actionLog) {
                     Action action = null;
-                    Task currTask = Saver.getInstance().downFindTask(task, actionLog.getTaskId());
+                    Task currTask = TaskSaver.getInstance().downFindTask(task, actionLog.getTaskId());
                     if (currTask != null) {
                         action = currTask.getAction(actionLog.getActionId());
                     }
@@ -252,7 +252,7 @@ public class LogFloatViewAdapter extends TreeAdapter {
 
             if (log instanceof ActionLog actionLog && actionBinding != null) {
                 Action action = null;
-                Task currTask = Saver.getInstance().downFindTask(task, actionLog.getTaskId());
+                Task currTask = TaskSaver.getInstance().downFindTask(task, actionLog.getTaskId());
                 if (currTask != null) {
                     action = currTask.getAction(actionLog.getActionId());
                 }

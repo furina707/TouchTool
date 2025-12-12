@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import top.bogey.touch_tool.R;
-import top.bogey.touch_tool.bean.save.Saver;
+import top.bogey.touch_tool.bean.save.TagSaver;
 import top.bogey.touch_tool.bean.task.Task;
 import top.bogey.touch_tool.databinding.DialogCreateTaskBinding;
 import top.bogey.touch_tool.databinding.ViewTagListItemBinding;
@@ -38,12 +38,12 @@ public class EditTaskDialog extends MaterialAlertDialogBuilder {
 
         binding.addTagBtn.setOnClickListener(v -> AppUtil.showEditDialog(context, R.string.task_tag_add, "", result -> {
             if (result != null && !result.isEmpty()) {
-                Saver.getInstance().addTag(result);
+                TagSaver.getInstance().addTag(result);
                 createChip(result);
             }
         }));
 
-        List<String> tags = Saver.getInstance().getAllTags();
+        List<String> tags = TagSaver.getInstance().getTags();
 
         List<String> currTags = task.getTags();
         if (currTags != null) {
@@ -106,7 +106,7 @@ public class EditTaskDialog extends MaterialAlertDialogBuilder {
         Chip chip = itemBinding.getRoot();
         chip.setOnCloseIconClickListener(v -> AppUtil.showDialog(getContext(), R.string.tag_remove, result -> {
             if (result) {
-                Saver.getInstance().removeTag(tag);
+                TagSaver.getInstance().removeTag(tag);
                 selectedTags.remove(tag);
                 binding.tagBox.removeView(chip);
             }
