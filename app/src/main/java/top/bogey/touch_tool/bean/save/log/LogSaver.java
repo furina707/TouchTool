@@ -8,14 +8,13 @@ import java.util.Set;
 
 import top.bogey.touch_tool.MainApplication;
 import top.bogey.touch_tool.bean.log.LogInfo;
-import top.bogey.touch_tool.bean.save.Saver;
 import top.bogey.touch_tool.utils.AppUtil;
 
 public class LogSaver {
     private static LogSaver instance;
 
     public static LogSaver getInstance() {
-        synchronized (Saver.class) {
+        synchronized (LogSaver.class) {
             if (instance == null) {
                 instance = new LogSaver();
             }

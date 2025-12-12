@@ -16,7 +16,7 @@ public class TagSaver {
     private static TagSaver instance;
 
     public static TagSaver getInstance() {
-        synchronized (Saver.class) {
+        synchronized (TagSaver.class) {
             if (instance == null) {
                 instance = new TagSaver();
             }

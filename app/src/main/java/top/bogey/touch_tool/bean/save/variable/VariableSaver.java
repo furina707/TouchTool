@@ -13,16 +13,14 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import top.bogey.touch_tool.bean.other.Usage;
-import top.bogey.touch_tool.bean.save.Saver;
 import top.bogey.touch_tool.bean.save.task.TaskSaver;
-import top.bogey.touch_tool.bean.task.Task;
 import top.bogey.touch_tool.bean.task.Variable;
 
 public class VariableSaver {
     private static VariableSaver instance;
 
     public static VariableSaver getInstance() {
-        synchronized (Saver.class) {
+        synchronized (VariableSaver.class) {
             if (instance == null) {
                 instance = new VariableSaver();
             }
@@ -98,10 +96,7 @@ public class VariableSaver {
 
     public List<Usage> getVarUses(String id) {
         List<Usage> usages = new ArrayList<>();
-        taskSaves.forEach((k, v) -> {
-            Task task = v.getTask();
-            usages.addAll(task.getVariableUses(id));
-        });
+        TaskSaver.getInstance().getTasks().forEach(task -> usages.addAll(task.getVariableUses(id)));
         return usages;
     }
 

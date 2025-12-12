@@ -11,7 +11,7 @@ public class SearchHistprySaver {
     private static SearchHistprySaver instance;
 
     public static SearchHistprySaver getInstance() {
-        synchronized (Saver.class) {
+        synchronized (SearchHistprySaver.class) {
             if (instance == null) {
                 instance = new SearchHistprySaver();
             }

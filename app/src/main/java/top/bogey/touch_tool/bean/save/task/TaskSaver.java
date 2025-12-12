@@ -16,7 +16,6 @@ import top.bogey.touch_tool.MainApplication;
 import top.bogey.touch_tool.R;
 import top.bogey.touch_tool.bean.action.Action;
 import top.bogey.touch_tool.bean.other.Usage;
-import top.bogey.touch_tool.bean.save.Saver;
 import top.bogey.touch_tool.bean.save.log.LogSave;
 import top.bogey.touch_tool.bean.save.log.LogSaver;
 import top.bogey.touch_tool.bean.task.Task;
@@ -27,7 +26,7 @@ public class TaskSaver {
     private static TaskSaver instance;
 
     public static TaskSaver getInstance() {
-        synchronized (Saver.class) {
+        synchronized (TaskSaver.class) {
             if (instance == null) {
                 instance = new TaskSaver();
             }
