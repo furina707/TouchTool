@@ -109,6 +109,7 @@ public class CardLayoutView extends FrameLayout implements TaskSaveListener, Var
     private final Map<String, String> selectedLinks = new HashMap<>();
     private PinView touchedPin;
     private PinView lastTouchedPin;
+    private PinView dragOnPin;
 
     private RectF selectArea = new RectF();
     private SelectActionDialog actionDialog = null;
@@ -586,6 +587,20 @@ public class CardLayoutView extends FrameLayout implements TaskSaveListener, Var
                     case TOUCH_DRAG_PIN, TOUCH_DRAG_LINK -> {
                         lastX = x;
                         lastY = y;
+                        PinView tmpDragOnPin = dragOnPin;
+                        dragOnPin = null;
+                        ActionCard card = getActionCard(lastX - offsetX, lastY - offsetY, true);
+                        if (card != null) {
+                            PinView currPosPinView = card.getLinkAblePinView(lastX - card.getX(), lastY - card.getY());
+                            if (currPosPinView != null) {
+                                if (isTouchLinkablePin(touchState, currPosPinView.getPin())) {
+                                    dragOnPin = currPosPinView;
+                                }
+                            }
+                        }
+                        if (dragOnPin != null && dragOnPin != tmpDragOnPin) {
+                            performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
+                        }
                     }
                 }
             }
@@ -944,25 +959,16 @@ public class CardLayoutView extends FrameLayout implements TaskSaveListener, Var
         if (touchedPin != null && (touchState == TOUCH_DRAG_PIN || touchState == TOUCH_DRAG_LINK)) {
             linkPaint.setColor(DisplayUtil.getAttrColor(getContext(), com.google.android.material.R.attr.colorPrimaryInverse));
 
-            ActionCard card = getActionCard(lastX - offsetX, lastY - offsetY, false);
-            if (card != null) {
-                PinView currPosPinView = card.getLinkAblePinView(lastX - card.getX(), lastY - card.getY());
-                Pin validPin = null;
-                if (currPosPinView == null) validPin = getTouchLinkblePin(touchState, card.getAction());
-                else if (isTouchLinkablePin(touchState, currPosPinView.getPin())) validPin = currPosPinView.getPin();
-                if (validPin != null) {
-                    PinView pinView = card.getPinView(validPin.getId());
-                    if (pinView != null) {
-                        if (touchedPin.getPin().isSameClass(validPin)) {
-                            linkPaint.setShader(null);
-                            linkPaint.setColor(touchedPin.getPinColor());
-                        } else {
-                            PointF startPoint = touchedPin.getSlotPosInLayout(scale);
-                            PointF endPoint = pinView.getSlotPosInLayout(scale);
-                            linkPaint.setShader(new LinearGradient(startPoint.x, startPoint.y, endPoint.x, endPoint.y, touchedPin.getPinColor(), pinView.getPinColor(), Shader.TileMode.CLAMP));
-                            linkPaint.setColor(Color.WHITE);
-                        }
-                    }
+            if (dragOnPin != null) {
+                Pin pin = dragOnPin.getPin();
+                if (touchedPin.getPin().isSameClass(pin)) {
+                    linkPaint.setShader(null);
+                    linkPaint.setColor(touchedPin.getPinColor());
+                } else {
+                    PointF startPoint = touchedPin.getSlotPosInLayout(scale);
+                    PointF endPoint = dragOnPin.getSlotPosInLayout(scale);
+                    linkPaint.setShader(new LinearGradient(startPoint.x, startPoint.y, endPoint.x, endPoint.y, touchedPin.getPinColor(), dragOnPin.getPinColor(), Shader.TileMode.CLAMP));
+                    linkPaint.setColor(Color.WHITE);
                 }
             }
 
