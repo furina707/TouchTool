@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -76,6 +77,13 @@ public class SettingView extends Fragment {
             return false;
         }
     };
+
+    @Override
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        getParentFragmentManager().beginTransaction().detach(this).commitAllowingStateLoss();
+        getParentFragmentManager().beginTransaction().attach(this).commitAllowingStateLoss();
+    }
 
     @SuppressLint("SetTextI18n")
     @Nullable

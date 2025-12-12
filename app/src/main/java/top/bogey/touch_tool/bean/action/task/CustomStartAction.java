@@ -18,10 +18,12 @@ public class CustomStartAction extends Action implements DynamicPinsAction {
     public CustomStartAction() {
         super(ActionType.CUSTOM_START);
         setExpandType(ExpandType.FULL);
+        addFlag(SINGLE_IN_TASK);
     }
 
     public CustomStartAction(JsonObject jsonObject) {
         super(jsonObject);
+        addFlag(SINGLE_IN_TASK);
         tmpPins.forEach(this::addPin);
         tmpPins.clear();
     }

@@ -63,20 +63,35 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/expandButton"
+                style="?attr/iconButton"
+                app:icon="@drawable/icon_symptoms" />
+
             <com.google.android.material.button.MaterialButtonGroup
+                android:id="@+id/varBox"
+                style="@style/Widget.Material3.MaterialButtonGroup.Connected"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:spacing="0dp">
+                android:spacing="-4dp">
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/expandButton"
-                    style="?attr/iconButton"
-                    app:icon="@drawable/icon_symptoms" />
+                    android:id="@+id/keySlot"
+                    style="?attr/iconButtonOutlined"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="1"
+                    android:minWidth="?attr/iconButtonSize"
+                    android:paddingHorizontal="0dp"
+                    android:textAppearance="@style/TextAppearance.Material3.BodySmall" />
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/resetButton"
-                    style="?attr/iconButton"
-                    app:icon="@drawable/icon_refresh" />
+                    android:id="@+id/valueSlot"
+                    style="?attr/iconButtonOutlined"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="1"
+                    android:minWidth="?attr/iconButtonSize"
+                    android:paddingHorizontal="0dp"
+                    android:textAppearance="@style/TextAppearance.Material3.BodySmall" />
 
             </com.google.android.material.button.MaterialButtonGroup>
 

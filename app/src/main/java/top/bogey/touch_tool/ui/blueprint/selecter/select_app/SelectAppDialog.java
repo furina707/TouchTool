@@ -5,10 +5,7 @@ import android.content.pm.PackageInfo;
 import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.FrameLayout;
-
-import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -60,25 +57,10 @@ public class SelectAppDialog extends BottomSheetDialog {
             adapter.refreshApps(searchApps());
         });
 
-
         MainActivity activity = MainApplication.getInstance().getActivity();
         View decorView = activity.getWindow().getDecorView();
-        int width = decorView.getWidth();
-        int height = decorView.getHeight();
-
-        GridLayoutManager layoutManager = (GridLayoutManager) binding.appIconBox.getLayoutManager();
-        if (layoutManager != null) {
-            boolean portrait = DisplayUtil.isPortrait(context);
-            if (portrait) {
-                DisplayUtil.setViewHeight(binding.getRoot(), (int) (height * 0.7f));
-                DisplayUtil.setViewWidth(binding.getRoot(), ViewGroup.LayoutParams.MATCH_PARENT);
-                layoutManager.setSpanCount(3);
-            } else {
-                DisplayUtil.setViewHeight(binding.getRoot(), (int) (height * 0.8f));
-                behavior.setMaxWidth(width);
-                layoutManager.setSpanCount(6);
-            }
-        }
+        behavior.setMaxWidth(decorView.getWidth());
+        DisplayUtil.setViewHeight(binding.getRoot(), (int) (decorView.getHeight() * 0.75f));
     }
 
     private List<PackageInfo> searchApps() {

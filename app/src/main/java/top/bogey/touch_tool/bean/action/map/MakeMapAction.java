@@ -27,7 +27,9 @@ public class MakeMapAction extends MapCalculateAction implements DynamicPinsActi
 
     public MakeMapAction() {
         super(ActionType.MAP_MAKE);
-        addPins(addPin, mapPin);
+        Pin keyPin = new Pin(new PinObject(PinSubType.DYNAMIC), R.string.map_action_key);
+        Pin valuePin = new Pin(new PinObject(PinSubType.DYNAMIC), R.string.map_action_value);
+        addPins(keyPin, valuePin, addPin, mapPin);
     }
 
     public MakeMapAction(JsonObject jsonObject) {
@@ -50,7 +52,7 @@ public class MakeMapAction extends MapCalculateAction implements DynamicPinsActi
     }
 
     @Override
-    protected void handleUnLinkFrom(Pin origin) {
+    protected void handleUnLinkFrom(Task task, Pin origin) {
     }
 
     @Override

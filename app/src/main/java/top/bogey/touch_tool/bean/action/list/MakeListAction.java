@@ -15,6 +15,7 @@ import top.bogey.touch_tool.bean.pin.pin_objects.PinAdd;
 import top.bogey.touch_tool.bean.pin.pin_objects.PinObject;
 import top.bogey.touch_tool.bean.pin.pin_objects.PinSubType;
 import top.bogey.touch_tool.bean.pin.pin_objects.pin_list.PinList;
+import top.bogey.touch_tool.bean.task.Task;
 import top.bogey.touch_tool.service.TaskRunnable;
 
 public class MakeListAction extends ListCalculateAction implements DynamicPinsAction {
@@ -24,7 +25,7 @@ public class MakeListAction extends ListCalculateAction implements DynamicPinsAc
 
     public MakeListAction() {
         super(ActionType.LIST_MAKE);
-        Pin firstPin = new Pin(new PinObject(), R.string.pin_object, false, true);
+        Pin firstPin = new Pin(new PinObject(PinSubType.DYNAMIC), R.string.pin_object, false, true);
         addPins(firstPin, addPin, listPin);
     }
 
@@ -41,7 +42,7 @@ public class MakeListAction extends ListCalculateAction implements DynamicPinsAc
     }
 
     @Override
-    public void handleUnLinkFrom(Pin origin) {
+    public void handleUnLinkFrom(Task task, Pin origin) {
     }
 
     @Override

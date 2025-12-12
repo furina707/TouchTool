@@ -28,12 +28,14 @@ public class CustomEndAction extends Action implements DynamicPinsAction, SyncAc
     public CustomEndAction() {
         super(ActionType.CUSTOM_END);
         setExpandType(ExpandType.FULL);
+        addFlag(SYNC_IN_TASK);
         addPin(realTimeMode);
         setPos(0, 30);
     }
 
     public CustomEndAction(JsonObject jsonObject) {
         super(jsonObject);
+        addFlag(SYNC_IN_TASK);
         reAddPin(realTimeMode);
         tmpPins.forEach(this::addPin);
         tmpPins.clear();

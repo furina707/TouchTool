@@ -3,6 +3,8 @@ package top.bogey.touch_tool.ui.task;
 import static top.bogey.touch_tool.ui.blueprint.selecter.select_action.SelectActionItemRecyclerViewAdapter.getTipsLinearLayout;
 
 import android.app.Activity;
+import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.text.Editable;
 import android.view.LayoutInflater;
@@ -118,6 +120,13 @@ public class TaskView extends Fragment implements ITaskListener, TaskSaveListene
         if (service != null && service.isEnabled()) service.removeListener(this);
         binding.tasksBox.setAdapter(null);
         super.onDestroyView();
+    }
+
+    @Override
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        getParentFragmentManager().beginTransaction().detach(this).commitAllowingStateLoss();
+        getParentFragmentManager().beginTransaction().attach(this).commitAllowingStateLoss();
     }
 
     @Nullable

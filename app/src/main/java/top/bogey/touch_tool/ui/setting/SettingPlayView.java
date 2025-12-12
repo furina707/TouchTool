@@ -4,6 +4,7 @@ import static top.bogey.touch_tool.ui.play.PlayFloatView.BUTTON_DP_SIZE;
 import static top.bogey.touch_tool.ui.play.PlayFloatView.UNIT_DP_SIZE;
 import static top.bogey.touch_tool.ui.play.PlayFloatView.UNIT_GROW_DP_SIZE;
 
+import android.content.res.Configuration;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -24,6 +25,14 @@ import top.bogey.touch_tool.utils.DisplayUtil;
 public class SettingPlayView extends Fragment {
     private ViewSettingPlayViewBinding binding;
     private String testText;
+
+
+    @Override
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        getParentFragmentManager().beginTransaction().detach(this).commitAllowingStateLoss();
+        getParentFragmentManager().beginTransaction().attach(this).commitAllowingStateLoss();
+    }
 
     @Nullable
     @Override

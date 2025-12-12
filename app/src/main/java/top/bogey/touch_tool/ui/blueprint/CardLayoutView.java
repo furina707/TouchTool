@@ -47,8 +47,6 @@ import top.bogey.touch_tool.R;
 import top.bogey.touch_tool.bean.action.Action;
 import top.bogey.touch_tool.bean.action.ActionInfo;
 import top.bogey.touch_tool.bean.action.parent.SyncAction;
-import top.bogey.touch_tool.bean.action.task.CustomEndAction;
-import top.bogey.touch_tool.bean.action.task.CustomStartAction;
 import top.bogey.touch_tool.bean.pin.Pin;
 import top.bogey.touch_tool.bean.save.Saver;
 import top.bogey.touch_tool.bean.save.task.TaskSaveListener;
@@ -214,24 +212,23 @@ public class CardLayoutView extends FrameLayout implements TaskSaveListener, Var
     }
 
     private void loadCards(int index) {
-        postDelayed(() -> {
-            Map<String, ActionCard> cardMap = new HashMap<>();
-            for (int i = index; i < index + 5; i++) {
-                if (i >= actions.size()) {
-                    updateCardsPos(cardMap);
-                    checkCards();
-                    return;
-                }
-                Action action = actions.get(i);
-                if (action instanceof SyncAction syncAction) syncAction.sync(task);
-                ActionCard card = newCard(actions.get(i));
-                cards.put(action.getId(), card);
-                cardMap.put(action.getId(), card);
-                addView(card);
+        Map<String, ActionCard> cardMap = new HashMap<>();
+        for (int i = index; i < index + 5; i++) {
+            if (i >= actions.size()) {
+                updateCardsPos(cardMap);
+                checkCards();
+                invalidate();
+                return;
             }
-            updateCardsPos(cardMap);
-            loadCards(index + 5);
-        }, 50);
+            Action action = actions.get(i);
+            if (action instanceof SyncAction syncAction) syncAction.sync(task);
+            ActionCard card = newCard(actions.get(i));
+            cards.put(action.getId(), card);
+            cardMap.put(action.getId(), card);
+            addView(card);
+        }
+        updateCardsPos(cardMap);
+        postDelayed(() -> loadCards(index + 5), 100);
     }
 
     public ActionCard newCard(Action action) {
@@ -247,7 +244,8 @@ public class CardLayoutView extends FrameLayout implements TaskSaveListener, Var
 
     // 添加卡片
     public ActionCard addCard(Action action) {
-        if (action instanceof CustomStartAction) {
+        // 单个任务内只能有一个
+        if (action.hasFlag(Action.SINGLE_IN_TASK)) {
             List<Action> actions = task.getActions(action.getClass());
             if (!actions.isEmpty()) {
                 Toast.makeText(getContext(), R.string.custom_action_single_error, Toast.LENGTH_SHORT).show();
@@ -256,8 +254,8 @@ public class CardLayoutView extends FrameLayout implements TaskSaveListener, Var
         }
 
         if (action instanceof SyncAction syncAction) {
-            // 自定义结束动作需要多卡同步
-            if (action instanceof CustomEndAction) {
+            // 任务中这个动作互相同步数据
+            if (action.hasFlag(Action.SYNC_IN_TASK)) {
                 List<Action> actions = task.getActions(action.getClass());
                 if (!actions.isEmpty()) {
                     Action first = actions.get(0);
@@ -881,8 +879,6 @@ public class CardLayoutView extends FrameLayout implements TaskSaveListener, Var
 
                     if (selectedCards.contains(actionCard)) return;
 
-                    if (!card.isNeedDraw() && !actionCard.isNeedDraw()) return;
-
                     PinView pinView = actionCard.getPinView(key);
                     if (pinView == null) return;
 
@@ -914,8 +910,6 @@ public class CardLayoutView extends FrameLayout implements TaskSaveListener, Var
                     ActionCard actionCard = cards.get(value);
 
                     if (actionCard == null) return;
-
-                    if (!card.isNeedDraw() && !actionCard.isNeedDraw()) return;
 
                     PinView pinView = actionCard.getPinView(key);
                     if (pinView == null) return;

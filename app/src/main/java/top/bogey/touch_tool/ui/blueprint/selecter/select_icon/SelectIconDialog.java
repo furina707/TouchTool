@@ -106,17 +106,8 @@ public class SelectIconDialog extends BottomSheetDialog {
 
         MainActivity activity = MainApplication.getInstance().getActivity();
         View decorView = activity.getWindow().getDecorView();
-        int width = decorView.getWidth();
-        int height = decorView.getHeight();
-
-        boolean portrait = DisplayUtil.isPortrait(context);
-        if (portrait) {
-            DisplayUtil.setViewHeight(binding.getRoot(), (int) (height * 0.7f));
-            DisplayUtil.setViewWidth(binding.getRoot(), ViewGroup.LayoutParams.MATCH_PARENT);
-        } else {
-            DisplayUtil.setViewHeight(binding.getRoot(), (int) (height * 0.8f));
-            behavior.setMaxWidth(width);
-        }
+        behavior.setMaxWidth(decorView.getWidth());
+        DisplayUtil.setViewHeight(binding.getRoot(), (int) (decorView.getHeight() * 0.75f));
     }
 
     public void calculateShowData() {

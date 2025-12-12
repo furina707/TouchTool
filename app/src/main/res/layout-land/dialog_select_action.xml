@@ -73,7 +73,7 @@
                 android:paddingBottom="96dp"
                 android:scrollbars="none"
                 app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
-                app:spanCount="2"
+                app:spanCount="4"
                 tools:listitem="@layout/dialog_select_action_normal_item" />
 
         </LinearLayout>

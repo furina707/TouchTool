@@ -16,45 +16,58 @@ import top.bogey.touch_tool.bean.task.Task;
 public class MapActionLinkEventHandler {
 
     public static void onLinkedTo(List<Pin> pins, List<Pin> keyPins, List<Pin> valuePins, Task task, Pin origin, Pin to) {
-        // 连接的针脚本身不为动态的，不执行
-        if (origin.getValue() instanceof PinMap pinMap) {
-            if (!pinMap.isHalfDynamic()) return;
+        onLinkedTo(pins, keyPins, valuePins, task, origin, to, false);
+    }
+
+    public static void onLinkedTo(List<Pin> pins, List<Pin> keyPins, List<Pin> valuePins, Task task, Pin origin, Pin to, boolean direct) {
+        boolean keyFlag, valueFlag;
+        if (direct && to.getValue() instanceof PinMap pinMap) {
+            keyFlag = !pinMap.isDynamicKey();
+            valueFlag = !pinMap.isDynamicValue();
         } else {
-            if (!origin.getValue().isDynamic()) return;
-        }
+            // 连接的针脚本身不为动态的，不执行
+            if (origin.getValue() instanceof PinMap pinMap) {
+                if (!pinMap.isHalfDynamic()) return;
+            } else {
+                if (!origin.getValue().isDynamic()) return;
+            }
 
-        // 判断当前连接的针脚是否可以确定动态针脚类型
-        List<Pin> keys = new ArrayList<>();
-        List<Pin> values = new ArrayList<>();
-        for (Pin pin : pins) {
-            if (pin.isLinked()) {
-                PinBase value = pin.getValue();
+            // 判断当前连接的针脚是否可以确定动态针脚类型
+            List<Pin> keys = new ArrayList<>();
+            List<Pin> values = new ArrayList<>();
+            for (Pin pin : pins) {
+                if (pin.isLinked()) {
+                    PinBase value = pin.getValue();
 
-                Pin linkedPin = pin.getLinkedPin(task);
-                if (linkedPin == null) continue;
-                PinBase linkedValue = linkedPin.getValue();
+                    Pin linkedPin = pin.getLinkedPin(task);
+                    if (linkedPin == null) continue;
+                    PinBase linkedValue = linkedPin.getValue();
 
-                if (keyPins.contains(pin)) {
-                    // 两边的值都是动态的，无法确定类型，跳过
-                    if (value.isDynamic() && linkedValue.isDynamic()) continue;
-                    keys.add(pin);
-                } else if (valuePins.contains(pin)) {
-                    // 两边的值都是动态的，无法确定类型，跳过
-                    if (value.isDynamic() && linkedValue.isDynamic()) continue;
-                    values.add(pin);
-                } else if (value instanceof PinMap pinMap) {
-                    if (linkedValue instanceof PinMap linkedPinMap) {
-                        if (!(pinMap.isDynamicKey() && linkedPinMap.isDynamicKey())) keys.add(pin);
-                        if (!(pinMap.isDynamicValue() && linkedPinMap.isDynamicValue())) values.add(pin);
+                    if (keyPins.contains(pin)) {
+                        // 两边的值都是动态的，无法确定类型，跳过
+                        if (value.isDynamic() && linkedValue.isDynamic()) continue;
+                        keys.add(pin);
+                    } else if (valuePins.contains(pin)) {
+                        // 两边的值都是动态的，无法确定类型，跳过
+                        if (value.isDynamic() && linkedValue.isDynamic()) continue;
+                        values.add(pin);
+                    } else if (value instanceof PinMap pinMap) {
+                        if (linkedValue instanceof PinMap linkedPinMap) {
+                            if (!(pinMap.isDynamicKey() && linkedPinMap.isDynamicKey())) keys.add(pin);
+                            if (!(pinMap.isDynamicValue() && linkedPinMap.isDynamicValue())) values.add(pin);
+                        }
                     }
                 }
             }
+
+            // 第一个有效连接针脚时，设置动态针脚类型
+            keyFlag = keys.size() == 1 && keys.contains(origin);
+            valueFlag = values.size() == 1 && values.contains(origin);
         }
 
-        // 第一个有效连接针脚时，设置动态针脚类型
-        boolean keyFlag = keys.size() == 1 && keys.contains(origin);
-        boolean valueFlag = values.size() == 1 && values.contains(origin);
-        if (!keyFlag && !valueFlag) return;
+        if (!keyFlag && !valueFlag) {
+            return;
+        }
 
         // 当针脚为首个连接的Key或首个连接的Value时，设置动态针脚类型
         PinBase keyTemplate = null, valueTemplate = null;
@@ -84,20 +97,20 @@ public class MapActionLinkEventHandler {
                 if (keyFlag) pinMap.setKeyType((PinObject) keyTemplate.copy());
                 if (valueFlag) pinMap.setValueType((PinObject) valueTemplate.copy());
                 pinMap.reset();
-                pin.setValue(pinMap); // 通知针脚刷新
+                pin.setValue(task, pinMap); // 通知针脚刷新
             } else if (value instanceof PinList pinList) {
                 if (keyFlag && keyPins.contains(pin)) pinList.setValueType((PinObject) keyTemplate.copy());
                 if (valueFlag && valuePins.contains(pin)) pinList.setValueType((PinObject) valueTemplate.copy());
                 pinList.reset();
-                pin.setValue(pinList); // 通知针脚刷新
+                pin.setValue(task, pinList); // 通知针脚刷新
             } else if (keyFlag && keyPins.contains(pin)) {
-                pin.setValue(keyTemplate.copy());
+                pin.setValue(task, keyTemplate.copy());
             } else if (valueFlag && valuePins.contains(pin)) {
-                pin.setValue(valueTemplate.copy());
+                pin.setValue(task, valueTemplate.copy());
             }
 
             // 已连接的动态针脚需要继续更新连接的动作
-            if (isDynamic && pin.isLinked() && pin != origin) {
+            if (isDynamic && pin.isLinked() && (pin != origin || direct)) {
                 Pin linkedPin = pin.getLinkedPin(task);
                 if (linkedPin != null) {
                     PinBase linkedValue = linkedPin.getValue();
@@ -113,7 +126,7 @@ public class MapActionLinkEventHandler {
         }
     }
 
-    public static void onUnLinkedFrom(List<Pin> pins, List<Pin> keyPins, List<Pin> valuePins, Pin origin) {
+    public static void onUnLinkedFrom(List<Pin> pins, List<Pin> keyPins, List<Pin> valuePins, Task task, Pin origin) {
         int keyCount = 0;
         int valueCount = 0;
 
@@ -143,15 +156,15 @@ public class MapActionLinkEventHandler {
                 if (keyFlag) pinMap.setKeyType(new PinObject(PinSubType.DYNAMIC));
                 if (valueFlag) pinMap.setValueType(new PinObject(PinSubType.DYNAMIC));
                 pinMap.reset();
-                pin.setValue(pinMap); // 通知针脚刷新
+                pin.setValue(task, pinMap); // 通知针脚刷新
             } else if (!pin.isDynamic() && value instanceof PinList pinList) {
                 pinList.setValueType(new PinObject(PinSubType.DYNAMIC));
                 pinList.reset();
-                pin.setValue(pinList); // 通知针脚刷新
+                pin.setValue(task, pinList); // 通知针脚刷新
             } else if (keyFlag && keyPins.contains(pin)) {
-                pin.setValue(new PinObject(PinSubType.DYNAMIC));
+                pin.setValue(task, new PinObject(PinSubType.DYNAMIC));
             } else if (valueFlag && valuePins.contains(pin)) {
-                pin.setValue(new PinObject(PinSubType.DYNAMIC));
+                pin.setValue(task, new PinObject(PinSubType.DYNAMIC));
             }
         }
     }

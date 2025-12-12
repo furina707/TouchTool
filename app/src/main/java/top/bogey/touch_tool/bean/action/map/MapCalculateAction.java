@@ -35,12 +35,12 @@ public abstract class MapCalculateAction extends CalculateAction implements Dyna
 
     @Override
     public void onUnLinkedFrom(Task task, Pin origin, Pin from) {
-        handleUnLinkFrom(origin);
+        handleUnLinkFrom(task, origin);
         super.onUnLinkedFrom(task, origin, from);
     }
 
-    protected void handleUnLinkFrom(Pin origin) {
-        MapActionLinkEventHandler.onUnLinkedFrom(getDynamicTypePins(), getDynamicKeyTypePins(), getDynamicValueTypePins(), origin);
+    protected void handleUnLinkFrom(Task task, Pin origin) {
+        MapActionLinkEventHandler.onUnLinkedFrom(getDynamicTypePins(), getDynamicKeyTypePins(), getDynamicValueTypePins(), task, origin);
     }
 
     @NonNull

@@ -12,23 +12,30 @@ import top.bogey.touch_tool.bean.pin.pin_objects.pin_list.PinList;
 import top.bogey.touch_tool.bean.task.Task;
 
 public class ListActionLinkEventHandler {
+
+
     public static void onLinkedTo(List<Pin> valuePins, Task task, Pin origin, Pin to) {
-        // 连接的针脚本身不为动态的，不执行
-        if (!origin.getValue().isDynamic()) return;
+        onLinkedTo(valuePins, task, origin, to, false);
+    }
 
-        // 判断当前连接的针脚是否可以确定动态针脚类型
-        int count = 0;
-        for (Pin pin : valuePins) {
-            if (pin.isLinked()) {
-                Pin linkedPin = pin.getLinkedPin(task);
-                if (linkedPin == null) continue;
-                // 两边的值都是动态的，无法确定类型，跳过
-                if (pin.getValue().isDynamic() && linkedPin.getValue().isDynamic()) continue;
-                count++;
+    public static void onLinkedTo(List<Pin> valuePins, Task task, Pin origin, Pin to, boolean direct) {
+        if (!direct) {
+            // 判断当前连接的针脚是否可以确定动态针脚类型
+            int count = 0;
+            // 连接的针脚本身不为动态的，不执行
+            if (!origin.getValue().isDynamic()) return;
+
+            for (Pin pin : valuePins) {
+                if (pin.isLinked()) {
+                    Pin linkedPin = pin.getLinkedPin(task);
+                    if (linkedPin == null) continue;
+                    // 两边的值都是动态的，无法确定类型，跳过
+                    if (pin.getValue().isDynamic() && linkedPin.getValue().isDynamic()) continue;
+                    count++;
+                }
             }
+            if (count != 1) return;
         }
-
-        if (count != 1) return;
 
         // 第一个有效连接针脚时，设置动态针脚类型
         PinBase template;
@@ -49,13 +56,13 @@ public class ListActionLinkEventHandler {
             } else if (value instanceof PinList pinList) {
                 pinList.setValueType((PinObject) template.copy());
                 pinList.reset();
-                pin.setValue(pinList); // 通知针脚刷新
+                pin.setValue(task, pinList);
             } else {
-                pin.setValue(template.copy());
+                pin.setValue(task, template.copy());
             }
 
             // 已连接的动态针脚需要继续更新连接的动作
-            if (pin.isLinked() && pin != origin) {
+            if (pin.isLinked() && (pin != origin || direct)) {
                 Pin linkedPin = pin.getLinkedPin(task);
                 if (linkedPin != null && linkedPin.getValue().isDynamic()) {
                     Action action = task.getAction(linkedPin.getOwnerId());
@@ -65,7 +72,7 @@ public class ListActionLinkEventHandler {
         }
     }
 
-    public static void onUnLinkedFrom(List<Pin> valuePins, Pin origin) {
+    public static void onUnLinkedFrom(List<Pin> valuePins, Task task, Pin origin) {
         // 所有动态类型针脚都断开连接，则所有动态类型针脚重置
         if (valuePins.contains(origin)) {
             boolean flag = true;
@@ -83,9 +90,9 @@ public class ListActionLinkEventHandler {
                     } else if (!pin.isDynamic() && value instanceof PinList pinList) {
                         pinList.setValueType(new PinObject(PinSubType.DYNAMIC));
                         pinList.reset();
-                        pin.setValue(pinList); // 通知针脚刷新
+                        pin.setValue(task, pinList);
                     } else {
-                        pin.setValue(new PinObject(PinSubType.DYNAMIC));
+                        pin.setValue(task, new PinObject(PinSubType.DYNAMIC));
                     }
                 }
             }

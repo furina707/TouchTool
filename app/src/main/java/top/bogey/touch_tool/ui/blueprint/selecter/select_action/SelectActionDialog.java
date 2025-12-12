@@ -178,24 +178,11 @@ public class SelectActionDialog extends BottomSheetDialog {
         });
 
         setCopyObject(copyObject);
+
         MainActivity activity = MainApplication.getInstance().getActivity();
         View decorView = activity.getWindow().getDecorView();
-        int width = decorView.getWidth();
-        int height = decorView.getHeight();
-
-        StaggeredGridLayoutManager layoutManager = (StaggeredGridLayoutManager) binding.actionsBox.getLayoutManager();
-        boolean portrait = DisplayUtil.isPortrait(context);
-        if (layoutManager != null) {
-            if (portrait) {
-                DisplayUtil.setViewHeight(binding.getRoot(), (int) (height * 0.7f));
-                DisplayUtil.setViewWidth(binding.getRoot(), ViewGroup.LayoutParams.MATCH_PARENT);
-                layoutManager.setSpanCount(2);
-            } else {
-                DisplayUtil.setViewHeight(binding.getRoot(), (int) (height * 0.8f));
-                behavior.setMaxWidth(width);
-                layoutManager.setSpanCount(4);
-            }
-        }
+        behavior.setMaxWidth(decorView.getWidth());
+        DisplayUtil.setViewHeight(binding.getRoot(), (int) (decorView.getHeight() * 0.75f));
     }
 
     protected void initAdapter(ResultCallback<Action> callback) {

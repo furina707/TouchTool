@@ -35,6 +35,12 @@ import top.bogey.touch_tool.service.TaskRunnable;
 import top.bogey.touch_tool.utils.GsonUtil;
 
 public abstract class Action extends Identity implements PinListener {
+    // 任务中只能存在一个
+    public final static int SINGLE_IN_TASK = 1;
+    // 任务中这个动作互相同步数据
+    public final static int SYNC_IN_TASK = 2;
+
+
     private final ActionType type;
     private final List<Pin> pins = new ArrayList<>();
 
@@ -44,6 +50,8 @@ public abstract class Action extends Identity implements PinListener {
 
     protected transient List<Pin> tmpPins = new ArrayList<>();
     protected final transient Set<ActionListener> listeners = new HashSet<>();
+
+    private transient int flag = 0;
 
     protected Action(ActionType type) {
         this.type = type;
@@ -351,6 +359,27 @@ public abstract class Action extends Identity implements PinListener {
 
     public void setPos(int x, int y) {
         pos.set(x, y);
+    }
+
+
+    public int getFlag() {
+        return flag;
+    }
+
+    public void setFlag(int flag) {
+        this.flag = flag;
+    }
+
+    public void addFlag(int flag) {
+        this.flag |= flag;
+    }
+
+    public void toggleFlag(int flag) {
+        this.flag ^= flag;
+    }
+
+    public boolean hasFlag(int flag) {
+        return (this.flag & flag) != 0;
     }
 
     public enum ExpandType {

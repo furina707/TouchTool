@@ -97,7 +97,6 @@ public abstract class PinCustomView extends PinView {
                 });
                 popup.show();
             });
-
         }
 
         MaterialButton typeView = getTypeView();

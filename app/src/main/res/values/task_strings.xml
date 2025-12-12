@@ -137,7 +137,7 @@
     <string name="custom_end_action">自定义结束</string>
     <string name="custom_end_action_desc">返回自定义任务结果</string>
     <string name="custom_pin_name">针脚名</string>
-    <string name="custom_action_single_error">这张卡不能重复添加</string>
+    <string name="custom_action_single_error">这个动作不能重复添加</string>
 
     <string name="set_value_action">设置%s</string>
     <string name="set_value_action_save">保存值</string>

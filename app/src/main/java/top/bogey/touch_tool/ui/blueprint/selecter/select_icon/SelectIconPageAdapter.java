@@ -59,11 +59,6 @@ public class SelectIconPageAdapter extends RecyclerView.Adapter<SelectIconPageAd
 
             adapter = new SelectIconPageItemRecyclerViewAdapter(callback);
             binding.getRoot().setAdapter(adapter);
-            GridLayoutManager layoutManager = (GridLayoutManager) binding.getRoot().getLayoutManager();
-            if (layoutManager != null) {
-                boolean portrait = DisplayUtil.isPortrait(binding.getRoot().getContext());
-                layoutManager.setSpanCount(portrait ? 5 : 10);
-            }
         }
 
         public void refresh(String tag) {
