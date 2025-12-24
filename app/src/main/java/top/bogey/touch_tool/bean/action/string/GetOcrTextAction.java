@@ -93,8 +93,8 @@ public class GetOcrTextAction extends ExecuteOrCalculateAction implements SyncAc
     @Override
     public void check(ActionCheckResult result, Task task) {
         super.check(result, task);
-        List<String> options = typePin.getValue(PinSingleSelect.class).getOptions();
-        if (options.isEmpty()) {
+        List<String> ocrApps = TaskInfoSummary.getInstance().getOcrApps();
+        if (ocrApps.isEmpty()) {
             result.addResult(ActionCheckResult.ResultType.ERROR, R.string.check_need_ocr_module_error);
         }
     }

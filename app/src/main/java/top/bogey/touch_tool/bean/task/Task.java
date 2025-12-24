@@ -278,6 +278,20 @@ public class Task extends Identity implements IActionManager, ITaskManager, IVar
         }
     }
 
+    public Set<String> getUsedTags() {
+        Set<String> tags = new HashSet<>(getTags());
+
+        for (Variable variable : getVariables()) {
+            tags.addAll(variable.getTags());
+        }
+
+        for (Task task : getTasks()) {
+            tags.addAll(task.getUsedTags());
+        }
+
+        return tags;
+    }
+
     public List<Usage> getVariableUses(String id) {
         List<Usage> usages = new ArrayList<>();
         List<Point> points = new ArrayList<>();

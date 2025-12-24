@@ -455,6 +455,7 @@ public class CardLayoutView extends FrameLayout implements TaskSaveListener, Var
         detector.onTouchEvent(event);
         if (touchState == TOUCH_SCALE) {
             longTouchHandler.removeCallbacksAndMessages(null);
+            doubleTouchHandler.removeCallbacksAndMessages(null);
             return true;
         }
 

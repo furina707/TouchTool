@@ -30,6 +30,8 @@ public class ImportTaskDialogAdapter extends RecyclerView.Adapter<ImportTaskDial
     private final List<TaskPackage> taskPackages = new ArrayList<>();
     private final TaskReference taskReference = new TaskReference();
 
+    private final Set<String> importTags = new HashSet<>();
+
     public ImportTaskDialogAdapter(List<TaskPackage> taskPackages) {
         this.taskPackages.addAll(taskPackages);
         for (TaskPackage taskPackage : taskPackages) {
@@ -57,16 +59,23 @@ public class ImportTaskDialogAdapter extends RecyclerView.Adapter<ImportTaskDial
     }
 
     public TaskRecord getTaskRecord(boolean importTag) {
+        importTags.clear();
         Set<Task> tasks = new HashSet<>();
         for (Task task : taskReference.getTasks()) {
-            if (!importTag) task.cleanInvalidTag();
+            if (importTag) {
+                importTags.addAll(task.getUsedTags());
+            } else {
+                task.cleanInvalidTag();
+            }
             tasks.add(task);
         }
 
         List<String> allTags = TagSaver.getInstance().getTags();
         Set<Variable> variables = new HashSet<>();
         for (Variable variable : taskReference.getVariables()) {
-            if (!importTag) {
+            if (importTag) {
+                importTags.addAll(variable.getTags());
+            } else {
                 for (String tag : new ArrayList<>(variable.getTags())) {
                     if (allTags.contains(tag)) continue;
                     variable.removeTag(tag);
@@ -76,6 +85,10 @@ public class ImportTaskDialogAdapter extends RecyclerView.Adapter<ImportTaskDial
         }
 
         return new TaskRecord(tasks, variables);
+    }
+
+    public Set<String> getImportTags() {
+        return importTags;
     }
 
     public void selectAll() {

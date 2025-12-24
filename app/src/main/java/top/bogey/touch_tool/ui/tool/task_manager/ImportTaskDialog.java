@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import top.bogey.touch_tool.R;
+import top.bogey.touch_tool.bean.save.TagSaver;
 import top.bogey.touch_tool.bean.save.task.TaskSaver;
 import top.bogey.touch_tool.bean.save.variable.VariableSaver;
 import top.bogey.touch_tool.bean.task.Task;
@@ -106,5 +107,15 @@ public class ImportTaskDialog extends FrameLayout {
         for (Variable variable : taskRecord.variables()) {
             VariableSaver.getInstance().saveVar(variable);
         }
+
+        if (!binding.importTag.isChecked()) return;
+        TagSaver tagSaver = TagSaver.getInstance();
+        List<String> tags = tagSaver.getTags();
+        for (String tag : adapter.getImportTags()) {
+            if (!tags.contains(tag)) {
+                tags.add(tag);
+            }
+        }
+        tagSaver.setTags(tags);
     }
 }
