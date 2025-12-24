@@ -48,7 +48,7 @@ public class SimpleNodeInfo {
         }
     }
 
-    public boolean matchNode(SimpleNodeInfo nodeInfo, boolean fullPath) {
+    public boolean matchRootNode(SimpleNodeInfo nodeInfo, boolean fullPath) {
         if (fullPath) return matchNodeClass(nodeInfo) && (index == 1 || matchNodeId(nodeInfo));
         else return matchNodeClass(nodeInfo);
     }

@@ -41,7 +41,7 @@ public class TouchPicker extends FullScreenPicker<PinTouchPath> {
 
     private final List<PinTouchPath.PathPart> pathParts = new ArrayList<>();
     private EAnchor anchor;
-    private final Map<Integer, Path> pathMap;
+    private final Map<Integer, Path> pathMap = new HashMap<>();
 
     private int mode;
     private float lastX, lastY;
@@ -52,7 +52,6 @@ public class TouchPicker extends FullScreenPicker<PinTouchPath> {
         super(context, callback);
         pathParts.addAll(path.getPathParts());
         anchor = path.getAnchor();
-        pathMap = getPathMap();
         mode = pathParts.isEmpty() ? MODE_NONE : MODE_MARKED;
 
         binding = FloatPickerTouchBinding.inflate(LayoutInflater.from(context), this, true);
@@ -88,6 +87,7 @@ public class TouchPicker extends FullScreenPicker<PinTouchPath> {
     @Override
     protected void realShow() {
         pathParts.forEach(pathPart -> pathPart.offset(-location[0], -location[1]));
+        pathMap.putAll(getPathMap());
         refreshUI();
     }
 

@@ -48,6 +48,7 @@ public class ImagePickerPreview extends BasePicker<Bitmap> {
         });
 
         binding.pickerButton.setOnClickListener(v -> new ImagePicker(context, result -> {
+            if (result == null) return;
             template = result;
             binding.current.setImageBitmap(template);
         }, template).show());

@@ -18,12 +18,13 @@ import top.bogey.touch_tool.bean.action.normal.ShowTextAction;
 import top.bogey.touch_tool.bean.pin.Pin;
 import top.bogey.touch_tool.bean.task.Task;
 import top.bogey.touch_tool.databinding.CardTextBinding;
+import top.bogey.touch_tool.ui.blueprint.CardLayoutView;
 import top.bogey.touch_tool.utils.DisplayUtil;
 import top.bogey.touch_tool.utils.listener.TextChangedListener;
 
 @SuppressLint("ViewConstructor")
 public class ShowTextActionCard extends ActionCard {
-    private static final int MIN_SIZE_DP = 96;
+    private static final int MIN_SIZE = 10;
 
     private CardTextBinding binding;
     private float lastX, lastY;
@@ -40,7 +41,7 @@ public class ShowTextActionCard extends ActionCard {
     @Override
     public void init() {
         // 初始化gridSize，与CardLayoutView中的gridSize保持一致（8dp）
-        gridSize = DisplayUtil.dp2px(getContext(), 8);
+        gridSize = DisplayUtil.dp2px(getContext(), CardLayoutView.GRID_DP_SIZE);
         binding = CardTextBinding.inflate(LayoutInflater.from(getContext()), this, true);
 
         initDelete(binding.removeButton);
@@ -68,10 +69,17 @@ public class ShowTextActionCard extends ActionCard {
         }
 
         binding.dragImage.setOnTouchListener((v, event) -> {
+            float x = event.getRawX();
+            float y = event.getRawY();
+            float scale = getScaleX();
+
+            x = x / scale;
+            y = y / scale;
+
             switch (event.getAction()) {
                 case MotionEvent.ACTION_DOWN:
-                    lastX = event.getRawX();
-                    lastY = event.getRawY();
+                    lastX = x;
+                    lastY = y;
                     // 保存原始尺寸
                     originalWidth = binding.linearLayout.getWidth();
                     originalHeight = binding.linearLayout.getHeight();
@@ -80,22 +88,19 @@ public class ShowTextActionCard extends ActionCard {
                     break;
                 case MotionEvent.ACTION_MOVE:
                     if (isResizing) {
-                        float deltaX = event.getRawX() - lastX;
-                        float deltaY = event.getRawY() - lastY;
+                        float deltaX = x - lastX;
+                        float deltaY = y - lastY;
 
-                        // 计算新尺寸
-                        int minSizePx = (int) DisplayUtil.dp2px(getContext(), MIN_SIZE_DP);
-                        int newWidth = Math.max(originalWidth + (int) deltaX, minSizePx);
-                        int newHeight = Math.max(originalHeight + (int) deltaY, minSizePx);
+                        float newWidth = originalWidth + deltaX;
+                        float newHeight = originalHeight + deltaY;
 
                         // 调整为gridSize的倍数
                         int gridWidth = Math.round(newWidth / gridSize);
                         int gridHeight = Math.round(newHeight / gridSize);
 
                         // 确保最小尺寸
-                        int minGridSize = (int) (minSizePx / gridSize);
-                        gridWidth = Math.max(gridWidth, minGridSize);
-                        gridHeight = Math.max(gridHeight, minGridSize);
+                        gridWidth = Math.max(gridWidth, MIN_SIZE);
+                        gridHeight = Math.max(gridHeight, MIN_SIZE);
 
                         // 转换为实际像素尺寸
                         int actualWidth = (int) (gridWidth * gridSize);

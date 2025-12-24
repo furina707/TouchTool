@@ -498,7 +498,7 @@ public class MainAccessibilityService extends AccessibilityService {
                     try (HardwareBuffer hardwareBuffer = result.getHardwareBuffer()) {
                         Bitmap bitmap = Bitmap.wrapHardwareBuffer(hardwareBuffer, result.getColorSpace());
                         if (bitmap != null) {
-                            Bitmap copy = bitmap.copy(Bitmap.Config.ARGB_8888, false);
+                            Bitmap copy = bitmap.copy(Bitmap.Config.ARGB_8888, true);
                             screenShot = new WeakReference<>(copy);
                             bitmap.recycle();
                             future.complete(copy);

@@ -14,7 +14,7 @@ import top.bogey.touch_tool.bean.pin.pin_objects.pin_string.PinString;
 import top.bogey.touch_tool.bean.pin.special_pin.ShowAblePin;
 import top.bogey.touch_tool.bean.task.Task;
 import top.bogey.touch_tool.service.TaskRunnable;
-import top.bogey.touch_tool.ui.custom.KeepAliveFloatView;
+import top.bogey.touch_tool.ui.custom.ReadClipboardFloatView;
 
 public class ReadFromClipboardAction extends ExecuteAction {
     private final transient Pin textPin = new ResultShowablePin(new PinString(), R.string.pin_string, true);
@@ -32,7 +32,7 @@ public class ReadFromClipboardAction extends ExecuteAction {
 
     @Override
     public void execute(TaskRunnable runnable, Pin pin) {
-        Object result = KeepAliveFloatView.getClipboardData();
+        Object result = ReadClipboardFloatView.getClipboardData();
         if (result instanceof String string) {
             textPin.getValue(PinString.class).setValue(string);
         } else if (result instanceof Bitmap bitmap) {

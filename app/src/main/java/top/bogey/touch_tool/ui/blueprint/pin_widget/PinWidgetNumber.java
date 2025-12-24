@@ -3,6 +3,7 @@ package top.bogey.touch_tool.ui.blueprint.pin_widget;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.text.Editable;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.inputmethod.EditorInfo;
 
@@ -41,6 +42,7 @@ public class PinWidgetNumber extends PinWidget<PinNumber<?>> {
     public PinWidgetNumber(@NonNull Context context, ActionCard card, PinView pinView, PinNumber<?> pinBase, boolean custom) {
         super(context, card, pinView, pinBase, custom);
         binding = PinWidgetInputBinding.inflate(LayoutInflater.from(context), this, true);
+        binding.editText.setGravity(Gravity.CENTER);
         init();
     }
 
@@ -88,7 +90,7 @@ public class PinWidgetNumber extends PinWidget<PinNumber<?>> {
 
         switch (pinBase.getSubType()) {
             case INTEGER -> {
-                binding.editText.setInputType(EditorInfo.TYPE_NUMBER_FLAG_SIGNED);
+                binding.editText.setInputType(EditorInfo.TYPE_CLASS_NUMBER | EditorInfo.TYPE_NUMBER_FLAG_SIGNED);
                 binding.editText.addTextChangedListener(new TextChangedListener() {
                     @Override
                     public void afterTextChanged(Editable s) {
@@ -105,7 +107,7 @@ public class PinWidgetNumber extends PinWidget<PinNumber<?>> {
                 });
             }
             case FLOAT -> {
-                binding.editText.setInputType(EditorInfo.TYPE_NUMBER_FLAG_DECIMAL);
+                binding.editText.setInputType(EditorInfo.TYPE_CLASS_NUMBER | EditorInfo.TYPE_NUMBER_FLAG_DECIMAL | EditorInfo.TYPE_NUMBER_FLAG_SIGNED);
                 binding.editText.addTextChangedListener(new TextChangedListener() {
                     @Override
                     public void afterTextChanged(Editable s) {
@@ -122,7 +124,7 @@ public class PinWidgetNumber extends PinWidget<PinNumber<?>> {
                 });
             }
             case DOUBLE -> {
-                binding.editText.setInputType(EditorInfo.TYPE_NUMBER_FLAG_DECIMAL);
+                binding.editText.setInputType(EditorInfo.TYPE_CLASS_NUMBER | EditorInfo.TYPE_NUMBER_FLAG_DECIMAL | EditorInfo.TYPE_NUMBER_FLAG_SIGNED);
                 binding.editText.addTextChangedListener(new TextChangedListener() {
                     @Override
                     public void afterTextChanged(Editable s) {
@@ -139,7 +141,7 @@ public class PinWidgetNumber extends PinWidget<PinNumber<?>> {
                 });
             }
             case LONG -> {
-                binding.editText.setInputType(EditorInfo.TYPE_NUMBER_FLAG_SIGNED);
+                binding.editText.setInputType(EditorInfo.TYPE_CLASS_NUMBER | EditorInfo.TYPE_NUMBER_FLAG_SIGNED);
                 binding.editText.addTextChangedListener(new TextChangedListener() {
                     @Override
                     public void afterTextChanged(Editable s) {

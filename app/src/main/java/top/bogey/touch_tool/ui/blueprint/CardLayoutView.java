@@ -796,7 +796,7 @@ public class CardLayoutView extends FrameLayout implements TaskSaveListener, Var
         offsetX = 0;
         offsetY = 0;
         updateCardsPos();
-        cards.values().forEach(card -> card.setVisibility(VISIBLE));
+        cards.values().forEach(card -> card.setNeedDraw(true));
 
         // 计算所有卡片的绘制区域
         RectF area = calculateCardsArea(cards.values());
@@ -809,7 +809,7 @@ public class CardLayoutView extends FrameLayout implements TaskSaveListener, Var
         offsetX = -area.left;
         offsetY = -area.top;
         updateCardsPos();
-        cards.values().forEach(card -> card.setVisibility(VISIBLE));
+        cards.values().forEach(card -> card.setNeedDraw(true));
 
         Bitmap bitmap = Bitmap.createBitmap((int) area.width(), (int) area.height(), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);

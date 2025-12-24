@@ -6,7 +6,6 @@ import android.view.accessibility.AccessibilityNodeInfo;
 import androidx.annotation.NonNull;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -138,18 +137,20 @@ public class NodeInfo extends SimpleNodeInfo implements ITreeNodeData {
     }
 
     public NodeInfo findChild(SimpleNodeInfo nodeInfo, boolean fullPath) {
-        Map<Integer, NodeInfo> children = new HashMap<>();
         // 先根据class，id，index一起查找
         if (nodeInfo.index > 0 && nodeInfo.index <= getChildCount()) {
-            NodeInfo child = children.computeIfAbsent(nodeInfo.index, i -> getChild(i - 1));
+            NodeInfo child = getChild(nodeInfo.index - 1);
             if (child != null) {
                 if (nodeInfo.matchNodeClass(child) && nodeInfo.matchNodeId(child)) return child;
             }
         }
 
+        //带标记，却没有找到，不再继续
+        if (fullPath) return null;
+
         // 如果没找到，再根据class，id查找
         for (int i = 0; i < getChildCount(); i++) {
-            NodeInfo child = children.computeIfAbsent(i, this::getChild);
+            NodeInfo child = getChild(i);
             if (child != null) {
                 if (nodeInfo.matchNodeClass(child) && nodeInfo.matchNodeId(child)) return child;
             }
@@ -157,18 +158,15 @@ public class NodeInfo extends SimpleNodeInfo implements ITreeNodeData {
 
         // 如果还是没找到，再根据class，index查找
         if (nodeInfo.index > 0 && nodeInfo.index <= getChildCount()) {
-            NodeInfo child = children.computeIfAbsent(nodeInfo.index, i -> getChild(i - 1));
+            NodeInfo child = getChild(nodeInfo.index - 1);
             if (child != null) {
                 if (nodeInfo.matchNodeClass(child)) return child;
             }
         }
 
-        //带标记，却没有找到，不再继续
-        if (fullPath && (nodeInfo.index > 1 || nodeInfo.id != null)) return null;
-
         //如果还是没找到，再根据class查找
         for (int i = 0; i < getChildCount(); i++) {
-            NodeInfo child = children.computeIfAbsent(i, this::getChild);
+            NodeInfo child = getChild(i);
             if (child != null) {
                 if (nodeInfo.matchNodeClass(child)) return child;
             }

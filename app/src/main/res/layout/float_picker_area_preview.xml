@@ -49,11 +49,11 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_weight="1"
                     android:clipChildren="false"
-                    android:hint="@string/area_top"
+                    android:hint="@string/area_left"
                     app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Medium">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/topEdit"
+                        android:id="@+id/leftEdit"
                         android:layout_width="match_parent"
                         android:layout_height="?attr/iconButtonSize"
                         android:gravity="center"
@@ -70,11 +70,11 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_weight="1"
                     android:clipChildren="false"
-                    android:hint="@string/area_left"
+                    android:hint="@string/area_top"
                     app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Medium">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/leftEdit"
+                        android:id="@+id/topEdit"
                         android:layout_width="match_parent"
                         android:layout_height="?attr/iconButtonSize"
                         android:gravity="center"
@@ -84,7 +84,6 @@
                         android:textAppearance="@style/TextAppearance.Material3.BodySmall" />
 
                 </com.google.android.material.textfield.TextInputLayout>
-
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="0dp"

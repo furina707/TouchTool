@@ -150,8 +150,8 @@ public class ColorPicker extends FullScreenPicker<PinColor.ColorInfo> {
             for (Rect rect : pickList) {
                 int size = rect.width() * rect.height();
                 if (size >= colorInfo.getMinArea() && size <= colorInfo.getMaxArea()) {
-                    currentX = rect.centerX() - location[0];
-                    currentY = rect.centerY() - location[1];
+                    currentX = rect.centerX();
+                    currentY = rect.centerY();
                     break;
                 }
             }
@@ -173,7 +173,7 @@ public class ColorPicker extends FullScreenPicker<PinColor.ColorInfo> {
         }
         Bitmap screenShot = screenInfo.getScreenShot();
         if (screenShot != null) {
-            int pixel = screenShot.getPixel((int) currentX + location[0], (int) currentY + location[1]);
+            int pixel = screenShot.getPixel((int) currentX, (int) currentY);
             binding.colorPreview.setBackgroundColor(pixel);
             binding.currentColor.setBackgroundColor(pixel);
             colorInfo.setColor(pixel);
@@ -188,7 +188,7 @@ public class ColorPicker extends FullScreenPicker<PinColor.ColorInfo> {
             float scale = 8;
             int width = (int) (getWidth() / scale);
             int height = (int) (getHeight() / scale);
-            Rect area = new Rect((int) (currentX - width / 2), (int) (currentY - height / 2), (int) (currentX + width / 2), (int) (currentY + height / 2));
+            Rect area = new Rect((int) (currentX - width / 2f), (int) (currentY - height / 2f), (int) (currentX + width / 2f), (int) (currentY + height / 2f));
             float x = getWidth() / 2f - area.width() * scale / 2 - area.left * scale;
             float y = getHeight() / 2f - area.height() * scale / 2 - area.top * scale;
             canvas.translate(x, y);

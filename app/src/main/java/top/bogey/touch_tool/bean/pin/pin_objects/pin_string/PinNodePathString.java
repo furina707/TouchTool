@@ -44,7 +44,8 @@ public class PinNodePathString extends PinString {
         for (NodeInfo window : roots) {
             int index = 0;
             SimpleNodeInfo nodeInfo = pathNodes.get(index);
-            if (nodeInfo.matchNode(window, fullPath)) {
+            // 先判断根节点是否匹配
+            if (nodeInfo.matchRootNode(window, fullPath)) {
                 index++;
 
                 while (index < pathNodes.size() && window != null) {

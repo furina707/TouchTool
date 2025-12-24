@@ -38,7 +38,7 @@ public class PointPicker extends FullScreenPicker<Point> {
         binding.backButton.setOnClickListener(v -> dismiss());
 
         binding.saveButton.setOnClickListener(v -> {
-            callback.onResult(new Point((int) currentX + location[0], (int) currentY + location[1]));
+            callback.onResult(new Point((int) currentX, (int) currentY));
             dismiss();
         });
     }
@@ -46,8 +46,8 @@ public class PointPicker extends FullScreenPicker<Point> {
     @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        float x = event.getX();
-        float y = event.getY();
+        float x = event.getRawX();
+        float y = event.getRawY();
 
         int action = event.getAction();
 
@@ -66,8 +66,8 @@ public class PointPicker extends FullScreenPicker<Point> {
             float dy = y - lastY;
             currentX += dx / 5;
             currentY += dy / 5;
-            currentX = Math.max(0, Math.min(currentX, getWidth() - 1));
-            currentY = Math.max(0, Math.min(currentY, getHeight() - 1));
+            currentX = Math.max(0, Math.min(currentX, getWidth() + location[0] - 1));
+            currentY = Math.max(0, Math.min(currentY, getHeight() + location[1] - 1));
             lastX = x;
             lastY = y;
             picking = true;
@@ -87,25 +87,25 @@ public class PointPicker extends FullScreenPicker<Point> {
 
     @Override
     protected void realShow() {
-        currentX -= location[0];
-        currentY -= location[1];
         refreshUI();
     }
 
     @SuppressLint("DefaultLocale")
     private void refreshUI() {
         binding.posText.setText(String.format("%.0f, %.0f", currentX, currentY));
-        binding.posBox.setX(currentX - binding.posBox.getWidth() / 2f);
-        float px = DisplayUtil.dp2px(getContext(), 4);
-        if (currentY + binding.posBox.getHeight() > getHeight()) {
-            binding.posBox.setScaleY(-1f);
-            binding.posText.setScaleY(-1f);
-            binding.posBox.setY(currentY - binding.posBox.getHeight() + px);
-        } else {
-            binding.posBox.setScaleY(1f);
-            binding.posText.setScaleY(1f);
-            binding.posBox.setY(currentY - px);
-        }
+        binding.posBox.post(() -> {
+            binding.posBox.setX(currentX - binding.posBox.getWidth() / 2f - location[0]);
+            float px = DisplayUtil.dp2px(getContext(), 4);
+            if (currentY + binding.posBox.getHeight() > getHeight()) {
+                binding.posBox.setScaleY(-1f);
+                binding.posText.setScaleY(-1f);
+                binding.posBox.setY(currentY - binding.posBox.getHeight() + px - location[1]);
+            } else {
+                binding.posBox.setScaleY(1f);
+                binding.posText.setScaleY(1f);
+                binding.posBox.setY(currentY - px - location[1]);
+            }
+        });
 
         invalidate();
     }

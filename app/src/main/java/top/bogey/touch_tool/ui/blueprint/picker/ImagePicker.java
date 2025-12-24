@@ -71,7 +71,6 @@ public class ImagePicker extends FullScreenPicker<Bitmap> {
             if (area.isEmpty()) {
                 callback.onResult(null);
             } else {
-                area.offset(location[0], location[1]);
                 Bitmap bitmap = DisplayUtil.safeClipBitmap(screenInfo.getScreenShot(), area.left, area.top, area.width(), area.height());
                 callback.onResult(bitmap);
             }
@@ -179,7 +178,6 @@ public class ImagePicker extends FullScreenPicker<Bitmap> {
     protected void realShow() {
         Rect rect = DisplayUtil.matchTemplate(screenInfo.getScreenShot(), bitmap, null, 80);
         if (rect != null && !rect.isEmpty()) area.set(rect);
-        area.offset(-location[0], -location[1]);
         refreshUI();
     }
 
