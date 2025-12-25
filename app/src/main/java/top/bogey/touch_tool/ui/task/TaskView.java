@@ -142,7 +142,7 @@ public class TaskView extends Fragment implements ITaskListener, TaskSaveListene
         MainAccessibilityService service = MainApplication.getInstance().getService();
         if (service != null && service.isEnabled()) service.addListener(this);
 
-        TaskPageItemRecyclerViewAdapter searchAdapter = new TaskPageItemRecyclerViewAdapter(this);
+        TaskSearchItemAdapter searchAdapter = new TaskSearchItemAdapter(this);
         binding.searchBox.setAdapter(searchAdapter);
 
         binding.searchView.getEditText().addTextChangedListener(new TextChangedListener() {
@@ -151,7 +151,7 @@ public class TaskView extends Fragment implements ITaskListener, TaskSaveListene
                 if (s.length() == 0) {
                     searchAdapter.setTasks("", new ArrayList<>());
                 } else {
-                    searchAdapter.setTasks("", TaskSaver.getInstance().searchTasks(s.toString()));
+                    searchAdapter.setTasks(s.toString(), TaskSaver.getInstance().searchTasks(s.toString()));
                 }
             }
         });

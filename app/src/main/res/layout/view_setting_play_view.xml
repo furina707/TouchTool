@@ -31,7 +31,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:padding="8dp">
+            android:padding="?attr/defaultPadding">
 
             <com.google.android.material.card.MaterialCardView
                 style="?attr/materialCardViewFilledStyle"
@@ -95,7 +95,7 @@
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="8dp" />
+                android:layout_height="?attr/defaultPadding" />
 
             <com.google.android.material.card.MaterialCardView
                 style="?attr/materialCardViewFilledStyle"
@@ -107,7 +107,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:padding="8dp">
+                    android:padding="?attr/defaultPadding">
 
                     <com.google.android.material.card.MaterialCardView
                         style="?attr/materialCardViewFilledStyle"
@@ -120,7 +120,7 @@
                         <FrameLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:paddingVertical="8dp">
+                            android:paddingVertical="?attr/defaultPadding">
 
                             <com.google.android.material.card.MaterialCardView
                                 android:id="@+id/playButtonBox"
@@ -135,7 +135,7 @@
                                     android:layout_height="wrap_content"
                                     android:gravity="center_horizontal"
                                     android:orientation="vertical"
-                                    android:padding="2dp">
+                                    android:padding="?attr/defaultOffset">
 
                                     <com.google.android.material.button.MaterialButton
                                         style="?attr/iconButton"
@@ -195,7 +195,7 @@
                     </com.google.android.material.card.MaterialCardView>
 
                     <Space
-                        android:layout_width="8dp"
+                        android:layout_width="?attr/defaultPadding"
                         android:layout_height="match_parent" />
 
                     <com.google.android.material.card.MaterialCardView
@@ -267,7 +267,7 @@
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="8dp" />
+                android:layout_height="?attr/defaultPadding" />
 
             <com.google.android.material.card.MaterialCardView
                 style="?attr/materialCardViewFilledStyle"

@@ -18,17 +18,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/dragImage"
-            android:layout_width="?attr/iconButtonSize"
-            android:layout_height="?attr/iconButtonSize"
-            android:layout_gravity="end|bottom"
-            android:scaleType="centerInside"
-            android:src="@drawable/icon_line_curve"
-            android:tint="?attr/colorOutlineVariant"
-            android:translationX="4dp"
-            android:translationY="4dp" />
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -139,6 +128,17 @@
             </LinearLayout>
 
         </LinearLayout>
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/dragImage"
+            android:layout_width="?attr/iconButtonSize"
+            android:layout_height="?attr/iconButtonSize"
+            android:layout_gravity="end|bottom"
+            android:scaleType="centerInside"
+            android:src="@drawable/icon_line_curve"
+            android:tint="?attr/colorOutlineVariant"
+            android:translationX="?attr/defaultOffset"
+            android:translationY="?attr/defaultOffset" />
 
     </FrameLayout>
 

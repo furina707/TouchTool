@@ -28,7 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:padding="8dp">
+            android:padding="?attr/defaultPadding">
 
             <com.google.android.material.card.MaterialCardView
                 style="?attr/materialCardViewFilledStyle"
@@ -40,7 +40,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="8dp">
+                    android:padding="?attr/defaultPadding">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -66,7 +66,7 @@
 
                     <Space
                         android:layout_width="wrap_content"
-                        android:layout_height="8dp" />
+                        android:layout_height="?attr/defaultPadding" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -89,7 +89,7 @@
                             app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Medium" />
 
                         <Space
-                            android:layout_width="8dp"
+                            android:layout_width="?attr/defaultPadding"
                             android:layout_height="wrap_content" />
 
                         <com.google.android.material.button.MaterialButton
@@ -110,7 +110,7 @@
 
                     <Space
                         android:layout_width="wrap_content"
-                        android:layout_height="8dp" />
+                        android:layout_height="?attr/defaultPadding" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -133,7 +133,7 @@
                             app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Medium" />
 
                         <Space
-                            android:layout_width="8dp"
+                            android:layout_width="?attr/defaultPadding"
                             android:layout_height="wrap_content" />
 
                         <com.google.android.material.button.MaterialButton

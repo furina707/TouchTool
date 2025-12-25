@@ -87,6 +87,15 @@ public class PinImage extends PinScaleAble<String> {
         image = null;
     }
 
+    @Override
+    public void sync(PinBase value) {
+        super.sync(value);
+
+        if (value instanceof PinImage pinImage) {
+            image = pinImage.image;
+        }
+    }
+
     @NonNull
     @Override
     public String toString() {

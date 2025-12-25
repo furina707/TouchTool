@@ -234,7 +234,7 @@
                 android:paddingBottom="96dp"
                 android:scrollbars="none"
                 app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
-                app:spanCount="2"
+                app:spanCount="4"
                 tools:listitem="@layout/view_task_search_item" />
 
         </LinearLayout>

@@ -19,7 +19,7 @@
             android:id="@+id/tagBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="8dp"
+            android:layout_marginHorizontal="?attr/defaultPadding"
             android:clipChildren="false"
             android:paddingBottom="96dp"
             app:layoutManager="com.google.android.flexbox.FlexboxLayoutManager"

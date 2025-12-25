@@ -30,7 +30,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="8dp">
+            android:padding="?attr/defaultPadding">
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -49,7 +49,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="end"
-                        android:layout_margin="8dp"
+                        android:layout_margin="?attr/defaultPadding"
                         android:alpha="0.1"
                         android:gravity="end"
                         android:textSize="24sp" />
@@ -59,15 +59,22 @@
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
 
-                        <com.google.android.material.textview.MaterialTextView
+                        <LinearLayout
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginVertical="8dp"
-                            android:layout_marginStart="56dp"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginBottom="8dp"
-                            android:text="@string/app_setting"
-                            android:textSize="12sp" />
+                            android:layout_height="wrap_content">
+
+                            <Space
+                                android:layout_width="?attr/minTouchTargetSize"
+                                android:layout_height="wrap_content" />
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="?attr/defaultPadding"
+                                android:text="@string/app_setting"
+                                android:textSize="12sp" />
+
+                        </LinearLayout>
 
                         <top.bogey.touch_tool.ui.setting.widget.SettingWidgetSwitch
                             android:id="@+id/enableSwitch"
@@ -145,7 +152,7 @@
 
                 <Space
                     android:layout_width="match_parent"
-                    android:layout_height="8dp" />
+                    android:layout_height="?attr/defaultPadding" />
 
                 <com.google.android.material.card.MaterialCardView
                     style="?attr/materialCardViewFilledStyle"
@@ -158,15 +165,22 @@
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
 
-                        <com.google.android.material.textview.MaterialTextView
+                        <LinearLayout
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginVertical="8dp"
-                            android:layout_marginStart="56dp"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginBottom="8dp"
-                            android:text="@string/task_setting"
-                            android:textSize="12sp" />
+                            android:layout_height="wrap_content">
+
+                            <Space
+                                android:layout_width="?attr/minTouchTargetSize"
+                                android:layout_height="wrap_content" />
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="?attr/defaultPadding"
+                                android:text="@string/task_setting"
+                                android:textSize="12sp" />
+
+                        </LinearLayout>
 
                         <top.bogey.touch_tool.ui.setting.widget.SettingWidgetSwitch
                             android:id="@+id/showTouchSwitch"
@@ -214,13 +228,12 @@
 
                 <Space
                     android:layout_width="match_parent"
-                    android:layout_height="8dp" />
-
+                    android:layout_height="?attr/defaultPadding" />
 
             </LinearLayout>
 
             <Space
-                android:layout_width="8dp"
+                android:layout_width="?attr/defaultPadding"
                 android:layout_height="match_parent" />
 
             <LinearLayout
@@ -240,15 +253,22 @@
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
 
-                        <com.google.android.material.textview.MaterialTextView
+                        <LinearLayout
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginVertical="8dp"
-                            android:layout_marginStart="56dp"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginBottom="8dp"
-                            android:text="@string/permission_setting"
-                            android:textSize="12sp" />
+                            android:layout_height="wrap_content">
+
+                            <Space
+                                android:layout_width="?attr/minTouchTargetSize"
+                                android:layout_height="wrap_content" />
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="?attr/defaultPadding"
+                                android:text="@string/permission_setting"
+                                android:textSize="12sp" />
+
+                        </LinearLayout>
 
                         <top.bogey.touch_tool.ui.setting.widget.SettingWidgetSelect
                             android:id="@+id/superUserSelect"
@@ -300,7 +320,7 @@
 
                 <Space
                     android:layout_width="match_parent"
-                    android:layout_height="8dp" />
+                    android:layout_height="?attr/defaultPadding" />
 
                 <com.google.android.material.card.MaterialCardView
                     style="?attr/materialCardViewFilledStyle"
@@ -313,15 +333,22 @@
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
 
-                        <com.google.android.material.textview.MaterialTextView
+                        <LinearLayout
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginVertical="8dp"
-                            android:layout_marginStart="56dp"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginBottom="8dp"
-                            android:text="@string/blueprint_setting"
-                            android:textSize="12sp" />
+                            android:layout_height="wrap_content">
+
+                            <Space
+                                android:layout_width="?attr/minTouchTargetSize"
+                                android:layout_height="wrap_content" />
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="?attr/defaultPadding"
+                                android:text="@string/blueprint_setting"
+                                android:textSize="12sp" />
+
+                        </LinearLayout>
 
                         <top.bogey.touch_tool.ui.setting.widget.SettingWidgetSelect
                             android:id="@+id/cardTypeSelect"
@@ -348,7 +375,7 @@
 
                 <Space
                     android:layout_width="match_parent"
-                    android:layout_height="8dp" />
+                    android:layout_height="?attr/defaultPadding" />
 
                 <com.google.android.material.card.MaterialCardView
                     style="?attr/materialCardViewFilledStyle"
@@ -361,15 +388,22 @@
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
 
-                        <com.google.android.material.textview.MaterialTextView
+                        <LinearLayout
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginVertical="8dp"
-                            android:layout_marginStart="56dp"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginBottom="8dp"
-                            android:text="@string/preference_setting"
-                            android:textSize="12sp" />
+                            android:layout_height="wrap_content">
+
+                            <Space
+                                android:layout_width="?attr/minTouchTargetSize"
+                                android:layout_height="wrap_content" />
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="?attr/defaultPadding"
+                                android:text="@string/preference_setting"
+                                android:textSize="12sp" />
+
+                        </LinearLayout>
 
                         <top.bogey.touch_tool.ui.setting.widget.SettingWidgetNormal
                             android:id="@+id/manualPlaySetting"

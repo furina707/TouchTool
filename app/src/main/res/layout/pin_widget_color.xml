@@ -23,7 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:paddingHorizontal="8dp"
+            android:paddingHorizontal="?attr/defaultPadding"
             android:textAppearance="@style/TextAppearance.Material3.LabelSmall" />
 
     </FrameLayout>

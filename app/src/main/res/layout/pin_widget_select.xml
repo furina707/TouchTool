@@ -32,7 +32,7 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:inputType="text"
-            android:paddingHorizontal="8dp"
+            android:paddingHorizontal="?attr/defaultPadding"
             android:paddingVertical="0dp"
             android:textAppearance="@style/TextAppearance.Material3.BodySmall" />
 

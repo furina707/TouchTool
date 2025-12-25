@@ -663,6 +663,7 @@
 
     <string name="list_add_action">添加元素</string>
     <string name="list_add_action_desc">向列表中添加元素</string>
+    <string name="list_add_action_index">元素位置</string>
 
     <string name="list_remove_action">移除元素</string>
     <string name="list_remove_action_desc">从列表中移除元素</string>

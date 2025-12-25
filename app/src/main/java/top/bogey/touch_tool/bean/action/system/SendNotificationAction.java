@@ -64,6 +64,7 @@ public class SendNotificationAction extends ExecuteAction {
             channel.setDescription(context.getString(R.string.send_notification_action_desc));
             notificationManager.createNotificationChannel(channel);
         }
+
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CUSTOM_NOTIFICATION_CHANNEL);
         builder.setContentTitle(title.toString());
         builder.setContentText(content.toString());

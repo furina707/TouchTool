@@ -4,8 +4,8 @@
     style="?attr/materialCardViewFilledStyle"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginEnd="8dp"
-    android:layout_marginBottom="8dp"
+    android:layout_marginEnd="?attr/defaultPadding"
+    android:layout_marginBottom="?attr/defaultPadding"
     android:checkable="true"
     app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Large">
 
@@ -13,13 +13,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingTop="8dp">
+        android:paddingTop="?attr/defaultPadding">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingHorizontal="8dp">
+            android:paddingHorizontal="?attr/defaultPadding">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -78,7 +78,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp">
+                android:layout_marginBottom="?attr/defaultPadding">
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/taskTag"
@@ -108,7 +108,7 @@
             android:layout_height="wrap_content"
             android:background="?attr/colorError"
             android:gravity="center"
-            android:paddingHorizontal="8dp"
+            android:paddingHorizontal="?attr/defaultPadding"
             android:textAppearance="@style/TextAppearance.Material3.BodySmall"
             android:textColor="?attr/colorOnError"
             android:visibility="visible" />
