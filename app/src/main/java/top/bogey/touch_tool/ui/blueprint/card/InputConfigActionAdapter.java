@@ -7,6 +7,7 @@ public class InputConfigActionAdapter extends CustomActionCardAdapter {
 
     @Override
     public void swap(int from, int to) {
+        super.swap(from, to);
         ((InputConfigActionCard) card).swap(from, to);
     }
 }

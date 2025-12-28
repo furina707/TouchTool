@@ -175,6 +175,7 @@ import top.bogey.touch_tool.ui.blueprint.card.CreateListActionCard;
 import top.bogey.touch_tool.ui.blueprint.card.CustomActionCard;
 import top.bogey.touch_tool.ui.blueprint.card.DynamicParamsActionCard;
 import top.bogey.touch_tool.ui.blueprint.card.ExecuteCustomActionCard;
+import top.bogey.touch_tool.ui.blueprint.card.InputConfigActionCard;
 import top.bogey.touch_tool.ui.blueprint.card.NormalActionCard;
 import top.bogey.touch_tool.ui.blueprint.card.ShowTextActionCard;
 
@@ -221,7 +222,7 @@ public class ActionInfo {
     private final static ActionInfo CLOSE_STICK_INFO = new ActionInfo(ActionType.CLOSE_STICK, StickCloseAction.class, R.drawable.icon_note_stack, R.string.stick_close_action, R.string.stick_close_action_desc, 0, NormalActionCard.class);
     private final static ActionInfo CLOSE_ALL_STICK_INFO = new ActionInfo(ActionType.CLOSE_ALL_STICK, StickCloseAllAction.class, R.drawable.icon_note_stack, R.string.stick_close_all_action, R.string.stick_close_all_action_desc, 0, NormalActionCard.class);
     private final static ActionInfo INPUT_PARAM_INFO = new ActionInfo(ActionType.INPUT_PARAM, InputParamAction.class, R.drawable.icon_edit, R.string.input_param_action, R.string.input_param_action_desc, 0, NormalActionCard.class);
-    private final static ActionInfo INPUT_CONFIG_INFO = new ActionInfo(ActionType.INPUT_CONFIG, InputConfigAction.class, R.drawable.icon_edit, R.string.input_config_action, R.string.input_config_action_desc, 0, NormalActionCard.class);
+    private final static ActionInfo INPUT_CONFIG_INFO = new ActionInfo(ActionType.INPUT_CONFIG, InputConfigAction.class, R.drawable.icon_edit, R.string.input_config_action, R.string.input_config_action_desc, 0, InputConfigActionCard.class);
     private final static ActionInfo MARK_AREA_INFO = new ActionInfo(ActionType.MARK_AREA, MarkAreaAction.class, R.drawable.icon_area, R.string.mark_area_action, R.string.mark_area_action_desc, 0, NormalActionCard.class);
     private final static ActionInfo SHOW_TEXT_INFO = new ActionInfo(ActionType.SHOW_TEXT, ShowTextAction.class, R.drawable.icon_edit, R.string.show_text_action, R.string.show_text_action_desc, 0, ShowTextActionCard.class);
 

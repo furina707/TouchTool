@@ -61,8 +61,8 @@ public class TaskInfoSummary {
     }
 
     private final Map<String, PackageInfo> apps = new ConcurrentHashMap<>();
-
     private final List<String> ocrApps = new ArrayList<>();
+    private final List<String> launcherApps = new ArrayList<>();
 
     private PackageActivity packageActivity = new PackageActivity("", "");
     private PackageActivity lastPackageActivity = new PackageActivity("", "");
@@ -93,6 +93,15 @@ public class TaskInfoSummary {
             ocrApps.add(resolveInfo.serviceInfo.packageName);
         }
         ocrApps.sort(String::compareTo);
+
+        launcherApps.clear();
+        intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        resolveInfos = packageManager.queryIntentActivities(intent, PackageManager.MATCH_ALL);
+        for (ResolveInfo resolveInfo : resolveInfos) {
+            launcherApps.add(resolveInfo.activityInfo.packageName);
+        }
+        launcherApps.sort(String::compareTo);
     }
 
     public PackageInfo getAppInfo(String packageName) {
@@ -287,6 +296,10 @@ public class TaskInfoSummary {
             names.add(packageInfo.applicationInfo.loadLabel(MainApplication.getInstance().getPackageManager()).toString());
         }
         return names;
+    }
+
+    public boolean isLauncherApp(String packageName) {
+        return launcherApps.contains(packageName);
     }
 
     public void tryStartActions(Class<? extends StartAction> clazz) {

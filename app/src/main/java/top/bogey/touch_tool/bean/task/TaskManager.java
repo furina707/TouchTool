@@ -60,6 +60,7 @@ public class TaskManager implements ITaskManager {
 
     @Override
     public Task upFindTask(String id) {
+        if (parent.getId().equals(id)) return parent;
         Task task = getTask(id);
         if (task != null) return task;
         task = parent.getParent();
@@ -69,6 +70,7 @@ public class TaskManager implements ITaskManager {
 
     @Override
     public Task downFindTask(String id) {
+        if (parent.getId().equals(id)) return parent;
         Task task = getTask(id);
         if (task != null) return task;
         for (Task t : tasks) {
@@ -82,7 +84,7 @@ public class TaskManager implements ITaskManager {
     public Task getTopParent() {
         Task task = parent.getParent();
         if (task != null) return task.getTopParent();
-        return null;
+        return parent;
     }
 
     @Override

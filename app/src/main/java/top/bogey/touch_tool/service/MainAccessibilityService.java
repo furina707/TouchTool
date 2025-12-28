@@ -99,14 +99,17 @@ public class MainAccessibilityService extends AccessibilityService {
 
         int eventType = event.getEventType();
         if (eventType == AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED) {
-            AccessibilityNodeInfo root = getRootInActiveWindow();
-            if (root != null && root.getPackageName() != null) {
-                if (Objects.equals(packageName, root.getPackageName().toString())) {
-                    taskInfoSummary.enterActivity(packageName, className);
+            // 桌面应用需要检查实际界面与事件是否匹配
+            if (taskInfoSummary.isLauncherApp(packageName)) {
+                AccessibilityNodeInfo root = getRootInActiveWindow();
+                if (root != null && root.getPackageName() != null) {
+                    if (!Objects.equals(packageName, root.getPackageName().toString())) {
+                        // 界面不匹配直接退出
+                        return;
+                    }
                 }
-            } else {
-                taskInfoSummary.enterActivity(packageName, className);
             }
+            taskInfoSummary.enterActivity(packageName, className);
         } else if (eventType == AccessibilityEvent.TYPE_NOTIFICATION_STATE_CHANGED) {
             Map<String, String> content = new HashMap<>();
             List<CharSequence> textList = event.getText();

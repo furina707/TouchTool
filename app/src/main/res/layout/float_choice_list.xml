@@ -4,13 +4,13 @@
     style="?attr/materialCardViewFilledStyle"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:maxWidth="240dp"
+    android:maxWidth="320dp"
     app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Large">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minWidth="128dp"
+        android:minWidth="168dp"
         android:orientation="vertical"
         android:paddingHorizontal="?attr/defaultPadding">
 

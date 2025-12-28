@@ -93,6 +93,7 @@ public class PinImage extends PinScaleAble<String> {
 
         if (value instanceof PinImage pinImage) {
             image = pinImage.image;
+            serialized = pinImage.serialized;
         }
     }
 

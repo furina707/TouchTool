@@ -66,8 +66,10 @@ public abstract class PinView extends FrameLayout implements PinListener {
         }
 
         Button removeButton = getRemoveButton();
-        removeButton.setVisibility(pin.isDynamic() ? VISIBLE : GONE);
-        removeButton.setOnClickListener(v -> card.removePin(pin));
+        if (removeButton != null) {
+            removeButton.setVisibility(pin.isDynamic() ? VISIBLE : GONE);
+            removeButton.setOnClickListener(v -> card.removePin(pin));
+        }
 
         Button copyButton = getCopyAndPasteButton();
         if (copyButton != null) {

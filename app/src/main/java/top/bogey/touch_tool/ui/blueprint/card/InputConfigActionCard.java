@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 
 import com.google.android.material.button.MaterialButton;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -31,8 +32,12 @@ public class InputConfigActionCard extends ActionCard implements IDynamicPinCard
     private CardInputConfigBinding binding;
     private InputConfigActionAdapter adapter;
 
+    private final List<PinView> rightPins = new ArrayList<>();
+
     public InputConfigActionCard(Context context, Task task, Action action) {
         super(context, task, action);
+        // 重新添加针脚，因为之前添加的会被跳过
+        action.getPins().forEach(this::addPinView);
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -65,7 +70,18 @@ public class InputConfigActionCard extends ActionCard implements IDynamicPinCard
     }
 
     public void swap(int from, int to) {
+        PinView fromPinView = rightPins.get(from);
+        Pin fromPin = fromPinView.getPin();
+        Pin toPin = rightPins.get(to).getPin();
+        rightPins.add(to, rightPins.remove(from));
 
+        List<Pin> pins = action.getPins();
+        int i = pins.indexOf(fromPin);
+        int j = pins.indexOf(toPin);
+        pins.add(j, pins.remove(i));
+
+        binding.outBox.removeView(fromPinView);
+        binding.outBox.addView(fromPinView, to);
     }
 
     @Override
@@ -85,6 +101,7 @@ public class InputConfigActionCard extends ActionCard implements IDynamicPinCard
 
     @Override
     public void addPinView(Pin pin, int offset) {
+        if (rightPins == null) return;
         PinView pinView;
         if (pin.isDynamic()) {
             pinView = adapter.addPin(pin);
@@ -96,6 +113,7 @@ public class InputConfigActionCard extends ActionCard implements IDynamicPinCard
                 } else {
                     pinView = new PinRightView(getContext(), this, pin);
                     binding.outBox.addView(pinView, binding.outBox.getChildCount() - offset);
+                    rightPins.add(pinView);
                 }
             } else {
                 if (pin.isVertical()) {
