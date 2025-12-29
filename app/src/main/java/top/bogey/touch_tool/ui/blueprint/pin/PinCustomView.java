@@ -34,10 +34,13 @@ import top.bogey.touch_tool.utils.listener.TextChangedListener;
 public abstract class PinCustomView extends PinView {
     private final static Map<PinType, List<PinInfo>> PIN_INFO_MAP = PinInfo.getCustomPinInfoMap();
     private final static int[] ICON_ARRAY = new int[]{R.drawable.icon_remove, R.drawable.icon_data_array, R.drawable.icon_map};
+
     private Variable variable;
+    protected final Map<PinType, List<PinInfo>> pinInfoMap;
 
     public PinCustomView(@NonNull Context context, ActionCard card, Pin pin) {
         super(context, card, pin, true);
+        pinInfoMap = PIN_INFO_MAP;
         if (pin.getValue() instanceof PinObject pinObject) {
             variable = new Variable((PinObject) pinObject.copy());
         } else {
@@ -55,7 +58,7 @@ public abstract class PinCustomView extends PinView {
                 ListPopupWindow popup = new ListPopupWindow(getContext());
                 List<PinInfo> pinInfoList = new ArrayList<>();
                 ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), R.layout.widget_textview_item);
-                PIN_INFO_MAP.forEach((pinType, infoList) -> infoList.forEach(info -> {
+                pinInfoMap.forEach((pinType, infoList) -> infoList.forEach(info -> {
                     adapter.add(info.getTitle());
                     pinInfoList.add(info);
                 }));
@@ -80,7 +83,7 @@ public abstract class PinCustomView extends PinView {
                 ListPopupWindow popup = new ListPopupWindow(getContext());
                 List<PinInfo> pinInfoList = new ArrayList<>();
                 ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), R.layout.widget_textview_item);
-                PIN_INFO_MAP.forEach((pinType, infoList) -> infoList.forEach(info -> {
+                pinInfoMap.forEach((pinType, infoList) -> infoList.forEach(info -> {
                     adapter.add(info.getTitle());
                     pinInfoList.add(info);
                 }));

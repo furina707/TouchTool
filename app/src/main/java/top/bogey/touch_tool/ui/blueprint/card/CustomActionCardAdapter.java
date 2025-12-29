@@ -19,7 +19,7 @@ import top.bogey.touch_tool.ui.blueprint.pin.PinView;
 import top.bogey.touch_tool.utils.ui.IDragableRecycleViewAdapter;
 
 public class CustomActionCardAdapter extends RecyclerView.Adapter<CustomActionCardAdapter.ViewHolder> implements IDragableRecycleViewAdapter {
-    private final List<PinView> pinViews = new ArrayList<>();
+    protected final List<PinView> pinViews = new ArrayList<>();
     protected final ActionCard card;
 
     public CustomActionCardAdapter(ActionCard card) {

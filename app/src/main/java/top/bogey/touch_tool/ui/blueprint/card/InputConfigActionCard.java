@@ -20,6 +20,7 @@ import top.bogey.touch_tool.bean.pin.pin_objects.pin_string.PinString;
 import top.bogey.touch_tool.bean.task.Task;
 import top.bogey.touch_tool.databinding.CardInputConfigBinding;
 import top.bogey.touch_tool.ui.blueprint.pin.PinBottomView;
+import top.bogey.touch_tool.ui.blueprint.pin.PinCustomView;
 import top.bogey.touch_tool.ui.blueprint.pin.PinLeftView;
 import top.bogey.touch_tool.ui.blueprint.pin.PinRightView;
 import top.bogey.touch_tool.ui.blueprint.pin.PinTopView;
@@ -105,6 +106,10 @@ public class InputConfigActionCard extends ActionCard implements IDynamicPinCard
         PinView pinView;
         if (pin.isDynamic()) {
             pinView = adapter.addPin(pin);
+            if (pinView instanceof PinCustomView customView) {
+                MaterialButton typeView = customView.getTypeView();
+                typeView.setVisibility(GONE);
+            }
         } else {
             if (pin.isOut()) {
                 if (pin.isVertical()) {
@@ -135,6 +140,12 @@ public class InputConfigActionCard extends ActionCard implements IDynamicPinCard
             adapter.removePin(pin);
         } else {
             super.removePinView(pin);
+            for (PinView rightPin : rightPins) {
+                if (rightPin.getPin().equals(pin)) {
+                    rightPins.remove(rightPin);
+                    break;
+                }
+            }
         }
     }
 
