@@ -18,31 +18,27 @@ import top.bogey.touch_tool.utils.EAnchor;
 import top.bogey.touch_tool.utils.GsonUtil;
 
 public class PinArea extends PinScaleAble<Rect> {
-    private final static Rect screenArea = DisplayUtil.getScreenArea(MainApplication.getInstance());
+    private final static Rect SCREEN_AREA = DisplayUtil.getScreenArea(MainApplication.getInstance());
 
     public PinArea() {
         super(PinType.AREA);
-        value = screenArea;
+        value = SCREEN_AREA;
     }
 
     public PinArea(Rect area) {
-        this();
+        super(PinType.AREA);
         value = area;
     }
 
     public PinArea(JsonObject jsonObject) {
         super(jsonObject);
-        value = GsonUtil.getAsObject(jsonObject, "value", Rect.class, screenArea);
-    }
-
-    public boolean isFullScreen() {
-        return value.isEmpty() || screenArea.equals(value);
+        value = GsonUtil.getAsObject(jsonObject, "value", Rect.class, SCREEN_AREA);
     }
 
     @Override
     public void reset() {
         super.reset();
-        value = screenArea;
+        value = SCREEN_AREA;
     }
 
     @Override

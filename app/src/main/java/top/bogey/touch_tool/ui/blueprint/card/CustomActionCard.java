@@ -62,6 +62,8 @@ public class CustomActionCard extends ActionCard implements IDynamicPinCard {
 
             ((View) binding.inPinBox.getParent()).setVisibility(GONE);
             ((View) binding.topPinBox.getParent()).setVisibility(GONE);
+
+            binding.copyButton.setVisibility(GONE);
         } else {
             binding.inPinBox.setAdapter(horizontalAdapter);
             horizontalTouchHelper.attachToRecyclerView(binding.inPinBox);
@@ -75,6 +77,7 @@ public class CustomActionCard extends ActionCard implements IDynamicPinCard {
 
         initCardInfo(binding.icon, binding.title, binding.des);
         initEditDesc(binding.editButton, binding.des);
+        initCopy(binding.copyButton);
         initDelete(binding.removeButton);
         initLock(binding.lockButton);
         initPosView(binding.position);
@@ -147,7 +150,7 @@ public class CustomActionCard extends ActionCard implements IDynamicPinCard {
     public boolean isEmptyPosition(float x, float y) {
         float scale = getScaleX();
 
-        List<MaterialButton> buttons = List.of(binding.lockButton, binding.addButton, binding.addExecuteButton, binding.removeButton, binding.editButton);
+        List<MaterialButton> buttons = List.of(binding.lockButton, binding.addButton, binding.copyButton, binding.addExecuteButton, binding.removeButton, binding.editButton);
         for (MaterialButton button : buttons) {
             PointF pointF = DisplayUtil.getLocationRelativeToView(button, this);
             float px = pointF.x * scale;

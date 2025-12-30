@@ -345,6 +345,10 @@ public class SettingView extends Fragment {
         binding.detailLogSwitch.setOnSwitchClickListener(v -> SettingSaver.getInstance().setDetailLog(binding.detailLogSwitch.isChecked()));
         binding.detailLogSwitch.setChecked(SettingSaver.getInstance().isDetailLog());
 
+        // 日志重置
+        binding.resetLogSwitch.setOnSwitchClickListener(v -> SettingSaver.getInstance().setLogResetOnStart(binding.resetLogSwitch.isChecked()));
+        binding.resetLogSwitch.setChecked(SettingSaver.getInstance().isLogResetOnStart());
+
         // 音量键退出
         binding.volumeButtonExitSwitch.setOnSwitchClickListener(v -> SettingSaver.getInstance().setVolumeButtonExit(binding.volumeButtonExitSwitch.isChecked()));
         binding.volumeButtonExitSwitch.setChecked(SettingSaver.getInstance().isVolumeButtonExit());

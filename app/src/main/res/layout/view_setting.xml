@@ -289,6 +289,14 @@
                         app:title="@string/task_setting_detail_log" />
 
                     <top.bogey.touch_tool.ui.setting.widget.SettingWidgetSwitch
+                        android:id="@+id/resetLogSwitch"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:description="@string/task_setting_log_reset_on_start_desc"
+                        app:icon="@drawable/icon_refresh"
+                        app:title="@string/task_setting_log_reset_on_start" />
+
+                    <top.bogey.touch_tool.ui.setting.widget.SettingWidgetSwitch
                         android:id="@+id/volumeButtonExitSwitch"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

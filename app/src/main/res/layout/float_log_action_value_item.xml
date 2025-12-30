@@ -12,7 +12,7 @@
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/title"
-            android:layout_width="64dp"
+            android:layout_width="80dp"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textAppearance="@style/TextAppearance.Material3.BodySmall.Emphasized" />
@@ -21,14 +21,26 @@
             android:layout_width="1dp"
             android:layout_height="match_parent" />
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/content"
+        <FrameLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="?attr/defaultPadding"
-            android:layout_weight="1"
-            android:breakStrategy="simple"
-            android:textAppearance="@style/TextAppearance.Material3.LabelSmall" />
+            android:layout_weight="1">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="?attr/defaultPadding"
+                android:breakStrategy="simple"
+                android:textAppearance="@style/TextAppearance.Material3.LabelSmall" />
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleType="center" />
+
+        </FrameLayout>
 
     </LinearLayout>
 

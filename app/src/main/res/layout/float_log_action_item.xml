@@ -17,59 +17,67 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:clipChildren="false"
-        android:gravity="center_vertical"
-        android:paddingVertical="?attr/defaultOffset">
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/expandButton"
-            style="?attr/iconButton"
-            app:icon="@drawable/icon_keyboard_arrow_down" />
+        android:orientation="vertical">
 
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:orientation="vertical">
+            android:clipChildren="false"
+            android:gravity="center_vertical"
+            android:paddingVertical="?attr/defaultOffset">
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/title"
-                android:layout_width="match_parent"
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/expandButton"
+                style="?attr/iconButton"
+                app:icon="@drawable/icon_keyboard_arrow_down" />
+
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="?attr/defaultOffset"
-                android:textAppearance="@style/TextAppearance.Material3.BodyMedium" />
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:orientation="vertical">
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/time"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="?attr/defaultOffset"
-                android:alpha="0.75"
-                android:textAppearance="@style/TextAppearance.Material3.LabelSmall" />
-
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/valueCard"
-                style="?attr/materialCardViewFilledStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="-34dp"
-                android:visibility="gone">
-
-                <LinearLayout
-                    android:id="@+id/valueBox"
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical" />
+                    android:layout_marginBottom="?attr/defaultOffset"
+                    android:textAppearance="@style/TextAppearance.Material3.BodyMedium" />
 
-            </com.google.android.material.card.MaterialCardView>
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="?attr/defaultOffset"
+                    android:alpha="0.75"
+                    android:textAppearance="@style/TextAppearance.Material3.LabelSmall" />
+
+
+            </LinearLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/gotoButton"
+                style="?attr/iconButton"
+                app:icon="@drawable/icon_keyboard_arrow_right" />
 
         </LinearLayout>
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/gotoButton"
-            style="?attr/iconButton"
-            app:icon="@drawable/icon_keyboard_arrow_right" />
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/valueCard"
+            style="?attr/materialCardViewFilledStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="?attr/defaultPadding"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:id="@+id/valueBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+
+        </com.google.android.material.card.MaterialCardView>
 
     </LinearLayout>
 

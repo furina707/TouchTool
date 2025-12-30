@@ -22,6 +22,7 @@ import top.bogey.touch_tool.bean.other.log.Log;
 import top.bogey.touch_tool.bean.other.log.LogInfo;
 import top.bogey.touch_tool.bean.other.log.NormalLog;
 import top.bogey.touch_tool.bean.pin.Pin;
+import top.bogey.touch_tool.bean.pin.pin_objects.pin_scale_able.PinImage;
 import top.bogey.touch_tool.bean.save.log.LogSave;
 import top.bogey.touch_tool.bean.save.task.TaskSaver;
 import top.bogey.touch_tool.bean.task.Task;
@@ -214,13 +215,21 @@ public class LogFloatViewAdapter extends TreeAdapter {
                 if (logInfo == null) return;
                 Log log = logInfo.getLogObject();
                 if (log instanceof ActionLog actionLog) {
-                    Action action = null;
-                    Task currTask = TaskSaver.getInstance().downFindTask(task, actionLog.getTaskId());
-                    if (currTask != null) {
-                        action = currTask.getAction(actionLog.getActionId());
+                    Task topTask = TaskSaver.getInstance().getTask(actionLog.getTopTaskId());
+                    if (topTask != null) {
+                        Task currTask = topTask.downFindTask(actionLog.getTaskId());
+                        if (currTask != null) {
+                            Action action = currTask.getAction(actionLog.getActionId());
+                            if (action != null) {
+                                BlueprintView.tryFocusAction(currTask, action);
+                            }
+                        }
                     }
-                    BlueprintView.tryFocusAction(currTask, action);
-                    if (searchIndex != -1) notifyItemChanged(searchIndex);
+                    if (searchIndex != -1) {
+                        int index = searchIndex;
+                        searchIndex = -1;
+                        notifyItemChanged(index);
+                    }
                     searchIndex = getBindingAdapterPosition();
                     notifyItemChanged(searchIndex);
                 }
@@ -252,9 +261,12 @@ public class LogFloatViewAdapter extends TreeAdapter {
 
             if (log instanceof ActionLog actionLog && actionBinding != null) {
                 Action action = null;
-                Task currTask = TaskSaver.getInstance().downFindTask(task, actionLog.getTaskId());
-                if (currTask != null) {
-                    action = currTask.getAction(actionLog.getActionId());
+                Task topTask = TaskSaver.getInstance().getTask(actionLog.getTopTaskId());
+                if (topTask != null) {
+                    Task currTask = topTask.downFindTask(actionLog.getTaskId());
+                    if (currTask != null) {
+                        action = currTask.getAction(actionLog.getActionId());
+                    }
                 }
                 actionBinding.gotoButton.setVisibility(action != null ? View.VISIBLE : View.GONE);
                 int size = logInfo.getChildrenFlags().size();
@@ -272,7 +284,11 @@ public class LogFloatViewAdapter extends TreeAdapter {
                         if (pinById == null) return;
                         FloatLogActionValueItemBinding itemBinding = FloatLogActionValueItemBinding.inflate(LayoutInflater.from(context), actionBinding.valueBox, true);
                         itemBinding.title.setText(pinById.getTitle());
-                        itemBinding.content.setText(value.toString());
+                        if (value instanceof PinImage pinImage) {
+                            itemBinding.image.setImageBitmap(pinImage.getImage());
+                        } else {
+                            itemBinding.content.setText(value.toString());
+                        }
                     });
                 }
                 actionBinding.valueCard.setVisibility(searchIndex == getBindingAdapterPosition() ? View.VISIBLE : View.GONE);

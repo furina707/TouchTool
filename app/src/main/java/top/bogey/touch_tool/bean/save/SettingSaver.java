@@ -20,9 +20,7 @@ import com.tencent.mmkv.MMKV;
 import java.util.List;
 
 import top.bogey.touch_tool.service.KeepAliveService;
-import top.bogey.touch_tool.ui.custom.KeepAliveFloatView;
 import top.bogey.touch_tool.utils.callback.ActivityLifecycleCallback;
-import top.bogey.touch_tool.utils.float_window_manager.FloatWindow;
 
 public class SettingSaver {
     private static SettingSaver instance;
@@ -66,6 +64,7 @@ public class SettingSaver {
     private static final String SHOW_NODE_AREA = "SHOW_NODE_AREA";                                      // 标记目标控件区域
     private static final String SHOW_TASK_START_TIPS = "SHOW_TASK_START_TIPS";                          // 任务开始运行提示
     private static final String DETAIL_LOG = "DETAIL_LOG";                                              // 详细日志
+    private static final String LOG_RESET_ON_START = "LOG_RESET_ON_START";                              // 日志重置
     private static final String VOLUME_BUTTON_EXIT = "VOLUME_BUTTON_EXIT";                              // 音量键退出
 
     private static final String DEFAULT_CARD_TYPE = "DEFAULT_CARD_TYPE";                                // 默认卡片展开类型
@@ -97,13 +96,10 @@ public class SettingSaver {
 
     public void initColor(Application application) {
         application.registerActivityLifecycleCallbacks(new ActivityLifecycleCallback() {
-
             @Override
             public void onActivityPreCreated(@NonNull Activity activity, @Nullable Bundle savedInstanceState) {
                 super.onActivityPreCreated(activity, savedInstanceState);
-                if (isDynamicColorTheme()) {
-                    DynamicColors.applyToActivityIfAvailable(activity, getDynamicColorOptions());
-                }
+                DynamicColors.applyToActivityIfAvailable(activity, getDynamicColorOptions());
             }
         });
     }
@@ -304,6 +300,14 @@ public class SettingSaver {
         mmkv.encode(DETAIL_LOG, enable);
     }
 
+    public boolean isLogResetOnStart() {
+        return mmkv.decodeBool(LOG_RESET_ON_START, false);
+    }
+
+    public void setLogResetOnStart(boolean enable) {
+        mmkv.encode(LOG_RESET_ON_START, enable);
+    }
+
     public boolean isVolumeButtonExit() {
         return mmkv.decodeBool(VOLUME_BUTTON_EXIT, false);
     }
@@ -366,14 +370,11 @@ public class SettingSaver {
     }
 
     public DynamicColorsOptions getDynamicColorOptions() {
-        if (isDynamicColorTheme()) {
-            DynamicColorsOptions.Builder builder = new DynamicColorsOptions.Builder();
-            int colorValue = getDynamicColorValue();
-            if (colorValue != Color.BLACK) builder.setContentBasedSource(colorValue);
-//            builder.setOnAppliedCallback(activity -> FloatWindow.dismiss(KeepAliveFloatView.class.getName()));
-            return builder.build();
-        }
-        return null;
+        DynamicColorsOptions.Builder builder = new DynamicColorsOptions.Builder();
+        builder.setPrecondition((activity, theme) -> isDynamicColorTheme());
+        int colorValue = getDynamicColorValue();
+        if (colorValue != Color.BLACK) builder.setContentBasedSource(colorValue);
+        return builder.build();
     }
 
     public int getManualPlayShowType() {

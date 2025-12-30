@@ -141,6 +141,7 @@ public class TaskSaver {
     }
 
     public Task getTask(String taskId) {
+        if (taskId == null || taskId.isEmpty()) return null;
         TaskSave taskSave = saves.get(taskId);
         if (taskSave == null) return null;
         return taskSave.getTask();

@@ -1,5 +1,7 @@
 package top.bogey.touch_tool.bean.other.log;
 
+import android.graphics.Bitmap;
+
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 
@@ -12,13 +14,14 @@ import top.bogey.touch_tool.bean.pin.Pin;
 import top.bogey.touch_tool.bean.pin.pin_objects.PinBase;
 import top.bogey.touch_tool.bean.pin.pin_objects.PinObject;
 import top.bogey.touch_tool.bean.pin.pin_objects.pin_scale_able.PinImage;
-import top.bogey.touch_tool.bean.pin.pin_objects.pin_string.PinString;
 import top.bogey.touch_tool.bean.task.Task;
+import top.bogey.touch_tool.utils.DisplayUtil;
 import top.bogey.touch_tool.utils.GsonUtil;
 
 public class ActionLog extends Log {
     private final int index;
 
+    private final String topTaskId;
     private final String taskId;
     private final String actionId;
     private final boolean execute;
@@ -28,15 +31,20 @@ public class ActionLog extends Log {
         super(LogType.ACTION);
         this.index = index;
         this.execute = execute;
+        topTaskId = task.getTopParent().getId();
         taskId = task.getId();
         actionId = action.getId();
 
         for (Pin pin : action.getPins()) {
             PinBase value = pin.getValue();
             if (value instanceof PinObject pinObject) {
-                // 图片不再原样进日志，转为字符串
-                if (value instanceof PinImage) values.put(pin.getId(), new PinString(value.toString()));
-                else values.put(pin.getId(), pinObject);
+                // 图片不再原样进日志，缩小一下
+                if (value instanceof PinImage pinImage) {
+                    Bitmap bitmap = DisplayUtil.safeScaleBitmap(pinImage.getImage(), 100, 100);
+                    PinImage copy = (PinImage) pinImage.copy();
+                    copy.setImage(bitmap);
+                    values.put(pin.getId(), copy);
+                } else values.put(pin.getId(), pinObject);
             }
         }
 
@@ -54,6 +62,7 @@ public class ActionLog extends Log {
         super(jsonObject);
         index = GsonUtil.getAsInt(jsonObject, "index", -1);
 
+        topTaskId = GsonUtil.getAsString(jsonObject, "topTaskId", "");
         taskId = GsonUtil.getAsString(jsonObject, "taskId", "");
         actionId = GsonUtil.getAsString(jsonObject, "actionId", "");
         execute = GsonUtil.getAsBoolean(jsonObject, "execute", true);
@@ -69,6 +78,10 @@ public class ActionLog extends Log {
 
     public int getIndex() {
         return index;
+    }
+
+    public String getTopTaskId() {
+        return topTaskId;
     }
 
     public String getTaskId() {

@@ -55,6 +55,10 @@ public class TaskRunnable implements Runnable {
             skipLog = true;
         }
         try {
+            if (SettingSaver.getInstance().isLogResetOnStart()) {
+                LogSaver.getInstance().clearLog(task.getId());
+            }
+
             task.execute(this, startAction, result -> {
                 if (result) listeners.stream().filter(Objects::nonNull).forEach(listener -> listener.onStart(this));
             });

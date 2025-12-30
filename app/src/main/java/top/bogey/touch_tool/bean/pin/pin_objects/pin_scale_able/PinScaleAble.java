@@ -16,7 +16,9 @@ import top.bogey.touch_tool.utils.EAnchor;
 import top.bogey.touch_tool.utils.GsonUtil;
 
 public abstract class PinScaleAble<T> extends PinObject {
-    protected int screen;
+    private final static int SCREEN = DisplayUtil.getScreenWidth(MainApplication.getInstance());
+
+    protected int screen = SCREEN;
     protected EAnchor anchor = EAnchor.TOP_LEFT;
     protected T value;
 
@@ -30,7 +32,7 @@ public abstract class PinScaleAble<T> extends PinObject {
 
     protected PinScaleAble(JsonObject jsonObject) {
         super(jsonObject);
-        screen = GsonUtil.getAsInt(jsonObject, "screen", 0);
+        screen = GsonUtil.getAsInt(jsonObject, "screen", SCREEN);
         anchor = GsonUtil.getAsObject(jsonObject, "anchor", EAnchor.class, EAnchor.TOP_LEFT);
     }
 
@@ -45,7 +47,7 @@ public abstract class PinScaleAble<T> extends PinObject {
 
     @Override
     public void reset() {
-        screen = 0;
+        screen = SCREEN;
         anchor = EAnchor.TOP_LEFT;
     }
 

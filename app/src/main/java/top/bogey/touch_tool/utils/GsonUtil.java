@@ -3,7 +3,6 @@ package top.bogey.touch_tool.utils;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonSyntaxException;
 
 import java.lang.reflect.Type;
 
@@ -40,21 +39,11 @@ public class GsonUtil {
             .create();
 
     public static <T> T copy(T src, Class<T> clazz) {
-        try {
-            return gson.fromJson(gson.toJson(src), clazz);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
+        return gson.fromJson(gson.toJson(src), clazz);
     }
 
     public static <T> T copy(T src, Type typeOfSrc) {
-        try {
-            return gson.fromJson(gson.toJson(src), typeOfSrc);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
+        return gson.fromJson(gson.toJson(src), typeOfSrc);
     }
 
     public static String toJson(Object src) {
