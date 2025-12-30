@@ -18,7 +18,6 @@ import top.bogey.touch_tool.bean.pin.pin_objects.pin_number.PinInteger;
 import top.bogey.touch_tool.bean.pin.pin_objects.pin_number.PinNumber;
 import top.bogey.touch_tool.bean.pin.pin_objects.pin_scale_able.PinPoint;
 import top.bogey.touch_tool.bean.pin.pin_objects.pin_string.PinSingleSelect;
-import top.bogey.touch_tool.bean.pin.special_pin.SingleSelectPin;
 import top.bogey.touch_tool.bean.save.SettingSaver;
 import top.bogey.touch_tool.bean.task.Task;
 import top.bogey.touch_tool.service.MainAccessibilityService;
@@ -30,7 +29,7 @@ public class TouchPointAction extends ExecuteAction implements SyncAction {
     private final transient Pin touchPin = new Pin(new PinPoint(), R.string.pin_point);
     private final transient Pin timePin = new Pin(new PinValueArea(100, 100), R.string.touch_point_action_time, false, false, true);
     private final transient Pin offsetPin = new Pin(new PinInteger(), R.string.touch_point_action_offset);
-    private final transient Pin typePin = new SingleSelectPin(new PinSingleSelect(), R.string.touch_point_action_type, false, false, true);
+    private final transient Pin typePin = new Pin(new PinSingleSelect(), R.string.touch_point_action_type, false, false, true);
 
     public TouchPointAction() {
         super(ActionType.TOUCH_POINT);

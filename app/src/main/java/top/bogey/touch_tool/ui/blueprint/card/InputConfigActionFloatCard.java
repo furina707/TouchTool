@@ -24,7 +24,7 @@ import top.bogey.touch_tool.utils.float_window_manager.FloatInterface;
 import top.bogey.touch_tool.utils.float_window_manager.FloatWindow;
 
 @SuppressLint("ViewConstructor")
-public class FloatInputConfigActionCard extends ActionCard implements FloatInterface {
+public class InputConfigActionFloatCard extends ActionCard implements FloatInterface {
 
     public static void showInputConfig(Task task, Action action, int timeout, BooleanResultCallback callback) {
         showInputConfig(task, action, timeout, callback, EAnchor.CENTER, EAnchor.CENTER, SettingSaver.getInstance().getManualChoiceViewPos());
@@ -34,9 +34,9 @@ public class FloatInputConfigActionCard extends ActionCard implements FloatInter
         KeepAliveFloatView keepView = (KeepAliveFloatView) FloatWindow.getView(KeepAliveFloatView.class.getName());
         if (keepView == null) return;
         new Handler(Looper.getMainLooper()).post(() -> {
-            FloatInputConfigActionCard card = new FloatInputConfigActionCard(keepView.getThemeContext(), task, action, timeout, callback);
+            InputConfigActionFloatCard card = new InputConfigActionFloatCard(keepView.getThemeContext(), task, action, timeout, callback);
             card.show();
-            FloatWindow.setLocation(FloatInputConfigActionCard.class.getName(), anchor, gravity, location);
+            FloatWindow.setLocation(InputConfigActionFloatCard.class.getName(), anchor, gravity, location);
         });
     }
 
@@ -45,7 +45,7 @@ public class FloatInputConfigActionCard extends ActionCard implements FloatInter
     private boolean canceled = false;
     private FloatInputConfigCardBinding binding;
 
-    public FloatInputConfigActionCard(Context context, Task task, Action action, int timeout, BooleanResultCallback callback) {
+    public InputConfigActionFloatCard(Context context, Task task, Action action, int timeout, BooleanResultCallback callback) {
         super(context, task, action);
         this.callback = callback;
         this.timeout = timeout;
@@ -110,17 +110,17 @@ public class FloatInputConfigActionCard extends ActionCard implements FloatInter
         Point point = SettingSaver.getInstance().getManualChoiceViewPos();
         FloatWindow.with(MainApplication.getInstance().getService())
                 .setLayout(this)
-                .setTag(FloatInputConfigActionCard.class.getName())
+                .setTag(InputConfigActionFloatCard.class.getName())
                 .setLocation(EAnchor.CENTER, point.x, point.y)
                 .setExistEditText(true)
-                .setCallback(new ActionFloatViewCallback(FloatInputConfigActionCard.class.getName()))
+                .setCallback(new ActionFloatViewCallback(InputConfigActionFloatCard.class.getName()))
                 .show();
         FloatBaseCallback.Block = true;
     }
 
     @Override
     public void dismiss() {
-        FloatWindow.dismiss(FloatInputConfigActionCard.class.getName());
+        FloatWindow.dismiss(InputConfigActionFloatCard.class.getName());
         FloatBaseCallback.Block = false;
     }
 }

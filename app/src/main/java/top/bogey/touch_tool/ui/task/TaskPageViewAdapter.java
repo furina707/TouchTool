@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import top.bogey.touch_tool.bean.save.task.TaskSaver;
@@ -57,6 +58,7 @@ public class TaskPageViewAdapter extends RecyclerView.Adapter<TaskPageViewAdapte
 
     public void setTags(List<String> tags) {
         search = false;
+        if (Objects.equals(tags, this.tags)) return;
         int oldSize = this.tags.size();
         int newSize = tags.size();
         this.tags.clear();

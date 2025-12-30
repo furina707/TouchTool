@@ -541,7 +541,7 @@ public class SelectActionItemRecyclerViewAdapter extends RecyclerView.Adapter<Se
                 PinInfo keyPinInfo = var.getKeyPinInfo();
                 if (keyPinInfo != null) variableBinding.keySlot.setText(keyPinInfo.getTitle());
 
-                int[] array = new int[]{R.drawable.icon_remove, R.drawable.icon_data_array, R.drawable.icon_map};
+                int[] array = new int[]{R.drawable.icon_variables, R.drawable.icon_data_array, R.drawable.icon_map};
                 variableBinding.typeSpinner.setIconResource(array[var.getType().ordinal()]);
 
                 if (var.getType() == Variable.VariableType.MAP) {

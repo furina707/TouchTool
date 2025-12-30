@@ -22,7 +22,6 @@ import top.bogey.touch_tool.bean.pin.pin_objects.pin_number.PinNumber;
 import top.bogey.touch_tool.bean.pin.pin_objects.pin_scale_able.PinImage;
 import top.bogey.touch_tool.bean.pin.pin_objects.pin_string.PinSingleLineString;
 import top.bogey.touch_tool.bean.pin.pin_objects.pin_string.PinSingleSelect;
-import top.bogey.touch_tool.bean.pin.special_pin.SingleSelectPin;
 import top.bogey.touch_tool.bean.task.Task;
 import top.bogey.touch_tool.service.MainAccessibilityService;
 import top.bogey.touch_tool.service.OcrResult;
@@ -34,7 +33,7 @@ public class IsOcrTextExistAction extends CalculateAction implements SyncAction 
     private final transient Pin sourcePin = new Pin(new PinImage(), R.string.pin_image);
     private final transient Pin textPin = new Pin(new PinSingleLineString(), R.string.pin_string);
     private final transient Pin similarPin = new Pin(new PinInteger(60), R.string.is_ocr_text_exist_action_similar);
-    private final transient Pin typePin = new SingleSelectPin(new PinSingleSelect(), R.string.is_ocr_text_exist_action_type, false, false, true);
+    private final transient Pin typePin = new Pin(new PinSingleSelect(), R.string.is_ocr_text_exist_action_type, false, false, true);
     private final transient Pin resultPin = new Pin(new PinBoolean(), R.string.pin_boolean_result, true);
 
     public IsOcrTextExistAction() {

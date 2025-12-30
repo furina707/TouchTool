@@ -6,7 +6,6 @@ public enum PinType {
     // 特殊类型
     EXECUTE,
     ADD,
-    PARAM,
 
     // 值类型
     OBJECT,
@@ -36,10 +35,9 @@ public enum PinType {
     public int getGroup() {
         return switch (this) {
             case NONE, EXECUTE, ADD -> -1;
-            case PARAM -> 0;
-            case LIST, APPS -> 2;
-            case MAP -> 3;
-            default -> 1;
+            case LIST, APPS -> 1;
+            case MAP -> 2;
+            default -> 0;
         };
     }
 }

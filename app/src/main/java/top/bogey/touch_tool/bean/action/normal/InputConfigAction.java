@@ -25,7 +25,7 @@ import top.bogey.touch_tool.bean.pin.special_pin.ShowAblePin;
 import top.bogey.touch_tool.bean.save.task.TaskSaver;
 import top.bogey.touch_tool.bean.task.Task;
 import top.bogey.touch_tool.service.TaskRunnable;
-import top.bogey.touch_tool.ui.blueprint.card.FloatInputConfigActionCard;
+import top.bogey.touch_tool.ui.blueprint.card.InputConfigActionFloatCard;
 import top.bogey.touch_tool.utils.EAnchor;
 
 public class InputConfigAction extends ExecuteAction implements DynamicPinsAction {
@@ -64,12 +64,12 @@ public class InputConfigAction extends ExecuteAction implements DynamicPinsActio
 
         PinNumber<?> timeout = getPinValue(runnable, timeoutPin);
         if (getTypeValue() == 0) {
-            FloatInputConfigActionCard.showInputConfig(runnable.getTask(), this, timeout.intValue(), result -> runnable.resume());
+            InputConfigActionFloatCard.showInputConfig(runnable.getTask(), this, timeout.intValue(), result -> runnable.resume());
         } else {
             PinSingleSelect anchor = getPinValue(runnable, anchorPin);
             PinSingleSelect gravity = getPinValue(runnable, gravityPin);
             PinPoint showPos = getPinValue(runnable, showPosPin);
-            FloatInputConfigActionCard.showInputConfig(runnable.getTask(), this, timeout.intValue(), result -> runnable.resume(), EAnchor.values()[anchor.getIndex()], EAnchor.values()[gravity.getIndex()], showPos.getValue());
+            InputConfigActionFloatCard.showInputConfig(runnable.getTask(), this, timeout.intValue(), result -> runnable.resume(), EAnchor.values()[anchor.getIndex()], EAnchor.values()[gravity.getIndex()], showPos.getValue());
         }
         runnable.await();
 

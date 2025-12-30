@@ -22,7 +22,6 @@ import top.bogey.touch_tool.bean.pin.pin_objects.PinBoolean;
 import top.bogey.touch_tool.bean.pin.pin_objects.PinMap;
 import top.bogey.touch_tool.bean.pin.pin_objects.PinNode;
 import top.bogey.touch_tool.bean.pin.pin_objects.PinObject;
-import top.bogey.touch_tool.bean.pin.pin_objects.PinParam;
 import top.bogey.touch_tool.bean.pin.pin_objects.PinSubType;
 import top.bogey.touch_tool.bean.pin.pin_objects.PinType;
 import top.bogey.touch_tool.bean.pin.pin_objects.PinValueArea;
@@ -86,7 +85,6 @@ public class PinInfo {
     private final static PinInfo STRING_EXECUTE_INFO = new PinInfo(PinType.EXECUTE, PinSubType.WITH_STRING, PinStringExecute.class, ExecutePinSlotView.class, 0, com.google.android.material.R.attr.colorPrimaryVariant, 0, PinWidgetExecute.class, false, false);
 
     private final static PinInfo ADD_INFO = new PinInfo(PinType.ADD, PinSubType.NORMAL, PinAdd.class, NormalPinSlotView.class, 0, com.google.android.material.R.attr.colorSurfaceVariant, 0, PinWidgetAdd.class, false, false);
-    private final static PinInfo PARAM_INFO = new PinInfo(PinType.PARAM, PinSubType.NORMAL, PinParam.class, NormalPinSlotView.class, 0, com.google.android.material.R.attr.colorPrimaryInverse, 0, null, false, false);
 
     private final static PinInfo OBJECT_INFO = new PinInfo(PinType.OBJECT, PinSubType.NORMAL, PinObject.class, NormalPinSlotView.class, 0, com.google.android.material.R.attr.colorPrimaryInverse, R.string.pin_object, null, false, false);
     private final static PinInfo DYNAMIC_OBJECT_INFO = new PinInfo(PinType.OBJECT, PinSubType.DYNAMIC, PinObject.class, NormalPinSlotView.class, 0, com.google.android.material.R.attr.colorPrimaryInverse, R.string.pin_object, null, false, false);
@@ -148,7 +146,6 @@ public class PinInfo {
                 }
             }
             case ADD -> info = ADD_INFO;
-            case PARAM -> info = PARAM_INFO;
             case OBJECT -> {
                 switch (subType) {
                     case NORMAL -> info = OBJECT_INFO;

@@ -16,15 +16,9 @@ import top.bogey.touch_tool.utils.GsonUtil;
 
 public class PinSingleSelect extends PinString {
     private List<String> options = new ArrayList<>();
-    private boolean dynamic = false;
 
     public PinSingleSelect() {
         super(PinSubType.SINGLE_SELECT);
-    }
-
-    public PinSingleSelect(boolean dynamic) {
-        this();
-        this.dynamic = dynamic;
     }
 
     public PinSingleSelect(@ArrayRes int optionsResId) {
@@ -51,15 +45,8 @@ public class PinSingleSelect extends PinString {
     }
 
     @Override
-    public void reset() {
-        super.reset();
-        if (dynamic) options.clear();
-    }
-
-    @Override
     public boolean linkFromAble(PinBase pin) {
         if (getType().getGroup() == pin.getType().getGroup()) {
-            if (isDynamic() || pin.isDynamic()) return true;
             if (pin instanceof PinSingleSelect pinSingleSelect) {
                 return getOptions().equals(pinSingleSelect.getOptions());
             }
@@ -70,7 +57,6 @@ public class PinSingleSelect extends PinString {
     @Override
     public boolean linkToAble(PinBase pin) {
         if (getType().getGroup() == pin.getType().getGroup()) {
-            if (isDynamic() || pin.isDynamic()) return true;
             if (pin instanceof PinSingleSelect pinSingleSelect) {
                 return getOptions().equals(pinSingleSelect.getOptions());
             }
@@ -123,28 +109,19 @@ public class PinSingleSelect extends PinString {
         if (options.contains(value)) super.setValue(value);
     }
 
-    public boolean isDynamic() {
-        return dynamic && options.isEmpty();
-    }
-
-    public void setDynamic(boolean dynamic) {
-        this.dynamic = dynamic;
-    }
-
     @Override
     public final boolean equals(Object object) {
         if (this == object) return true;
         if (!(object instanceof PinSingleSelect that)) return false;
         if (!super.equals(object)) return false;
 
-        return dynamic == that.dynamic && getOptions().equals(that.getOptions());
+        return getOptions().equals(that.getOptions());
     }
 
     @Override
     public int hashCode() {
         int result = super.hashCode();
         result = 31 * result + getOptions().hashCode();
-        result = 31 * result + Boolean.hashCode(dynamic);
         return result;
     }
 }

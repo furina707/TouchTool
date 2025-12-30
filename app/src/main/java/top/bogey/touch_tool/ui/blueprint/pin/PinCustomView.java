@@ -15,6 +15,7 @@ import androidx.appcompat.widget.ListPopupWindow;
 import com.google.android.material.button.MaterialButton;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -33,14 +34,14 @@ import top.bogey.touch_tool.utils.listener.TextChangedListener;
 @SuppressLint("ViewConstructor")
 public abstract class PinCustomView extends PinView {
     private final static Map<PinType, List<PinInfo>> PIN_INFO_MAP = PinInfo.getCustomPinInfoMap();
-    private final static int[] ICON_ARRAY = new int[]{R.drawable.icon_remove, R.drawable.icon_data_array, R.drawable.icon_map};
+    private final static int[] ICON_ARRAY = new int[]{R.drawable.icon_variables, R.drawable.icon_data_array, R.drawable.icon_map};
 
     private Variable variable;
     protected final Map<PinType, List<PinInfo>> pinInfoMap;
 
     public PinCustomView(@NonNull Context context, ActionCard card, Pin pin) {
         super(context, card, pin, true);
-        pinInfoMap = PIN_INFO_MAP;
+        pinInfoMap = new LinkedHashMap<>(PIN_INFO_MAP);
         if (pin.getValue() instanceof PinObject pinObject) {
             variable = new Variable((PinObject) pinObject.copy());
         } else {

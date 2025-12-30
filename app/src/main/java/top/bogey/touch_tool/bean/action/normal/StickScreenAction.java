@@ -10,7 +10,6 @@ import top.bogey.touch_tool.bean.pin.pin_objects.PinObject;
 import top.bogey.touch_tool.bean.pin.pin_objects.pin_scale_able.PinPoint;
 import top.bogey.touch_tool.bean.pin.pin_objects.pin_string.PinSingleSelect;
 import top.bogey.touch_tool.bean.pin.pin_objects.pin_string.PinString;
-import top.bogey.touch_tool.bean.pin.special_pin.SingleSelectPin;
 import top.bogey.touch_tool.service.TaskRunnable;
 import top.bogey.touch_tool.ui.custom.StickScreenFloatView;
 import top.bogey.touch_tool.utils.EAnchor;
@@ -18,8 +17,8 @@ import top.bogey.touch_tool.utils.EAnchor;
 public class StickScreenAction extends ExecuteAction {
     private final transient Pin valuePin = new Pin(new PinString(), R.string.pin_object);
 
-    private final transient Pin anchorPin = new SingleSelectPin(new PinSingleSelect(R.array.anchor, 4), R.string.window_anchor, false, false, true);
-    private final transient Pin gravityPin = new SingleSelectPin(new PinSingleSelect(R.array.anchor, 4), R.string.screen_anchor, false, false, true);
+    private final transient Pin anchorPin = new Pin(new PinSingleSelect(R.array.anchor, 4), R.string.window_anchor, false, false, true);
+    private final transient Pin gravityPin = new Pin(new PinSingleSelect(R.array.anchor, 4), R.string.screen_anchor, false, false, true);
     private final transient Pin showPosPin = new Pin(new PinPoint(), R.string.screen_anchor_pos, false, false, true);
 
     private final transient Pin idPin = new Pin(new PinString(), R.string.stick_screen_action_id, true);

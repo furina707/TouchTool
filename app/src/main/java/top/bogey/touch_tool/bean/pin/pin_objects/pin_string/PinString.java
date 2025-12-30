@@ -62,7 +62,7 @@ public class PinString extends PinObject {
     public boolean linkToAble(PinBase pin) {
         if (getType().getGroup() == pin.getType().getGroup()) {
             if (isDynamic() || pin.isDynamic()) return true;
-            return pin instanceof PinString;
+            return pin instanceof PinString && !(pin instanceof PinSingleSelect);
         }
         return false;
     }

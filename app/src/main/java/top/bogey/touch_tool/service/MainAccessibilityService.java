@@ -444,7 +444,7 @@ public class MainAccessibilityService extends AccessibilityService {
             startActivity(intent);
             return true;
         } else {
-            callback.onResult(true);
+            if (callback != null) callback.onResult(true);
             return false;
         }
     }
@@ -475,8 +475,7 @@ public class MainAccessibilityService extends AccessibilityService {
 
             Intent intent = new Intent(this, CaptureService.class);
             intent.putExtra(CaptureService.DATA, data);
-            if (!bindService(intent, captureConnection, Context.BIND_AUTO_CREATE))
-                callCaptureCallback(false);
+            if (!bindService(intent, captureConnection, Context.BIND_AUTO_CREATE)) callCaptureCallback(false);
         } else {
             callCaptureCallback(false);
         }
@@ -558,6 +557,7 @@ public class MainAccessibilityService extends AccessibilityService {
 
         IOcr iOcr = ocrBinderMap.get(packageName);
         if (iOcr == null || !iOcr.asBinder().isBinderAlive()) {
+            ocrBinderMap.remove(packageName);
             ServiceConnection connection = new ServiceConnection() {
                 @Override
                 public void onServiceConnected(ComponentName name, IBinder service) {
@@ -584,7 +584,7 @@ public class MainAccessibilityService extends AccessibilityService {
 
             Intent intent = new Intent(OCR_SERVICE_ACTION);
             intent.setComponent(new ComponentName(packageName, OCR_SERVICE_ACTION));
-            bindService(intent, connection, Context.BIND_AUTO_CREATE);
+            if (!bindService(intent, connection, Context.BIND_AUTO_CREATE)) callback.onResult(new ArrayList<>());
         } else {
             try {
                 iOcr.runOcr(bitmap, new IOcrCallback.Stub() {
@@ -704,10 +704,7 @@ public class MainAccessibilityService extends AccessibilityService {
         try {
             MediaPlayer mediaPlayer = new MediaPlayer();
             mediaPlayer.setDataSource(this, Uri.parse(path));
-            mediaPlayer.setAudioAttributes(new AudioAttributes.Builder()
-                    .setUsage(index == 0 ? AudioAttributes.USAGE_MEDIA : AudioAttributes.USAGE_NOTIFICATION_RINGTONE)
-                    .setContentType(index == 0 ? AudioAttributes.CONTENT_TYPE_MUSIC : AudioAttributes.CONTENT_TYPE_SONIFICATION)
-                    .build());
+            mediaPlayer.setAudioAttributes(new AudioAttributes.Builder().setUsage(index == 0 ? AudioAttributes.USAGE_MEDIA : AudioAttributes.USAGE_NOTIFICATION_RINGTONE).setContentType(index == 0 ? AudioAttributes.CONTENT_TYPE_MUSIC : AudioAttributes.CONTENT_TYPE_SONIFICATION).build());
             mediaPlayer.setOnPreparedListener(mp -> {
                 playerMap.put(path, mp);
                 mp.start();
