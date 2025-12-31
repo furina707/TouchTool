@@ -79,7 +79,9 @@ public class SettingSaver {
     private static final String MANUAL_PLAY_SHOW_TYPE = "MANUAL_PLAY_SHOW_TYPE";                        // 手动执行什么时候显示
     private static final String MANUAL_PLAY_PAUSE_TYPE = "MANUAL_PLAY_PAUSE_TYPE";                      // 手动执行暂停模式
     private static final String MANUAL_PLAY_HIDE_TYPE = "MANUAL_PLAY_HIDE_TYPE";                        // 手动执行什么时候隐藏
-    private static final String MANUAL_PLAYING_HIDE_TYPE = "MANUAL_PLAYING_HIDE_TYPE";                  // 手动执行中隐藏模式
+    private static final String MANUAL_PLAYING_HIDE = "MANUAL_PLAYING_HIDE";                            // 手动执行中隐藏模式
+    private static final String NOT_PLAY_HIDE = "NOT_PLAY_HIDE";                                        // 手动执行未使用时淡化模式
+    private static final String NOT_PLAY_HIDE_ALPHA = "NOT_PLAY_HIDE_ALPHA";                            // 手动执行未使用时淡化模式
     private static final String MANUAL_PLAY_VIEW_PADDING = "MANUAL_PLAY_VIEW_PADDING";                  // 手动执行悬浮窗偏移
     private static final String MANUAL_PLAY_VIEW_EXPAND_SIZE = "MANUAL_PLAY_VIEW_EXPAND_SIZE";          // 手动悬浮窗按钮容纳文本数量
     private static final String MANUAL_PLAY_VIEW_CLOSE_SIZE = "MANUAL_PLAY_VIEW_CLOSE_SIZE";            // 手动悬浮窗按钮收起时宽度
@@ -402,12 +404,28 @@ public class SettingSaver {
     }
 
 
-    public boolean getManualPlayingHideType() {
-        return mmkv.decodeBool(MANUAL_PLAYING_HIDE_TYPE, false);
+    public boolean isManualPlayingHide() {
+        return mmkv.decodeBool(MANUAL_PLAYING_HIDE, false);
     }
 
-    public void setManualPlayingHideType(boolean enable) {
-        mmkv.encode(MANUAL_PLAYING_HIDE_TYPE, enable);
+    public void setManualPlayingHide(boolean enable) {
+        mmkv.encode(MANUAL_PLAYING_HIDE, enable);
+    }
+
+    public boolean isNotPlayHide() {
+        return mmkv.decodeBool(NOT_PLAY_HIDE, true);
+    }
+
+    public void setNotPlayHide(boolean enable) {
+        mmkv.encode(NOT_PLAY_HIDE, enable);
+    }
+
+    public int getNotPlayHideAlpha() {
+        return mmkv.decodeInt(NOT_PLAY_HIDE_ALPHA, 50);
+    }
+
+    public void setNotPlayHideAlpha(int alpha) {
+        mmkv.encode(NOT_PLAY_HIDE_ALPHA, alpha);
     }
 
     public int getManualPlayViewPadding() {

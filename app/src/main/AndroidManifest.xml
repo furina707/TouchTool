@@ -121,6 +121,7 @@
 
                 <data android:scheme="tt" />
                 <data android:host="do_action" />
+                <data android:host="open_tool" />
             </intent-filter>
 
             <intent-filter android:label="@string/instant_activity_filter_name">
@@ -167,6 +168,48 @@
                 <action android:name="android.service.notification.NotificationListenerService" />
             </intent-filter>
         </service>
+
+        <service
+            android:name=".service.tile.AppInfoFloatViewTileService"
+            android:exported="true"
+            android:icon="@drawable/icon_apps"
+            android:label="@string/package_activity"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+        </service>
+
+        <service
+            android:name=".service.tile.LogFloatViewTileService"
+            android:exported="true"
+            android:icon="@drawable/icon_draw"
+            android:label="@string/task_running_log"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+        </service>
+
+        <service
+            android:name=".service.tile.NodeInfoFloatViewTileService"
+            android:exported="true"
+            android:icon="@drawable/icon_widgets"
+            android:label="@string/node_picker"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+        </service>
+
+        <receiver
+            android:name=".service.receiver.BootCompletedReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
 
         <provider
             android:name="androidx.core.content.FileProvider"

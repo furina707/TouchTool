@@ -74,8 +74,17 @@ public class SettingPlayView extends Fragment {
         binding.hideManualPlaySelect.checkIndex(SettingSaver.getInstance().getManualPlayHideType());
 
         // 执行时隐藏悬浮窗
-        binding.manualPlayingHideSwitch.setOnSwitchClickListener(v -> SettingSaver.getInstance().setManualPlayingHideType(binding.manualPlayingHideSwitch.isChecked()));
-        binding.manualPlayingHideSwitch.setChecked(SettingSaver.getInstance().getManualPlayingHideType());
+        binding.manualPlayingHideSwitch.setOnSwitchClickListener(v -> SettingSaver.getInstance().setManualPlayingHide(binding.manualPlayingHideSwitch.isChecked()));
+        binding.manualPlayingHideSwitch.setChecked(SettingSaver.getInstance().isManualPlayingHide());
+
+        // 未使用时淡化
+        binding.notPlayHideSwitch.setOnSwitchClickListener(v -> SettingSaver.getInstance().setNotPlayHide(binding.notPlayHideSwitch.isChecked()));
+        binding.notPlayHideSwitch.setChecked(SettingSaver.getInstance().isNotPlayHide());
+
+        // 未使用时淡化透明度
+        binding.notPlayHideAlpha.setValueFormat("%d%%");
+        binding.notPlayHideAlpha.setSliderOnChangeListener((slider, value, fromUser) -> SettingSaver.getInstance().setNotPlayHideAlpha((int) value));
+        binding.notPlayHideAlpha.setValue(SettingSaver.getInstance().getNotPlayHideAlpha());
 
         // 重置位置
         binding.manualPlayReset.setOnButtonClickListener(v -> {

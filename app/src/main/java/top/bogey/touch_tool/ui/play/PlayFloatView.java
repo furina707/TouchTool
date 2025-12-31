@@ -48,9 +48,12 @@ public class PlayFloatView extends FrameLayout implements FloatInterface, ITaskL
     private static long HIDE_TIME = 0;
 
     private final FloatPlayBinding binding;
+
+    private final Handler handler;
     private final int padding = SettingSaver.getInstance().getManualPlayViewPadding() * UNIT_DP_SIZE;
 
     private int runningTaskCount = 0;
+    private boolean isNotPlayHide = false;
 
     public static void showActions(List<TaskInfoSummary.ManualExecuteInfo> actions) {
         TaskInfoSummary.PackageActivity packageActivity = TaskInfoSummary.getInstance().getPackageActivity();
@@ -76,6 +79,8 @@ public class PlayFloatView extends FrameLayout implements FloatInterface, ITaskL
         binding = FloatPlayBinding.inflate(LayoutInflater.from(context), this, true);
         DisplayUtil.setViewMargin(binding.playButtonBox, padding, 0, padding, 0);
 
+        handler = new Handler(Looper.getMainLooper());
+
         int size = SettingSaver.getInstance().getManualPlayViewCloseSize();
         int buttonDpSize = BUTTON_DP_SIZE * 2 / 3;
         int growDpSize = (BUTTON_DP_SIZE - buttonDpSize) / 2;
@@ -83,9 +88,15 @@ public class PlayFloatView extends FrameLayout implements FloatInterface, ITaskL
         DisplayUtil.setViewWidth(binding.dragSpaceButton, px);
 
         binding.dragSpaceButton.setOnClickListener(v -> {
-            refreshExpand(true);
-            refreshCorner(false);
-            toDockSide();
+            if (isNotPlayHide) {
+                isNotPlayHide = false;
+                animate().alpha(1f);
+                startNotPlayHide();
+            } else {
+                refreshExpand(true);
+                refreshCorner(false);
+                toDockSide();
+            }
         });
 
         binding.dragSpaceButton.setOnLongClickListener(v -> {
@@ -119,6 +130,8 @@ public class PlayFloatView extends FrameLayout implements FloatInterface, ITaskL
 
         MainAccessibilityService service = MainApplication.getInstance().getService();
         if (service != null) service.addListener(this);
+
+        startNotPlayHide();
     }
 
     @Override
@@ -175,7 +188,6 @@ public class PlayFloatView extends FrameLayout implements FloatInterface, ITaskL
         binding.playButtonBox.setVisibility(expand ? VISIBLE : GONE);
         binding.dragSpace.setVisibility(expand ? GONE : VISIBLE);
         binding.dragSpaceButton.setIconResource(inLeft() ? R.drawable.icon_keyboard_arrow_right : R.drawable.icon_keyboard_arrow_left);
-        binding.getRoot().animate().alpha(expand ? 1 : 0.7f);
     }
 
     private void refreshCorner(boolean dragging) {
@@ -238,7 +250,19 @@ public class PlayFloatView extends FrameLayout implements FloatInterface, ITaskL
     }
 
     private boolean isHideNotRunningPlayItem() {
-        return SettingSaver.getInstance().getManualPlayingHideType() && runningTaskCount > 0;
+        return SettingSaver.getInstance().isManualPlayingHide() && runningTaskCount > 0;
+    }
+
+    private void startNotPlayHide() {
+        if (runningTaskCount == 0 && SettingSaver.getInstance().isNotPlayHide()) {
+            handler.removeCallbacksAndMessages(null);
+            handler.postDelayed(() -> {
+                int alpha = SettingSaver.getInstance().getNotPlayHideAlpha();
+                animate().alpha(alpha / 100f);
+                refreshExpand(false);
+                isNotPlayHide = true;
+            }, 5000);
+        }
     }
 
     private boolean inLeft() {
@@ -303,6 +327,7 @@ public class PlayFloatView extends FrameLayout implements FloatInterface, ITaskL
                 refreshPlayButton();
             }
         }
+        handler.removeCallbacksAndMessages(null);
     }
 
     @Override
@@ -324,6 +349,8 @@ public class PlayFloatView extends FrameLayout implements FloatInterface, ITaskL
                 refreshPlayButton();
             }
         }
+
+        startNotPlayHide();
     }
 
     private static class PlayFloatCallback extends FloatBaseCallback {
@@ -344,6 +371,7 @@ public class PlayFloatView extends FrameLayout implements FloatInterface, ITaskL
             View view = FloatWindow.getView(PlayFloatView.class.getName());
             if (view instanceof PlayFloatView playFloatView) {
                 playFloatView.refreshCorner(true);
+                playFloatView.handler.removeCallbacksAndMessages(null);
             }
         }
 
@@ -358,6 +386,7 @@ public class PlayFloatView extends FrameLayout implements FloatInterface, ITaskL
                 if (view != null) {
                     view.refreshExpand(SettingSaver.getInstance().getManualPlayViewState());
                     view.refreshCorner(false);
+                    view.startNotPlayHide();
                 }
             }
         }

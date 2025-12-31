@@ -3,7 +3,6 @@ package top.bogey.touch_tool.service.receiver;
 import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothDevice;
 import android.content.BroadcastReceiver;
-import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -20,12 +19,10 @@ import java.util.Collections;
 import java.util.List;
 
 import top.bogey.touch_tool.service.TaskInfoSummary;
-import top.bogey.touch_tool.ui.InstantActivity;
 
 public class SystemEventReceiver extends BroadcastReceiver {
     private final Context context;
     private ConnectivityManager.NetworkCallback networkCallback;
-    private ClipboardManager.OnPrimaryClipChangedListener clipboardListener;
 
     public SystemEventReceiver(Context context) {
         this.context = context;
@@ -37,10 +34,6 @@ public class SystemEventReceiver extends BroadcastReceiver {
         String action = intent.getAction();
         if (action == null) return;
         switch (action) {
-            case Intent.ACTION_TIME_TICK -> {
-
-            }
-
             case Intent.ACTION_BATTERY_CHANGED -> {
                 int level = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, 100);
                 int scale = intent.getIntExtra(BatteryManager.EXTRA_SCALE, 100);
@@ -57,19 +50,11 @@ public class SystemEventReceiver extends BroadcastReceiver {
                 if (device == null) return;
                 TaskInfoSummary.getInstance().setBluetoothInfo(device.getAddress(), device.getName(), action.equals(BluetoothDevice.ACTION_ACL_CONNECTED));
             }
-
-            case InstantActivity.INTENT_KEY_DO_ACTION -> {
-                String taskId = intent.getStringExtra(InstantActivity.TASK_ID);
-                String actionId = intent.getStringExtra(InstantActivity.ACTION_ID);
-                String pinId = intent.getStringExtra(InstantActivity.PIN_ID);
-                InstantActivity.doAction(taskId, actionId, pinId, null);
-            }
         }
     }
 
     private IntentFilter getFilter() {
         IntentFilter filter = new IntentFilter();
-//        filter.addAction(Intent.ACTION_TIME_TICK);
         // 电量变动
         filter.addAction(Intent.ACTION_BATTERY_CHANGED);
         // 屏幕与锁屏状态变更
@@ -83,8 +68,6 @@ public class SystemEventReceiver extends BroadcastReceiver {
         // 蓝牙连接或断开
         filter.addAction(BluetoothDevice.ACTION_ACL_CONNECTED);
         filter.addAction(BluetoothDevice.ACTION_ACL_DISCONNECTED);
-        // 动作执行
-        filter.addAction(InstantActivity.INTENT_KEY_DO_ACTION);
 
         return filter;
     }

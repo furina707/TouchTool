@@ -23,7 +23,6 @@ public class FloatWindow {
     static final List<String> tags = new ArrayList<>();
     static final Map<String, FloatWindowHelper> views = new HashMap<>();
 
-
     public static FloatWindowHelper getHelper(String tag) {
         return views.get(tag);
     }

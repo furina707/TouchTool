@@ -374,6 +374,12 @@
     <string name="preference_setting_manual_playing_hide">执行时隐藏</string>
     <string name="preference_setting_manual_playing_hide_desc">设置任务运行时是否隐藏其他执行按钮</string>
 
+    <string name="preference_setting_manual_not_play_hide">未使用时淡化</string>
+    <string name="preference_setting_manual_not_play_hide_desc">设置长时间未使用时是否淡化悬浮窗</string>
+
+    <string name="preference_setting_manual_not_play_hide_alpha">淡化透明度</string>
+    <string name="preference_setting_manual_not_play_hide_alpha_desc">设置悬浮窗淡化的透明度</string>
+
     <string name="preference_setting_manual_play_reset">重置位置</string>
     <string name="preference_setting_manual_play_reset_desc">重置手动执行悬浮窗位置</string>
     <string name="preference_setting_manual_play_reset_tips">已重置</string>

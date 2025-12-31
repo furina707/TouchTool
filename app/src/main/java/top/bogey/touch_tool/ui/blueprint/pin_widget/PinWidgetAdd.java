@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import androidx.annotation.NonNull;
 
 import java.util.List;
+import java.util.UUID;
 
 import top.bogey.touch_tool.bean.pin.Pin;
 import top.bogey.touch_tool.bean.pin.pin_objects.PinAdd;
@@ -30,6 +31,7 @@ public class PinWidgetAdd extends PinWidget<PinAdd> {
             List<Pin> pins = pinBase.getPins();
             for (Pin pin : pins) {
                 Pin copy = pin.newCopy();
+                copy.setUid(UUID.randomUUID().toString());
                 copy.setTitleId(pin.getTitleId());
                 copy.setDynamic(true);
                 card.addPin(pinView.getPin(), copy);

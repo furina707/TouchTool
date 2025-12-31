@@ -52,6 +52,10 @@ public class SettingWidgetSlider extends FrameLayout {
         binding.slider.setValue(value);
     }
 
+    public void setValueFormat(String format) {
+        binding.slider.setLabelFormatter(value -> String.format(format, (int) value));
+    }
+
     @Override
     public void setOnClickListener(OnClickListener listener) {
         binding.getRoot().setOnClickListener(listener);

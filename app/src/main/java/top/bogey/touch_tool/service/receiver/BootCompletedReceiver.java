@@ -3,6 +3,7 @@ package top.bogey.touch_tool.service.receiver;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.view.ContextThemeWrapper;
 
 import com.google.android.material.color.DynamicColors;
 
@@ -18,7 +19,9 @@ public class BootCompletedReceiver extends BroadcastReceiver {
         if (action == null) return;
         if (action.equals(Intent.ACTION_BOOT_COMPLETED)) {
             if (SettingSaver.getInstance().isBootCompletedAutoStart()) {
-                new KeepAliveFloatView(DynamicColors.wrapContextIfAvailable(context, R.style.Theme_TouchTool)).show();
+                ContextThemeWrapper themeWrapper = new ContextThemeWrapper(context, R.style.Theme_TouchTool_DayNight);
+                Context themeContext = DynamicColors.wrapContextIfAvailable(themeWrapper, R.style.Theme_TouchTool_DayNight);
+                new KeepAliveFloatView(themeContext).show();
             }
         }
     }

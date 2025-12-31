@@ -22,11 +22,11 @@ import top.bogey.touch_tool.bean.task.Task;
 import top.bogey.touch_tool.bean.task.Variable;
 import top.bogey.touch_tool.service.MainAccessibilityService;
 import top.bogey.touch_tool.service.TaskInfoSummary;
+import top.bogey.touch_tool.ui.tool.ToolView;
 import top.bogey.touch_tool.utils.AppUtil;
 
 public class InstantActivity extends FloatViewActivity {
     public static final String INTENT_KEY_DO_ACTION = "INTENT_KEY_DO_ACTION";
-
     public static final String TASK_ID = "TASK_ID";
     public static final String ACTION_ID = "ACTION_ID";
     public static final String PIN_ID = "PIN_ID";
@@ -59,6 +59,10 @@ public class InstantActivity extends FloatViewActivity {
                         String taskId = params.remove(TASK_ID);
                         String actionId = params.remove(ACTION_ID);
                         doAction(taskId, actionId, null, params);
+                    }
+
+                    if ("open_tool".equals(uri.getHost())) {
+                        ToolView.openTool(this, uri.getQuery());
                     }
                 }
             }

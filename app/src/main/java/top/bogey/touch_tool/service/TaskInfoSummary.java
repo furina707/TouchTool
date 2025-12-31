@@ -395,6 +395,9 @@ public class TaskInfoSummary {
     public void enterActivity(String packageName, String activityName) {
         if (isActivityClass(packageName, activityName)) {
             if (packageName.equals(MainApplication.getInstance().getPackageName()) && activityName.equals(MainActivity.class.getName())) {
+                if (lastPackageActivity != null && !packageActivity.packageName.equals(lastPackageActivity.packageName)) {
+                    tryStartActions(ApplicationQuitStartAction.class);
+                }
                 if (setPackageActivity(packageName, activityName)) {
                     tryShowManualPlayView(false);
                 }

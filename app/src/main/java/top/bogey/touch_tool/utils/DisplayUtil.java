@@ -201,6 +201,7 @@ public class DisplayUtil {
     }
 
     public static Bitmap safeScaleBitmap(Bitmap bitmap, int maxWidth, int maxHeight) {
+        if (bitmap == null) return null;
         final int srcWidth = bitmap.getWidth();
         final int srcHeight = bitmap.getHeight();
         if (srcWidth <= maxWidth && srcHeight <= maxHeight) return bitmap;
